@@ -8,9 +8,9 @@
     <a href="https://github.com/SP-SoftFuzz/OptiHeat"><strong>View Project »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/SP-SoftFuzz/OptiHeat/issues">Report Bug</a>
+    <a href="https://softfuzz.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog">Report Bug</a>
     ·
-    <a href="https://github.com/SP-SoftFuzz/OptiHeat/issues">Request Feature</a>
+    <a href="https://softfuzz.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog">Request Feature</a>
   </p>
 </div>
 
