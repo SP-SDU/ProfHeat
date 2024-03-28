@@ -8,9 +8,9 @@
     <a href="https://github.com/SP-SoftFuzz/OptiHeat"><strong>View Project »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/SP-SoftFuzz/OptiHeat/issues">Report Bug</a>
+    <a href="https://softfuzz.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog">Report Bug</a>
     ·
-    <a href="https://github.com/SP-SoftFuzz/OptiHeat/issues">Request Feature</a>
+    <a href="https://softfuzz.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog">Request Feature</a>
   </p>
 </div>
 
@@ -29,7 +29,6 @@ OptiHeat simplifies the integration of heat demand and electricity prices, makin
 
 **Prerequisites:**
 - Ensure [.NET 8.0 desktop runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) is installed.
-- Requires Windows 10 or newer.
 - Install the Avalonia UI template for .NET by running this in your terminal:
 ```
 dotnet new install Avalonia.Templates` in your terminal
@@ -54,6 +53,12 @@ https://github.com/SP-SoftFuzz/OptiHeat/
 5. **Push:** Click `Push origin` to upload your changes to GitHub.
 6. **Pull Request:** On GitHub, `New pull request` against `main`, fill details, and create.
 7. **Request a review** from a teammate by tagging them in your pull request.
+
+## Project Management 🗂️
+
+- **Task Tracking:** We use [Jira](https://softfuzz.atlassian.net/jira/software/projects/SCRUM/boards/1) for all bug reports, feature requests, and overall project management.
+- **Communication:** Join our [Discord server](https://discord.gg/YMfsnVVg2X) for all project discussions, updates, and daily communication.
+- **Report:** Contribute to our [semester report](https://1drv.ms/w/s!Au0hUddHOg4Uju4bhCltwFKTgqUZBA?e=I5Q1P2) on OneDrive, where we document our progress and findings.
 
 ## Built With 🛠️
 
