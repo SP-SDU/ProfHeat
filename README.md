@@ -55,6 +55,12 @@ https://github.com/SP-SoftFuzz/OptiHeat/
 6. **Pull Request:** On GitHub, `New pull request` against `main`, fill details, and create.
 7. **Request a review** from a teammate by tagging them in your pull request.
 
+## Project Management 🗂️
+
+- **Task Tracking:** We use [Jira](https://softfuzz.atlassian.net/jira/software/projects/SCRUM/boards/1) for all bug reports, feature requests, and overall project management.
+- **Communication:** Join our [Discord server](https://discord.gg/YMfsnVVg2X) for all project discussions, updates, and daily communication.
+- **Report:** Contribute to our [semester report](https://1drv.ms/w/s!Au0hUddHOg4Uju4bhCltwFKTgqUZBA?e=I5Q1P2) on OneDrive, where we document our progress and findings.
+
 ## Built With 🛠️
 
 - [Avalonia UI](https://avaloniaui.net/) - A cross-platform XAML framework. Use Visual Studio Code with the Avalonia extension for the best development experience.
