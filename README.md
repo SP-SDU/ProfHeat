@@ -31,7 +31,7 @@ OptiHeat simplifies the integration of heat demand and electricity prices, makin
 - Ensure [.NET 8.0 desktop runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) is installed.
 - Install the Avalonia UI template for .NET by running this in your terminal:
 ```
-dotnet new install Avalonia.Templates` in your terminal
+dotnet new install Avalonia.Templates
 ```
 - For editing Avalonia UI projects in Visual Studio Code, install the [Avalonia for Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=AvaloniaTeam.vscode-avalonia).
 
