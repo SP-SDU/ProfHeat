@@ -29,7 +29,6 @@ OptiHeat simplifies the integration of heat demand and electricity prices, makin
 
 **Prerequisites:**
 - Ensure [.NET 8.0 desktop runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) is installed.
-- Requires Windows 10 or newer.
 - Install the Avalonia UI template for .NET by running this in your terminal:
 ```
 dotnet new install Avalonia.Templates` in your terminal
