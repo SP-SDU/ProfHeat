@@ -28,8 +28,13 @@ OptiHeat simplifies the integration of heat demand and electricity prices, makin
 ## Getting Started 🚀
 
 **Prerequisites:**
-- [.NET 8.0 desktop runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
-- Windows 10 or newer
+- Ensure [.NET 8.0 desktop runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) is installed.
+- Requires Windows 10 or newer.
+- Install the Avalonia UI template for .NET by running this in your terminal:
+```
+dotnet new install Avalonia.Templates` in your terminal
+```
+- For editing Avalonia UI projects in Visual Studio Code, install the [Avalonia for Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=AvaloniaTeam.vscode-avalonia).
 
 **Installation:**
 1. Download the latest release from [releases](https://github.com/SP-SoftFuzz/OptiHeat/releases/).
@@ -37,7 +42,7 @@ OptiHeat simplifies the integration of heat demand and electricity prices, makin
 
 ## Contributing 🤝
 
-For a smooth collaboration process, please use GitHub Desktop:
+For a smooth collaboration process, please use [GitHub Desktop](https://desktop.github.com/):
 
 1. **Clone:** Open GitHub Desktop, `File > Clone Repository`, paste
 ```
@@ -52,7 +57,7 @@ https://github.com/SP-SoftFuzz/OptiHeat/
 
 ## Built With 🛠️
 
-- [Avalonia UI](https://avaloniaui.net/) - A cross-platform XAML framework.
+- [Avalonia UI](https://avaloniaui.net/) - A cross-platform XAML framework. Use Visual Studio Code with the Avalonia extension for the best development experience.
 
 ## License 📝
 
