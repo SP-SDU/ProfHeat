@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OptiHeat.Models;
+﻿namespace OptiHeat.Models;
 
 public class ProductionUnitModel
 {
     public int Id { get; set; } // Unit Id
-    public string Name { get; set; } // Unit name
+    public string? Name { get; set; } // Unit name
     public ProductionUnitType Type { get; set; } // Type of unit
     public double MaximumOutput { get; set; } // MWh
     public double MinimumOutput { get; set; } // MWh
