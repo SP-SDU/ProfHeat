@@ -52,6 +52,7 @@ https://github.com/SP-SoftFuzz/OptiHeat/
 4. **Commit:** In the `Summary (required)` field of GitHub Desktop, prepend your commit message with the Jira issue key (e.g., `SCRUM-123: Add login feature`) and click `Commit`.
 
 ![issue key Example](images/issue-key.png)
+
 5. **Push:** Click `Push origin` to upload your changes to GitHub.
 6. **Pull Request:** On GitHub, `New pull request` against `main`, fill details, and create.
 7. **Request a review** from a teammate by tagging them in your pull request.
