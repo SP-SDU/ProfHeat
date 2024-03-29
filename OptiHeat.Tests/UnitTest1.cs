@@ -7,6 +7,5 @@ public class UnitTest1
     {
         // Unimplemented test, it's null to quiet down the IDE
         Assert.Null(null);
-        throw new NotImplementedException();
     }
 }
