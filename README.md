@@ -43,19 +43,22 @@ dotnet new install Avalonia.Templates
 
 For a smooth collaboration process, please use [GitHub Desktop](https://desktop.github.com/):
 
-1. **Clone:** Open GitHub Desktop, `File > Clone Repository`, paste
-```
-https://github.com/SP-SoftFuzz/OptiHeat/
-```
+1. **Clone:** Open GitHub Desktop, go to `File > Clone Repository`, and paste:
+   ```
+   https://github.com/SP-SoftFuzz/OptiHeat/
+   ```
 2. **Branch:** Switch to `dev` using the branch switcher.
 3. **Review:** Carefully review your changes to ensure accuracy and completeness.
-4. **Commit:** In the `Summary (required)` field of GitHub Desktop, prepend your commit message with the Jira issue key (e.g., `SCRUM-123: Add login feature`) and click `Commit`.
+4. **Commit:** Enter your commit message in the `Summary (required)` field and click `Commit`.
 
-![issue key Example](images/issue-key.png)
+   ![Commit Example](images/commit-example.png)
 
 5. **Push:** Click `Push origin` to upload your changes to GitHub.
-6. **Pull Request:** On GitHub, `New pull request` against `main`, fill details, and create.
-7. **Request a review** from a teammate by tagging them in your pull request.
+6. **Pull Request:** On GitHub, create a `New pull request` against `main`. **Include the Jira issue key in the `title` of your pull request**, e.g., `SCRUM-123: Added feature`, fill in the details, and submit.
+
+   ![issue key Example](images/issue-key.png)
+
+7. **Request a Review:** Tag a teammate in your pull request for a review.
 
 ## Project Management 🗂️
 
