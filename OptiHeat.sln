@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptiHeat", "OptiHeat\OptiHeat.csproj", "{1882C006-9192-456F-9FF1-B034BFCB31BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptiHeat", "OptiHeat\OptiHeat.csproj", "{1882C006-9192-456F-9FF1-B034BFCB31BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptiHeat.Tests", "OptiHeat.Tests\OptiHeat.Tests.csproj", "{B2D44B15-07DD-437B-939D-8446E8D07140}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1882C006-9192-456F-9FF1-B034BFCB31BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1882C006-9192-456F-9FF1-B034BFCB31BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1882C006-9192-456F-9FF1-B034BFCB31BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2D44B15-07DD-437B-939D-8446E8D07140}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2D44B15-07DD-437B-939D-8446E8D07140}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2D44B15-07DD-437B-939D-8446E8D07140}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2D44B15-07DD-437B-939D-8446E8D07140}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
