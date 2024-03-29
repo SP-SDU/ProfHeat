@@ -50,9 +50,6 @@ For a smooth collaboration process, please use [GitHub Desktop](https://desktop.
 2. **Branch:** Switch to `dev` using the branch switcher.
 3. **Review:** Carefully review your changes to ensure accuracy and completeness.
 4. **Commit:** Enter your commit message in the `Summary (required)` field and click `Commit`.
-
-   ![Commit Example](images/commit-example.png)
-
 5. **Push:** Click `Push origin` to upload your changes to GitHub.
 6. **Pull Request:** On GitHub, create a `New pull request` against `main`. **Include the Jira issue key in the `title` of your pull request**, e.g., `SCRUM-123: Added feature`, fill in the details, and submit.
 
