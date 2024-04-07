@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Avalonia.Controls;
+using ProfHeat.Models;
+using System.Collections.Generic;
 
-namespace ProfHeat.Views;
-
-public partial class OptimizerView : UserControl
+namespace ProfHeat.Interfaces;
+public interface IResultDataManager
 {
-    public OptimizerView() => InitializeComponent();
+    List<OptimizationResult> LoadOptimizationResults();
+    void SaveOptimizationResults(List<OptimizationResult> results);
 }

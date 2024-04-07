@@ -1,8 +1,7 @@
-  Models:
-- HeatingUnit
+Models:
+- ProductionUnit
   + Id: Guid
   + Name: string
-  + Type: Enum (Gas, Oil, Electric)
   + MaxHeat: double
   + ProductionCost: double
   + MaxElectricity: double
@@ -24,36 +23,39 @@
   + CO2Emissions: double
 
 - Optimizer (Business Logic/Model)
-  + Optimize(assets: List<HeatingUnit>, demands: List<HeatDemand>, prices: List<ElectricityPrice>): List<OptimizationResult>
+  + Optimize(assets: List<ProductionUnit>, demands: List<HeatDemand>, prices: List<ElectricityPrice>): List<OptimizationResult>
+  --> Interacts with: ProductionUnit, HeatDemand, ElectricityPrice, OptimizationResult
 
 Services: (Are named managers to keep consistency with the case)
 - AssetManager
-  --> Interacts with: CSVDataImportExportService
-  + GetAllHeatingUnits(): List<HeatingUnit>
-  + SaveHeatingUnit(unit: HeatingUnit): void
+  + LoadAssets(): List<ProductionUnit>
+  + SaveAssets(List<ProductionUnit> units): void
+  --> Uses: ProductionUnit
 
 - SourceDataManager
-  --> Interacts with: CSVDataImportExportService
-  + GetHeatDemand(): List<HeatDemand>
-  + GetElectricityPrice(): List<ElectricityPrice>
+  + LoadSourceData(): List<(HeatDemand, ElectricityPrice)>
+  + SaveSourceData(List<(HeatDemand demand, ElectricityPrice price)> data): void
+  --> Uses: HeatDemand, ElectricityPrice
 
 - ResultDataManager
-  --> Interacts with: CSVDataImportExportService
   + SaveOptimizationResults(results: List<OptimizationResult>): void
-  + GetOptimizationResults(): List<OptimizationResult>
+  + LoadOptimizationResults(): List<OptimizationResult>
+  --> Uses: OptimizationResult
 
 ViewModels:
 - OptimizerViewModel
-  --> Uses: AssetService, SourceDataService, ResultDataService, Optimizer
+  --> Uses: AssetManager, SourceDataManager, ResultDataManager, Optimizer
   + OptimizationResults: ObservableCollection<OptimizationResult>
   + OptimizeCommand(): void
+  --> Binds to: OptimizationResult
 
 - DataVisualizerViewModel
-  --> Uses: SourceDataService
+  --> Uses: SourceDataManager
   Inherits: ViewModelBase
   + HeatDemands: ObservableCollection<HeatDemand>
   + ElectricityPrices: ObservableCollection<ElectricityPrice>
   + LoadDataCommand(): void
+  --> Binds to: HeatDemand, ElectricityPrice
 
 Views:
 - OptimizerView

@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using ProfHeat.Models;
 using System.Collections.Generic;
 
 namespace ProfHeat.Interfaces;
 
-public interface IDataService
+public interface ISourceDataManager
 {
-
+    List<(HeatDemand, ElectricityPrice)> LoadSourceData();
+    void SaveSourceData(List<(HeatDemand demand, ElectricityPrice price)> data);
 }

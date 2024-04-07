@@ -18,8 +18,5 @@ namespace ProfHeat.Views;
 
 public partial class DataVisualizerView : UserControl
 {
-    public DataVisualizerView()
-    {
-        InitializeComponent();
-    }
+    public DataVisualizerView() => InitializeComponent();
 }
