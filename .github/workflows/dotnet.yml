@@ -20,17 +20,19 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
-    - name: Restore dependencies (OptiHeat)
-      run: dotnet restore
-      working-directory: OptiHeat
 
-    - name: Build (OptiHeat)
+    - name: Restore dependencies (ProfHeat)
+      run: dotnet restore
+      working-directory: src/ProfHeat
+
+    - name: Build (ProfHeat)
       run: dotnet build --no-restore
-      working-directory: OptiHeat
+      working-directory: src/ProfHeat
 
-    - name: Restore dependencies (OptiHeat.Tests)
+    - name: Restore dependencies (ProfHeat.Tests)
       run: dotnet restore
-      working-directory: OptiHeat.Tests
-    - name: Test (OptiHeat.Tests)
+      working-directory: src/ProfHeat.Tests
+
+    - name: Test (ProfHeat.Tests)
       run: dotnet test
-      working-directory: OptiHeat.Tests
+      working-directory: src/ProfHeat.Tests

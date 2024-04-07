@@ -1,11 +1,11 @@
 <!-- PROJECT LOGO -->
 <div align="center">
   <img src="images/icon.svg" alt="Logo" width="256" height="256">
-  <h3 align="center">OptiHeat</h3>
+  <h3 align="center">ProfHeat</h3>
   <p align="center">
     Optimize heat demand and electricity price integration with ease.
     <br />
-    <a href="https://github.com/SP-SoftFuzz/OptiHeat"><strong>View Project »</strong></a>
+    <a href="https://github.com/SP-SoftFuzz/ProfHeat"><strong>View Project »</strong></a>
     <br />
     <br />
     <a href="https://softfuzz.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog">Report Bug</a>
@@ -16,7 +16,7 @@
 
 ## About The Project 🌐
 
-OptiHeat simplifies the integration of heat demand and electricity prices, making complex calculations and decision-making processes more straightforward. Designed for efficiency and ease of use, OptiHeat is the go-to application for optimizing your assets.
+ProfHeat simplifies the integration of heat demand and electricity prices, making complex calculations and decision-making processes more straightforward. Designed for efficiency and ease of use, ProfHeat is the go-to application for optimizing your assets.
 
 ## Key Features 💡
 
@@ -36,7 +36,7 @@ dotnet new install Avalonia.Templates
 - For editing Avalonia UI projects in Visual Studio Code, install the [Avalonia for Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=AvaloniaTeam.vscode-avalonia).
 
 **Installation:**
-1. Download the latest release from [releases](https://github.com/SP-SoftFuzz/OptiHeat/releases/).
+1. Download the latest release from [releases](https://github.com/SP-SoftFuzz/ProfHeat/releases/).
 2. Follow the installation guide provided with the release.
 
 ## Contributing 🤝
@@ -45,7 +45,7 @@ For a smooth collaboration process, please use [GitHub Desktop](https://desktop.
 
 1. **Clone:** Open GitHub Desktop, go to `File > Clone Repository`, and paste:
    ```
-   https://github.com/SP-SoftFuzz/OptiHeat/
+   https://github.com/SP-SoftFuzz/ProfHeat/
    ```
 2. **Branch:** Switch to `dev` using the branch switcher.
 3. **Review:** Carefully review your changes to ensure accuracy and completeness.
@@ -56,6 +56,10 @@ For a smooth collaboration process, please use [GitHub Desktop](https://desktop.
    ![issue key Example](images/issue-key.png)
 
 7. **Request a Review:** Tag a teammate in your pull request for a review.
+
+## Style Guide 📚
+
+For the `src` directory, adhere to the standards set in [Google's C# Style Guide](https://google.github.io/styleguide/csharp-style.html), use `var` for variable declarations when the type is clear, and write namespaces using a semicolon, which overrides Google's guidelines. The root directory will follow the [universal GitHub folder structure conventions](https://github.com/kriasoft/Folder-Structure-Conventions). To automatically apply the style use the [editorconfig extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 
 ## Project Management 🗂️
 
@@ -73,4 +77,4 @@ This project is distributed under the Apache 2.0 License. See `LICENSE` for more
 
 ## Contact 📧
 
-For inquiries, please visit our [GitHub page](https://github.com/SP-SoftFuzz/OptiHeat).
+For inquiries, please visit our [GitHub page](https://github.com/SP-SoftFuzz/ProfHeat).
