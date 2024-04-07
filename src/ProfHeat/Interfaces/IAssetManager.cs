@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
+using ProfHeat.Models;
 using System.Collections.Generic;
-using ProfHeat.Interfaces;
 
-namespace OptiHeat.Services;
+namespace ProfHeat.Interfaces;
 
-public class CsvDataService : IDataService
+public interface IAssetManager
 {
-    
+    List<ProductionUnit> LoadAssets();
+    void SaveAssets(List<ProductionUnit> units);
 }

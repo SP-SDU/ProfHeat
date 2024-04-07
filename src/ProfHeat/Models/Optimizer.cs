@@ -18,10 +18,10 @@ using System.Linq;
 
 namespace ProfHeat.Models;
 
-public class Optimizer
+public static class Optimizer
 {
-    public List<OptimizationResult> Optimize(
-        List<HeatingUnit> assets,
+    public static List<OptimizationResult> Optimize(
+        List<ProductionUnit> assets,
         List<HeatDemand> demands,
         List<ElectricityPrice> prices)
     {
@@ -47,19 +47,15 @@ public class Optimizer
             foreach (var asset in orderedAssets)
             {
                 if (remainingDemand <= 0)
+                {
                     break;
+                }
 
                 var productionAmount = Math.Min(asset.MaxHeat, remainingDemand);
                 var cost = productionAmount * asset.ProductionCost;
                 var profit = (productionAmount * currentPrice) - cost;
 
-                optimizationResults.Add(new OptimizationResult
-                {
-                    Time = demand.Time,
-                    OptimizedHeat = productionAmount,
-                    OptimizedCosts = cost,
-                    CO2Emissions = productionAmount * asset.CO2Emission
-                });
+                optimizationResults.Add(new OptimizationResult(demand.Time, productionAmount, cost, productionAmount * asset.CO2Emission));
 
                 remainingDemand -= productionAmount;
             }

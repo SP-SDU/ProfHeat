@@ -16,10 +16,10 @@ using System;
 
 namespace ProfHeat.Models;
 
-public class OptimizationResult
+public class OptimizationResult(DateTime time, double optimizedHeat, double optimizedCosts, double co2Emissions)
 {
-    public DateTime Time { get; set; } // The time of the optimization result
-    public double OptimizedHeat { get; set; } // Optimized heat production in MWh
-    public double OptimizedCosts { get; set; } // Optimized production costs
-    public double CO2Emissions { get; set; } // CO2 emissions after optimization in kg
+    public DateTime Time { get; set; } = time; // The time of the optimization result
+    public double OptimizedHeat { get; set; } = optimizedHeat; // Optimized heat production in MWh
+    public double OptimizedCosts { get; set; } = optimizedCosts; // Optimized production costs
+    public double CO2Emissions { get; set; } = co2Emissions; // CO2 emissions after optimization in kg
 }

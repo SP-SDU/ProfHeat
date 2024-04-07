@@ -16,8 +16,8 @@ using System;
 
 namespace ProfHeat.Models;
 
-public class HeatDemand
+public class HeatDemand(DateTime time, double demandValue)
 {
-    public DateTime Time { get; set; } // The time of the demand
-    public double DemandValue { get; set; } // The value of the heat demand in MWh
+    public DateTime Time { get; set; } = time; // The time of the demand
+    public double DemandValue { get; set; } = demandValue; // The value of the heat demand in MWh
 }

@@ -1,0 +1,5 @@
+Name,MaxHeat,ProductionCost,CO2Emission,GasConsumption,MaxElectricity
+GB,5.0,500,215,1.1,
+OB,4.0,700,265,1.2,
+GM,3.6,1100,640,1.9,2.7
+EK,8.0,50,,,-8.0

@@ -16,8 +16,8 @@ using System;
 
 namespace ProfHeat.Models;
 
-public class ElectricityPrice
+public class ElectricityPrice(DateTime time, double price)
 {
-    public DateTime Time { get; set; } // The time of the price
-    public double Price { get; set; } // The price of electricity per MWh
+    public DateTime Time { get; set; } = time; // The time of the price
+    public double Price { get; set; } = price; // The price of electricity per MWh
 }

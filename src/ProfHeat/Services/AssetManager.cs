@@ -12,14 +12,48 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
+using ProfHeat.Interfaces;
+using ProfHeat.Models;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ProfHeat.Services;
 
-public class AssetManager
+public class AssetManager(string filePath) : IAssetManager
 {
+    private readonly char _delimiter = CultureInfo.CurrentCulture.TextInfo.ListSeparator[0];
+
+    public List<ProductionUnit> LoadAssets()
+    {
+        var units = new List<ProductionUnit>();
+        foreach (var line in File.ReadAllLines(filePath).Skip(1).ToList()) // Skip the header line
+        {
+            var columns = line.Split(_delimiter);
+            var unit = new ProductionUnit(
+                columns[0].Trim(),
+                double.Parse(columns[1].Trim(), CultureInfo.InvariantCulture),
+                double.Parse(columns[2].Trim(), CultureInfo.InvariantCulture),
+                double.Parse(columns[3].Trim(), CultureInfo.InvariantCulture),
+                double.Parse(columns[4].Trim(), CultureInfo.InvariantCulture),
+                double.Parse(columns[5].Trim(), CultureInfo.InvariantCulture));
+
+            units.Add(unit);
+        }
+
+        return units;
+    }
+
+    public void SaveAssets(List<ProductionUnit> units)
+    {
+        var sb = new StringBuilder("Name,Type,MaxHeat,ProductionCost,CO2Emission,GasConsumption,MaxElectricity\n");
+        foreach (var unit in units)
+        {
+            _ = sb.AppendLine($"{unit.Name}{_delimiter}{unit.MaxHeat}{_delimiter}{unit.ProductionCost}{_delimiter}{unit.CO2Emission}{_delimiter}{unit.GasConsumption}{_delimiter}{unit.MaxElectricity}");
+        }
+
+        File.WriteAllText(filePath, sb.ToString());
+    }
 }
