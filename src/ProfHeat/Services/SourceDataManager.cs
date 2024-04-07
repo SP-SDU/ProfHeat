@@ -31,7 +31,7 @@ public class SourceDataManager(string filePath) : ISourceDataManager
     public List<(HeatDemand, ElectricityPrice)> LoadSourceData()
     {
         var data = new List<(HeatDemand, ElectricityPrice)>();
-        foreach (var line in File.ReadAllLines(filePath).Skip(4).ToList()) // Skips the headers.
+        foreach (var line in File.ReadAllLines(filePath).Skip(1).ToList()) // Skips the headers.
         {
             var columns = line.Split(_delimiter);
 
@@ -54,7 +54,7 @@ public class SourceDataManager(string filePath) : ISourceDataManager
     public void SaveSourceData(List<(HeatDemand demand, ElectricityPrice price)> data)
     {
         var csv = new StringBuilder();
-        _ = csv.AppendLine($"Time from{_delimiter}Time to{_delimiter}Heat Demand{_delimiter}Electricity Price");
+        _ = csv.AppendLine($"Time from (DKK local time){_delimiter}Time to (DKK local time){_delimiter}Heat Demand (MWh){_delimiter}Electricity Price (DKK / Mwh el)");
 
         foreach (var (demand, price) in data)
         {

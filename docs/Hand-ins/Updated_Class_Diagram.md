@@ -1,4 +1,4 @@
-  Models:
+Models:
 - ProductionUnit
   + Id: Guid
   + Name: string
@@ -24,32 +24,38 @@
 
 - Optimizer (Business Logic/Model)
   + Optimize(assets: List<ProductionUnit>, demands: List<HeatDemand>, prices: List<ElectricityPrice>): List<OptimizationResult>
+  --> Interacts with: ProductionUnit, HeatDemand, ElectricityPrice, OptimizationResult
 
 Services: (Are named managers to keep consistency with the case)
 - AssetManager
   + LoadAssets(): List<ProductionUnit>
   + SaveAssets(List<ProductionUnit> units): void
+  --> Uses: ProductionUnit
 
 - SourceDataManager
   + LoadSourceData(): List<(HeatDemand, ElectricityPrice)>
   + SaveSourceData(List<(HeatDemand demand, ElectricityPrice price)> data): void
+  --> Uses: HeatDemand, ElectricityPrice
 
 - ResultDataManager
   + SaveOptimizationResults(results: List<OptimizationResult>): void
   + LoadOptimizationResults(): List<OptimizationResult>
+  --> Uses: OptimizationResult
 
 ViewModels:
 - OptimizerViewModel
-  --> Uses: AssetService, SourceDataService, ResultDataService, Optimizer
+  --> Uses: AssetManager, SourceDataManager, ResultDataManager, Optimizer
   + OptimizationResults: ObservableCollection<OptimizationResult>
   + OptimizeCommand(): void
+  --> Binds to: OptimizationResult
 
 - DataVisualizerViewModel
-  --> Uses: SourceDataService
+  --> Uses: SourceDataManager
   Inherits: ViewModelBase
   + HeatDemands: ObservableCollection<HeatDemand>
   + ElectricityPrices: ObservableCollection<ElectricityPrice>
   + LoadDataCommand(): void
+  --> Binds to: HeatDemand, ElectricityPrice
 
 Views:
 - OptimizerView
