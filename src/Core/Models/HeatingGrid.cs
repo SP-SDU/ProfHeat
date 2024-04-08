@@ -12,10 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Xml.Serialization;
+
 namespace ProfHeat.Core.Models;
 
-public class ElectricityPrice(DateTime time, double price)
+[XmlRoot("HeatingGrid")]
+public class HeatingGrid(string name, string imagePath)
 {
-    public DateTime Time { get; set; } = time; // The time of the price
-    public double Price { get; set; } = price; // The price of electricity per MWh
+    [XmlElement("Name")]
+    public string Name { get; set; } = name;
+
+    [XmlElement("ImagePath")]
+    public string ImagePath { get; set; } = imagePath;
 }

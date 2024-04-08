@@ -18,6 +18,6 @@ namespace ProfHeat.Core.Interfaces;
 
 public interface ISourceDataManager
 {
-    List<(HeatDemand, ElectricityPrice)> LoadSourceData();
-    void SaveSourceData(List<(HeatDemand demand, ElectricityPrice price)> data);
+    List<SourceData> LoadSourceData();
+    void SaveSourceData(List<SourceData> data);
 }

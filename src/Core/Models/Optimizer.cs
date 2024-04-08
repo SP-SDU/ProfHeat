@@ -16,42 +16,37 @@ namespace ProfHeat.Core.Models;
 
 public static class Optimizer
 {
-    public static List<OptimizationResult> Optimize(
-        List<ProductionUnit> assets,
-        List<HeatDemand> demands,
-        List<ElectricityPrice> prices)
+    public static List<ResultData> Optimize(List<ProductionUnit> units, List<SourceData> sourceData)
     {
-        var optimizationResults = new List<OptimizationResult>();
+        var optimizationResults = new List<ResultData>();
 
-        foreach (var demand in demands)
+        foreach (var data in sourceData)
         {
-            var currentPrice = prices.Find(p => p.Time == demand.Time)?.Price ?? 0;
+            // Calculate profit potential for each unit based on current electricity price and cost
+            var orderedUnits = units.Select(unit => new
+            {
+                Unit = unit,
+                ProfitPotential = data.ElectricityPrice - unit.ProductionCost
+            })
+                .Where(a => a.ProfitPotential > 0)          // Only consider units that can generate profit
+                .OrderByDescending(a => a.ProfitPotential)  // Order by profit potential for efficiency
+                .Select(a => a.Unit);
 
-            // Calculate profit potential for each asset based on current electricity price and cost
-            var orderedAssets = assets
-                .Select(asset => new
-                {
-                    Asset = asset,
-                    ProfitPerMWh = currentPrice - asset.ProductionCost // Assuming electricity price applies to all unit types
-                })
-                .Where(a => a.ProfitPerMWh > 0) // Only consider assets that can generate profit
-                .OrderByDescending(a => a.ProfitPerMWh)
-                .Select(a => a.Asset);
+            var remainingDemand = data.HeatDemand;
 
-            var remainingDemand = demand.DemandValue;
-
-            foreach (var asset in orderedAssets)
+            foreach (var unit in orderedUnits)
             {
                 if (remainingDemand <= 0)
                 {
                     break;
                 }
 
-                var productionAmount = Math.Min(asset.MaxHeat, remainingDemand);
-                var cost = productionAmount * asset.ProductionCost;
-                // var profit = (productionAmount * currentPrice) - cost; // The user needs to know their profits, so maybe add to optimization result (check case)
+                var productionAmount = Math.Min(unit.MaxHeat, remainingDemand);
+                var cost = productionAmount * unit.ProductionCost;
+                var co2Emissions = productionAmount * unit.CO2Emission;
+                var consumption = productionAmount * unit.GasConsumption; // Calculate energy consumption based on gas consumption
 
-                optimizationResults.Add(new OptimizationResult(demand.Time, productionAmount, cost, productionAmount * asset.CO2Emission));
+                optimizationResults.Add(new ResultData(data.TimeFrom, data.TimeTo, productionAmount, consumption, cost, co2Emissions));
 
                 remainingDemand -= productionAmount;
             }

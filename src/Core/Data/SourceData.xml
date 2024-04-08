@@ -1,0 +1,171 @@
+<?xml version="1.0" ?>
+<ArrayOfSourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 00:00</TimeFrom>
+    <TimeTo>08/02/2023 01:00</TimeTo>
+    <HeatDemand>6.62</HeatDemand>
+    <ElectricityPrice>1190.94</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 01:00</TimeFrom>
+    <TimeTo>08/02/2023 02:00</TimeTo>
+    <HeatDemand>6.85</HeatDemand>
+    <ElectricityPrice>1154.55</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 02:00</TimeFrom>
+    <TimeTo>08/02/2023 03:00</TimeTo>
+    <HeatDemand>6.98</HeatDemand>
+    <ElectricityPrice>1116.22</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 03:00</TimeFrom>
+    <TimeTo>08/02/2023 04:00</TimeTo>
+    <HeatDemand>7.04</HeatDemand>
+    <ElectricityPrice>1101.12</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 04:00</TimeFrom>
+    <TimeTo>08/02/2023 05:00</TimeTo>
+    <HeatDemand>7.72</HeatDemand>
+    <ElectricityPrice>1086.24</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 05:00</TimeFrom>
+    <TimeTo>08/02/2023 06:00</TimeTo>
+    <HeatDemand>7.85</HeatDemand>
+    <ElectricityPrice>1109.53</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 06:00</TimeFrom>
+    <TimeTo>08/02/2023 07:00</TimeTo>
+    <HeatDemand>8.15</HeatDemand>
+    <ElectricityPrice>1307.40</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 07:00</TimeFrom>
+    <TimeTo>08/02/2023 08:00</TimeTo>
+    <HeatDemand>7.62</HeatDemand>
+    <ElectricityPrice>1463.30</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 08:00</TimeFrom>
+    <TimeTo>08/02/2023 09:00</TimeTo>
+    <HeatDemand>7.55</HeatDemand>
+    <ElectricityPrice>1608.78</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 09:00</TimeFrom>
+    <TimeTo>08/02/2023 10:00</TimeTo>
+    <HeatDemand>7.60</HeatDemand>
+    <ElectricityPrice>1309.70</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 10:00</TimeFrom>
+    <TimeTo>08/02/2023 11:00</TimeTo>
+    <HeatDemand>7.75</HeatDemand>
+    <ElectricityPrice>952.51</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 11:00</TimeFrom>
+    <TimeTo>08/02/2023 12:00</TimeTo>
+    <HeatDemand>7.06</HeatDemand>
+    <ElectricityPrice>882.93</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 12:00</TimeFrom>
+    <TimeTo>08/02/2023 13:00</TimeTo>
+    <HeatDemand>6.68</HeatDemand>
+    <ElectricityPrice>860.31</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 13:00</TimeFrom>
+    <TimeTo>08/02/2023 14:00</TimeTo>
+    <HeatDemand>6.73</HeatDemand>
+    <ElectricityPrice>854.88</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 14:00</TimeFrom>
+    <TimeTo>08/02/2023 15:00</TimeTo>
+    <HeatDemand>6.84</HeatDemand>
+    <ElectricityPrice>850.12</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 15:00</TimeFrom>
+    <TimeTo>08/02/2023 16:00</TimeTo>
+    <HeatDemand>7.30</HeatDemand>
+    <ElectricityPrice>933.09</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 16:00</TimeFrom>
+    <TimeTo>08/02/2023 17:00</TimeTo>
+    <HeatDemand>7.39</HeatDemand>
+    <ElectricityPrice>953.26</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 17:00</TimeFrom>
+    <TimeTo>08/02/2023 18:00</TimeTo>
+    <HeatDemand>7.68</HeatDemand>
+    <ElectricityPrice>951.10</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 18:00</TimeFrom>
+    <TimeTo>08/02/2023 19:00</TimeTo>
+    <HeatDemand>7.38</HeatDemand>
+    <ElectricityPrice>765.21</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 19:00</TimeFrom>
+    <TimeTo>08/02/2023 20:00</TimeTo>
+    <HeatDemand>7.40</HeatDemand>
+    <ElectricityPrice>716.47</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 20:00</TimeFrom>
+    <TimeTo>08/02/2023 21:00</TimeTo>
+    <HeatDemand>7.56</HeatDemand>
+    <ElectricityPrice>696.30</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 21:00</TimeFrom>
+    <TimeTo>08/02/2023 22:00</TimeTo>
+    <HeatDemand>7.69</HeatDemand>
+    <ElectricityPrice>665.34</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 22:00</TimeFrom>
+    <TimeTo>08/02/2023 23:00</TimeTo>
+    <HeatDemand>7.66</HeatDemand>
+    <ElectricityPrice>663.56</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>08/02/2023 23:00</TimeFrom>
+    <TimeTo>09/02/2023 00:00</TimeTo>
+    <HeatDemand>7.54</HeatDemand>
+    <ElectricityPrice>636.77</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>09/02/2023 00:00</TimeFrom>
+    <TimeTo>09/02/2023 01:00</TimeTo>
+    <HeatDemand>7.58</HeatDemand>
+    <ElectricityPrice>615.31</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>14/07/2023 21:00</TimeFrom>
+    <TimeTo>14/07/2023 22:00</TimeTo>
+    <HeatDemand>1.57</HeatDemand>
+    <ElectricityPrice>929.40</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>14/07/2023 22:00</TimeFrom>
+    <TimeTo>14/07/2023 23:00</TimeTo>
+    <HeatDemand>1.55</HeatDemand>
+    <ElectricityPrice>714.38</ElectricityPrice>
+  </SourceData>
+  <SourceData>
+    <TimeFrom>14/07/2023 23:00</TimeFrom>
+    <TimeTo>15/07/2023 00:00</TimeTo>
+    <HeatDemand>1.62</HeatDemand>
+    <ElectricityPrice>607.05</ElectricityPrice>
+  </SourceData>
+</ArrayOfSourceData>

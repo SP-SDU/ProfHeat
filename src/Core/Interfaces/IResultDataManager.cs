@@ -23,6 +23,6 @@ namespace ProfHeat.Core.Interfaces;
 
 public interface IResultDataManager
 {
-    List<OptimizationResult> LoadOptimizationResults();
-    void SaveOptimizationResults(List<OptimizationResult> results);
+    List<ResultData> LoadResultData();
+    void SaveResultData(List<ResultData> data);
 }
