@@ -21,18 +21,34 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Restore dependencies (ProfHeat)
+    - name: Restore dependencies (Core)
       run: dotnet restore
-      working-directory: src/ProfHeat
+      working-directory: src/Core
 
-    - name: Build (ProfHeat)
+    - name: Build (Core)
       run: dotnet build --no-restore
-      working-directory: src/ProfHeat
+      working-directory: src/Core
 
-    - name: Restore dependencies (ProfHeat.Tests)
+    - name: Restore dependencies (GUI)
       run: dotnet restore
-      working-directory: src/ProfHeat.Tests
+      working-directory: src/GUI
 
-    - name: Test (ProfHeat.Tests)
+    - name: Build (GUI)
+      run: dotnet build --no-restore
+      working-directory: src/GUI
+
+    - name: Restore dependencies (Core.Tests)
+      run: dotnet restore
+      working-directory: tests/Core.Tests
+
+    - name: Test (Core.Tests)
       run: dotnet test
-      working-directory: src/ProfHeat.Tests
+      working-directory: tests/Core.Tests
+
+    - name: Restore dependencies (GUI.Tests)
+      run: dotnet restore
+      working-directory: tests/GUI.Tests
+
+    - name: Test (GUI.Tests)
+      run: dotnet test
+      working-directory: tests/GUI.Tests
