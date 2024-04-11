@@ -21,34 +21,52 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Restore dependencies (Core)
+      # Source:
+    - name: Restore dependencies (ProfHeat.Core)
       run: dotnet restore
-      working-directory: src/Core
+      working-directory: src/ProfHeat.Core
 
-    - name: Build (Core)
+    - name: Build (ProfHeat.Core)
       run: dotnet build --no-restore
-      working-directory: src/Core
+      working-directory: src/ProfHeat.Core
 
-    - name: Restore dependencies (GUI)
+    - name: Restore dependencies (ProfHeat.DAL)
       run: dotnet restore
-      working-directory: src/GUI
+      working-directory: src/ProfHeat.DAL
 
-    - name: Build (GUI)
+    - name: Build (ProfHeat.DAL)
       run: dotnet build --no-restore
-      working-directory: src/GUI
+      working-directory: src/ProfHeat.DAL
 
-    - name: Restore dependencies (Core.Tests)
+    - name: Restore dependencies (ProfHeat.AUI)
       run: dotnet restore
-      working-directory: tests/Core.Tests
+      working-directory: src/ProfHeat.AUI
 
-    - name: Test (Core.Tests)
-      run: dotnet test
-      working-directory: tests/Core.Tests
+    - name: Build (ProfHeat.AUI)
+      run: dotnet build --no-restore
+      working-directory: src/ProfHeat.AUI
 
-    - name: Restore dependencies (GUI.Tests)
+      # Tests:
+    - name: Restore dependencies (ProfHeat.Core.Tests)
       run: dotnet restore
-      working-directory: tests/GUI.Tests
+      working-directory: tests/ProfHeat.Core.Tests
 
-    - name: Test (GUI.Tests)
+    - name: Test (ProfHeat.Core.Tests)
       run: dotnet test
-      working-directory: tests/GUI.Tests
+      working-directory: tests/ProfHeat.Core.Tests
+
+    - name: Restore dependencies (ProfHeat.DAL.Tests)
+      run: dotnet restore
+      working-directory: tests/ProfHeat.DAL.Tests
+
+    - name: Test (ProfHeat.DAL.Tests)
+      run: dotnet test
+      working-directory: tests/ProfHeat.DAL.Tests
+
+    - name: Restore dependencies (ProfHeat.AUI.Tests)
+      run: dotnet restore
+      working-directory: tests/ProfHeat.AUI.Tests
+
+    - name: Test (ProfHeat.AUI.Tests)
+      run: dotnet test
+      working-directory: tests/ProfHeat.AUI.Tests

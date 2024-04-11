@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<HeatingGrid>
+    <Name>Heatington</Name>
+    <ImagePath>Assets/Heatington.png</ImagePath>
+    <Buildings>1600</Buildings>
+    <ProductionUnits>
+        <ProductionUnit>
+            <Name>Gas Boiler</Name>
+            <ImagePath>Assets/GasBoiler.png</ImagePath>
+            <MaxHeat>5.00</MaxHeat>
+            <ProductionCost>500</ProductionCost>
+            <CO2Emissions>215</CO2Emissions>
+            <GasConsumption>1.01</GasConsumption>
+            <MaxElectricity>0</MaxElectricity>
+        </ProductionUnit>
+        <ProductionUnit>
+            <Name>Oil Boiler</Name>
+            <ImagePath>Assets/OilBoiler.png</ImagePath>
+            <MaxHeat>4.00</MaxHeat>
+            <ProductionCost>700</ProductionCost>
+            <CO2Emissions>265</CO2Emissions>
+            <GasConsumption>1.02</GasConsumption>
+            <MaxElectricity>0</MaxElectricity>
+        </ProductionUnit>
+        <ProductionUnit>
+            <Name>Gas Motor</Name>
+            <ImagePath>Assets/GasMotor.png</ImagePath>
+            <MaxHeat>3.06</MaxHeat>
+            <ProductionCost>1100</ProductionCost>
+            <CO2Emissions>640</CO2Emissions>
+            <GasConsumption>1.09</GasConsumption>
+            <MaxElectricity>2.07</MaxElectricity>
+        </ProductionUnit>
+        <ProductionUnit>
+            <Name>Electric Boiler</Name>
+            <ImagePath>Assets/ElectricBoiler.png</ImagePath>
+            <MaxHeat>8.00</MaxHeat>
+            <ProductionCost>50</ProductionCost>
+            <CO2Emissions>0</CO2Emissions>
+            <GasConsumption>0.00</GasConsumption>
+            <MaxElectricity>-8.0</MaxElectricity>
+        </ProductionUnit>
+    </ProductionUnits>
+</HeatingGrid>

@@ -42,24 +42,23 @@ dotnet new install Avalonia.Templates
 ## Contributing 🤝
 
 For a smooth collaboration process, please use [GitHub Desktop](https://desktop.github.com/):
+- **Note:**  Forking is creating a personal copy of the repository. It's used when you don't have write access to the repository.
 
 1. **Clone:** Open GitHub Desktop, go to `File > Clone Repository`, and paste:
    ```
    https://github.com/SP-SoftFuzz/ProfHeat/
    ```
-2. **Branch:** Switch to `dev` using the branch switcher.
-3. **Review:** Carefully review your changes to ensure accuracy and completeness.
-4. **Commit:** Enter your commit message in the `Summary (required)` field and click `Commit`.
-5. **Push:** Click `Push origin` to upload your changes to GitHub.
-6. **Pull Request:** On GitHub, create a `New pull request` against `main`. **Include the Jira issue key in the `title` of your pull request**, e.g., `SCRUM-123: Added feature`, fill in the details, and submit.
+2. **Branch**: Switch to `main` using the branch switcher, create a new branch for your feature. Name it after the JIRA issue key and feature, e.g., `SCRUM-123-Feature`.
+3. **Commit:** Enter your commit message in the `Summary (required)` field and click `Commit`.
+4. **Push:** Click `Push origin` to upload your changes to GitHub.
+5. **Pull Request:** On GitHub, create a `New pull request` against `main`. **Include the Jira issue key in the `title` of your pull request**, e.g., `SCRUM-123: Added feature`, fill in the details, and submit.
 
    ![issue key Example](images/issue-key.png)
 
-7. **Request a Review:** Tag a teammate in your pull request for a review.
+6. **Request a Review:** Tag a teammate in your pull request for a review.
+7. **Stacking:** Instead of waiting for approval, continue working on another feature based on your current feature work. On your **feature branch** (not main), create a new branch `Current Branch > New Branch` for the next feature, e.g., `SCRUM-124-NextFeature`.
 
-## Style Guide 📚
-
-For the `src` directory, adhere to the standards set in [Google's C# Style Guide](https://google.github.io/styleguide/csharp-style.html), use `var` for variable declarations when the type is clear, and write namespaces using a semicolon, which overrides Google's guidelines. The root directory will follow the [universal GitHub folder structure conventions](https://github.com/kriasoft/Folder-Structure-Conventions). To automatically apply the style use the [editorconfig extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for more details.
 
 ## Project Management 🗂️
 
@@ -73,7 +72,7 @@ For the `src` directory, adhere to the standards set in [Google's C# Style Guide
 
 ## License 📝
 
-This project is distributed under the Apache 2.0 License. See `LICENSE` for more information.
+This project is distributed under the Apache 2.0 License. See [LICENSE](LICENSE) for more information.
 
 ## Contact 📧
 
