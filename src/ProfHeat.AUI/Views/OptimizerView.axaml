@@ -28,7 +28,7 @@
             <Button Content="Import"  Command="{Binding ImportCommand}" />
             <Button Content="Export" />
         </StackPanel>
-        <Button HorizontalAlignment="Center" Content="       Calculate" Width="134" />
+        <Button HorizontalAlignment="Center" Content="       Calculate" Width="134" Command="{Binding OptimizeCommand}"/>
     </StackPanel>
 
 </UserControl>

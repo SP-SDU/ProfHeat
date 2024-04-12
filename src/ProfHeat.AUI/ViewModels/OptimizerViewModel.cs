@@ -24,38 +24,60 @@ using ProfHeat.DAL.Repositories;
 using System;
 using System.Reactive.Linq;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
-namespace ProfHeat.AUI.ViewModels
+namespace ProfHeat.AUI.ViewModels;
+
+public class OptimizerViewModel : BaseViewModel
 {
-    public class OptimizerViewModel : BaseViewModel
+    private IAssetManager _assetManager { get; }
+    private ISourceDataManager _sourceDataManager { get; }
+    private readonly HeatingGrid _grid;                                     // Static grid (Display grid image in the UI)
+    private List<MarketCondition> _marketConditions = [];                   // Dynamic data
+
+    public ObservableCollection<CheckBoxItem> CheckBoxItems { get; set; }   // Note: Add the pictures from PU and display in the UI (And make the pictures)
+    public ObservableCollection<OptimizationResult> Results { get; set; } = [];
+
+    public Interaction<Unit, string[]> ShowOpenFileDialog { get; }
+    public ReactiveCommand<Unit, Unit> ImportCommand { get; }
+    public ReactiveCommand<Unit, Unit> OptimizeCommand { get;  }
+    public OptimizerViewModel()
     {
-        private IAssetManager _assetManager { get; }
-        private ISourceDataManager _sourceDataManager { get; }
-        public ObservableCollection<CheckBoxItem> CheckBoxItems { get; set; }
-        public ObservableCollection<MarketCondition> MarketConditions { get; set; }
+        _sourceDataManager = new SourceDataManager();
+        _assetManager = new AssetManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data/HeatingGrid.xml"));
+        _grid = _assetManager.LoadAssets();
+        CheckBoxItems = new ObservableCollection<CheckBoxItem>(_grid.ProductionUnits.Select(pu => new CheckBoxItem(pu.Name)));
 
-        // Define an Interaction for opening file dialogs
-        public Interaction<Unit, string[]> ShowOpenFileDialog { get; }
+        ShowOpenFileDialog = new Interaction<Unit, string[]>();
 
-        public ReactiveCommand<Unit, Unit> ImportCommand { get; }
-        public OptimizerViewModel()
+        ImportCommand = ReactiveCommand.CreateFromTask(ImportAsync);
+        OptimizeCommand = ReactiveCommand.Create(Optimize);
+    }
+
+    private async Task ImportAsync()
+    {
+        // Trigger the interaction
+        var filePath = await ShowOpenFileDialog.Handle(Unit.Default);
+
+        // Load the source data
+        _marketConditions = _sourceDataManager.LoadSourceData(filePath[0]);
+    }
+
+    private void Optimize()
+    {
+        // User selected units
+        var selectedUnits = CheckBoxItems.Where(cbi => cbi.IsChecked).Select(cbi => cbi.Name).ToList();
+        var newUnits = _grid.ProductionUnits.Where(pu => selectedUnits.Contains(pu.Name)).ToList();
+        var newGrid = new HeatingGrid
         {
-            _sourceDataManager = new SourceDataManager();
-            _assetManager = new AssetManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data/HeatingGrid.xml"));
-            var units = _assetManager.LoadAssets().ProductionUnits;
-            CheckBoxItems = new ObservableCollection<CheckBoxItem>(units.Select(pu => new CheckBoxItem(pu.Name)));
+            Buildings = _grid.Buildings,
+            ProductionUnits = newUnits
+        };
 
-            ShowOpenFileDialog = new Interaction<Unit, string[]>();
-
-            // Setup the ImportCommand to show the file dialog
-            ImportCommand = ReactiveCommand.CreateFromTask(async () =>
-            {
-                // Trigger the interaction
-                var filePath = await ShowOpenFileDialog.Handle(Unit.Default);
-
-                // Load the source data
-                MarketConditions = new ObservableCollection<MarketCondition>(_sourceDataManager.LoadSourceData(filePath[0]));
-            });
-        }
+        var optimizationResults = Optimizer.Optimize(newGrid, _marketConditions);
+        Results = new ObservableCollection<OptimizationResult>(optimizationResults);
+        // Need to prove that the optimization is working by displaying the results
+        // Turn them into a graph (which is why it is observable collection)
+        // And export the results to a file
     }
 }

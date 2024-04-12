@@ -22,4 +22,6 @@ namespace ProfHeat.AUI.ViewModels;
 
 public class DataVisualizerViewModel : BaseViewModel
 {
+    // Display data as graphs and charts
+    // Maybe an Import results button
 }
