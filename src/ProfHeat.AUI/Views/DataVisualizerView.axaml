@@ -12,6 +12,9 @@
         <vm:DataVisualizerViewModel/>
     </Design.DataContext>
 
-    <!-- Graphs Here -->
-
+    <StackPanel>
+        <TextBlock Text="Optimization Results:" />
+        <!-- Graphs Here -->
+        <Button Content="Export Results" />
+    </StackPanel>
 </UserControl>

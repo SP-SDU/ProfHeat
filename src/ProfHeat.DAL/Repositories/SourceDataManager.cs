@@ -20,7 +20,7 @@ using System.Xml.Serialization;
 
 namespace ProfHeat.DAL.Repositories;
 
-public class SourceDataManager() : ISourceDataManager
+public class SourceDataManager : ISourceDataManager
 {
     public List<MarketCondition> LoadSourceData(string filePath)
     {
@@ -37,4 +37,6 @@ public class SourceDataManager() : ISourceDataManager
         using var writer = new StreamWriter(filePath);
         serializer.Serialize(writer, data);
     }
+
+    // Note: Add method for api here
 }

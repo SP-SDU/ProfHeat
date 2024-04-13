@@ -39,7 +39,7 @@ public class OptimizerViewModel : BaseViewModel
     public ObservableCollection<OptimizationResult> Results { get; set; } = [];
 
     public Interaction<Unit, string[]> ShowOpenFileDialog { get; }
-    public ReactiveCommand<Unit, Unit> ImportCommand { get; }
+    public ReactiveCommand<Unit, Unit> ImportDataCommand { get; }
     public ReactiveCommand<Unit, Unit> OptimizeCommand { get;  }
     public OptimizerViewModel()
     {
@@ -50,11 +50,11 @@ public class OptimizerViewModel : BaseViewModel
 
         ShowOpenFileDialog = new Interaction<Unit, string[]>();
 
-        ImportCommand = ReactiveCommand.CreateFromTask(ImportAsync);
+        ImportDataCommand = ReactiveCommand.CreateFromTask(ImportDataAsync);
         OptimizeCommand = ReactiveCommand.Create(Optimize);
     }
 
-    private async Task ImportAsync()
+    private async Task ImportDataAsync()
     {
         // Trigger the interaction
         var filePath = await ShowOpenFileDialog.Handle(Unit.Default);
@@ -77,7 +77,7 @@ public class OptimizerViewModel : BaseViewModel
         var optimizationResults = Optimizer.Optimize(newGrid, _marketConditions);
         Results = new ObservableCollection<OptimizationResult>(optimizationResults);
         // Need to prove that the optimization is working by displaying the results
-        // Turn them into a graph (which is why it is observable collection)
-        // And export the results to a file
+        // Turn them into a graph in DV (which is why it is observable collection)
+        // And export the results to a file in DV (OpenFolderDialog)
     }
 }

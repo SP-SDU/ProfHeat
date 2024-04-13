@@ -17,6 +17,8 @@
 
     <StackPanel>
         <v:OptimizerView/>
+
+        <!-- Should be a different tab -->
         <v:DataVisualizerView/>
     </StackPanel>
 

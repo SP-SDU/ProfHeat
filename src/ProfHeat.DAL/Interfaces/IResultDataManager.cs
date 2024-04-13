@@ -23,6 +23,6 @@ namespace ProfHeat.DAL.Interfaces;
 
 public interface IResultDataManager
 {
-    List<OptimizationResult> LoadResultData();
-    void SaveResultData(List<OptimizationResult> data);
+    List<OptimizationResult> LoadResultData(string filePath);
+    void SaveResultData(List<OptimizationResult> data, string filePath);
 }

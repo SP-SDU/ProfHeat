@@ -20,9 +20,9 @@ using System.Xml.Serialization;
 
 namespace ProfHeat.DAL.Repositories;
 
-public class ResultDataManager(string filePath) : IResultDataManager
+public class ResultDataManager : IResultDataManager
 {
-    public List<OptimizationResult> LoadResultData()
+    public List<OptimizationResult> LoadResultData(string filePath)
     {
         var serializer = new XmlSerializer(typeof(List<OptimizationResult>));
         using var reader = new StreamReader(filePath);
@@ -31,7 +31,7 @@ public class ResultDataManager(string filePath) : IResultDataManager
         return result as List<OptimizationResult> ?? [];
     }
 
-    public void SaveResultData(List<OptimizationResult> data)
+    public void SaveResultData(List<OptimizationResult> data, string filePath)
     {
         var serializer = new XmlSerializer(typeof(List<OptimizationResult>));
         using var writer = new StreamWriter(filePath);
