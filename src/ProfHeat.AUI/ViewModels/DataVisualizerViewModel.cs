@@ -14,32 +14,27 @@
 
 using ProfHeat.Core.Models;
 using ReactiveUI;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ProfHeat.DAL.Interfaces;
 using ProfHeat.DAL.Repositories;
 using Avalonia.Platform.Storage;
+using System.IO;
+using System.Collections.ObjectModel;
 
 namespace ProfHeat.AUI.ViewModels;
 
 public class DataVisualizerViewModel : BaseViewModel
 {
-    private readonly IResultDataManager _ResultDataManager;
-
-    public ObservableCollection<OptimizationResult> Results { get; set; } = [];
+    private readonly IResultDataManager _ResultDataManager = new ResultDataManager();
+    private readonly ObservableCollection<OptimizationResult> _results;
 
     public ICommand ExportResultsCommand { get; }
-    // Display data as graphs and charts
-    // Maybe an Import results button
 
-    public DataVisualizerViewModel()
+    public DataVisualizerViewModel(ObservableCollection<OptimizationResult> results)
     {
-        _ResultDataManager = new ResultDataManager();
+        _results = results;
 
         ExportResultsCommand = ReactiveCommand.CreateFromTask(ExportResultsAsync);
     }
@@ -48,19 +43,32 @@ public class DataVisualizerViewModel : BaseViewModel
     {
         var options = new FilePickerSaveOptions
         {
-            SuggestedFileName = "Results",
+            SuggestedFileName = $"Results_{Path.GetRandomFileName()}",
             DefaultExtension = "xml",
+            FileTypeChoices = [
+                    new("XML Files")
+                    {
+                        Patterns = ["*.xml"],
+                        AppleUniformTypeIdentifiers = ["public.xml"],
+                        MimeTypes = ["application/xml", "text/xml"]
+                    }]
         };
 
-        var filePath = (await GetMainWindow().StorageProvider.SaveFilePickerAsync(options))!.TryGetLocalPath();
+        var files = await GetMainWindow().StorageProvider.SaveFilePickerAsync(options);
+
+        if (files == null)
+        {
+            return;
+        }
+
+        var filePath = files.TryGetLocalPath();
 
         if (filePath == null)
         {
             return;
         }
 
-        var results = new List<OptimizationResult>(Results);
-
+        var results = new List<OptimizationResult>(_results);
         _ResultDataManager.SaveResultData(results, filePath!);
     }
 }

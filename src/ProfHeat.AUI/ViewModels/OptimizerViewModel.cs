@@ -25,29 +25,30 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
 using System.Windows.Input;
-using ProfHeat.AUI.ViewModels;
 
 namespace ProfHeat.AUI.ViewModels;
 
 public class OptimizerViewModel : BaseViewModel
 {
-    private IAssetManager _assetManager { get; }
-    private ISourceDataManager _sourceDataManager { get; }
+    private readonly IAssetManager _assetManager =
+        new AssetManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "HeatingGrid.config"));
+    private readonly ISourceDataManager _sourceDataManager = new SourceDataManager();
     private readonly HeatingGrid _grid;                                     // Static grid (Display grid image in the UI)
-    private List<MarketCondition> _marketConditions = [];                   // Dynamic data
+    private readonly ObservableCollection<OptimizationResult> _results;
+    private List<MarketCondition> _marketConditions = [];                   // Dynamically loaded Market data
 
-    public ObservableCollection<CheckBoxItem> CheckBoxItems { get; set; }   // Note: Add the pictures from PU and display in the UI (And make the pictures)
-    public ObservableCollection<OptimizationResult> Results { get; set; } = [];
+    public ObservableCollection<CheckBoxItem> CheckBoxItems { get; }
 
     public ICommand ImportDataCommand { get; }
     public ICommand OptimizeCommand { get; }
-    public OptimizerViewModel()
+    public OptimizerViewModel(ObservableCollection<OptimizationResult> results)
     {
-        _sourceDataManager = new SourceDataManager();
-        _assetManager = new AssetManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "HeatingGrid.config"));
+        // Initialize fields
+        _results = results;
         _grid = _assetManager.LoadAssets();
         CheckBoxItems = new ObservableCollection<CheckBoxItem>(_grid.ProductionUnits.Select(pu => new CheckBoxItem(pu.Name)));
 
+        // Create commands
         ImportDataCommand = ReactiveCommand.CreateFromTask(ImportDataAsync);
         OptimizeCommand = ReactiveCommand.Create(Optimize);
     }
@@ -66,12 +67,12 @@ public class OptimizerViewModel : BaseViewModel
                     }]
         };
 
-        // Trigger the interaction
+        // Trigger file picker interaction
         var filePaths = (await GetMainWindow().StorageProvider.OpenFilePickerAsync(options))
             .Select(file => file.TryGetLocalPath())
             .ToArray();
 
-        if (filePaths == null || filePaths.Length == 0)
+        if (filePaths.Length == 0)
         {
             return;
         }
@@ -87,34 +88,23 @@ public class OptimizerViewModel : BaseViewModel
         var newUnits = _grid.ProductionUnits.Where(pu => selectedUnits.Contains(pu.Name)).ToList();
         var newGrid = new HeatingGrid
         {
+            Name = _grid.Name,
+            ImagePath = _grid.ImagePath,
             Buildings = _grid.Buildings,
             ProductionUnits = newUnits
         };
 
         var optimizationResults = Optimizer.Optimize(newGrid, _marketConditions);
 
-        // For testing, needs to be removed
-        ResultsText = string.Join("\n", optimizationResults.Select(result =>
-    $"Period: {result.TimeFrom} to {result.TimeTo}, " +
-    $"Produced Heat: {result.ProducedHeat} MWh, " +
-    $"Electricity Produced: {result.ElectricityProduced} MWh, " +
-    $"Primary Energy Consumption: {result.PrimaryEnergyConsumption} MWh, " +
-    $"Costs: {result.Costs} DKK, " +
-    $"CO2 Emissions: {result.CO2Emissions} kg")); // Update this when you have new results
-
-        if (optimizationResults == null || !optimizationResults.Any())
+        if (optimizationResults.Count == 0)
         {
             throw new InvalidOperationException("Optimization failed to produce any results.");
         }
 
-        Results = new ObservableCollection<OptimizationResult>(optimizationResults);
-
-    }
-
-    private string _resultsText;
-    public string ResultsText
-    {
-        get => _resultsText;
-        set => this.RaiseAndSetIfChanged(ref _resultsText, value);
+        _results.Clear();
+        foreach (var result in optimizationResults)
+        {
+            _results.Add(result);
+        }
     }
 }

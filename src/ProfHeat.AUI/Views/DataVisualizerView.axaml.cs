@@ -13,15 +13,10 @@
 // limitations under the License.
 
 using Avalonia.Controls;
-using ProfHeat.AUI.ViewModels;
 
 namespace ProfHeat.AUI.Views;
 
 public partial class DataVisualizerView : UserControl
 {
-    public DataVisualizerView()
-    {
-        InitializeComponent();
-        DataContext = new DataVisualizerViewModel();
-    }
+    public DataVisualizerView() => InitializeComponent();
 }

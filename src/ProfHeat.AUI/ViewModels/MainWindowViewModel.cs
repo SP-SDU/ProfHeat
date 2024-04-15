@@ -16,28 +16,30 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using ReactiveUI;
+using System.Collections.Generic;
 using System.Windows.Input;
+using ProfHeat.Core.Models;
+using System.Collections.ObjectModel;
 
 namespace ProfHeat.AUI.ViewModels;
 
 public class MainWindowViewModel : BaseViewModel
 {
-    public OptimizerViewModel Optimizer { get; } = new OptimizerViewModel();
+    public OptimizerViewModel Optimizer { get; }
+    public DataVisualizerViewModel DataVisualizer { get; }
 
-    public DataVisualizerViewModel DataVisualizer { get; } = new DataVisualizerViewModel();
+    public ObservableCollection<OptimizationResult> Results { get; set; } = [];
 
     public ICommand MinimizeCommand { get; }
     public ICommand MaximizeRestoreCommand { get; }
     public ICommand CloseCommand { get; }
-
     public MainWindowViewModel()
     {
+        Optimizer = new OptimizerViewModel(Results);
+        DataVisualizer = new DataVisualizerViewModel(Results);
         MinimizeCommand = ReactiveCommand.Create(MinimizeWindow);
         MaximizeRestoreCommand = ReactiveCommand.Create(MaximizeRestoreWindow);
         CloseCommand = ReactiveCommand.Create(CloseWindow);
-
-        // Assign the Results from Optimizer to DataVisualizer
-        DataVisualizer.Results = Optimizer.Results;
     }
 
     private void MinimizeWindow() => GetMainWindow().WindowState = WindowState.Minimized;

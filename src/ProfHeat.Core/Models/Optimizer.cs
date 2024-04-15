@@ -35,7 +35,7 @@ public static class Optimizer
 
                 var productionAmount = Math.Min(unit.MaxHeat, adjustedHeatDemand);
                 var cost = productionAmount * unit.ProductionCost;
-                var co2Emissions = productionAmount * unit.CO2Emission;
+                var co2Emissions = productionAmount * unit.CO2Emissions;
                 var primaryEnergyConsumption = productionAmount * unit.GasConsumption;
                 var electricityProduced = unit.MaxElectricity > 0 ? productionAmount * (unit.MaxElectricity / unit.MaxHeat) : 0;
 

@@ -45,12 +45,12 @@
             <TabControl x:Name="MainTabControl" Grid.Column="0">
                 <!-- OptimizerView -->
                 <TabItem Header="Optimizer">
-                    <v:OptimizerView/>
+                    <v:OptimizerView DataContext="{Binding Optimizer}"/>
                 </TabItem>
 
                 <!-- DataVisualizerView -->
                 <TabItem Header="Data Visualizer" >
-                    <v:DataVisualizerView/>
+                    <v:DataVisualizerView DataContext="{Binding DataVisualizer}"/>
                 </TabItem>
             </TabControl>
             

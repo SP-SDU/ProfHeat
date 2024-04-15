@@ -20,15 +20,15 @@ namespace ProfHeat.Core.Models;
 public class HeatingGrid
 {
     [XmlElement("Name")]
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
     [XmlElement("ImagePath")]
-    public string ImagePath { get; set; }
+    public required string ImagePath { get; set; }
 
     [XmlElement("Buildings")]
     public int Buildings { get; set; }
 
     [XmlArray("ProductionUnits")]
     [XmlArrayItem("ProductionUnit")]
-    public List<ProductionUnit> ProductionUnits { get; set; }
+    public required List<ProductionUnit> ProductionUnits { get; set; }
 }

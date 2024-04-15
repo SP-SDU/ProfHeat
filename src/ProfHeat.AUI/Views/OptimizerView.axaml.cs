@@ -13,26 +13,10 @@
 // limitations under the License.
 
 using Avalonia.Controls;
-using ReactiveUI;
-using Avalonia.ReactiveUI;
-using ProfHeat.AUI.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Reactive.Disposables;
-using Avalonia.Platform.Storage;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Reactive;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia;
 
 namespace ProfHeat.AUI.Views;
 
 public partial class OptimizerView : UserControl
 {
-    public OptimizerView()
-    {
-        InitializeComponent();
-        DataContext = new OptimizerViewModel();
-    }
+    public OptimizerView() => InitializeComponent();
 }

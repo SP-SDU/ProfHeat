@@ -1,4 +1,4 @@
-﻿// Copyright 2024 SoftFuzz
+// Copyright 2024 SoftFuzz
 //
 // Licensed under the Apache License, Version 2.0 (the "License"):
 // you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ using System;
 
 namespace ProfHeat.AUI;
 
-internal sealed class Program
+internal static class Program
 {
     // Initialization code. Don't use any Avalonia, third-party APIs or any
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized

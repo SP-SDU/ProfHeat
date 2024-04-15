@@ -35,8 +35,8 @@ public class ProductionUnit
     [XmlElement("ProductionCost")]
     public double ProductionCost { get; set; }      // Production cost in currency per MWh
 
-    [XmlElement("CO2Emission")]
-    public double CO2Emission { get; set; }         // CO2 emissions in kg per MWh
+    [XmlElement("CO2Emissions")]
+    public double CO2Emissions { get; set; }         // CO2 emissions in kg per MWh
 
     [XmlElement("GasConsumption")]
     public double GasConsumption { get; set; }      // Gas consumption in units
