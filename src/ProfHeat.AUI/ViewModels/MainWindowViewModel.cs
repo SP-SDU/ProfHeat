@@ -12,6 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using ReactiveUI;
+using System.Windows.Input;
+
 namespace ProfHeat.AUI.ViewModels;
 
 public class MainWindowViewModel : BaseViewModel
@@ -19,4 +25,21 @@ public class MainWindowViewModel : BaseViewModel
     public OptimizerViewModel Optimizer { get; } = new OptimizerViewModel();
 
     public DataVisualizerViewModel DataVisualizer { get; } = new DataVisualizerViewModel();
+
+    public ICommand MinimizeCommand { get; }
+    public ICommand MaximizeRestoreCommand { get; }
+    public ICommand CloseCommand { get; }
+
+    public MainWindowViewModel()
+    {
+        MinimizeCommand = ReactiveCommand.Create(MinimizeWindow);
+        MaximizeRestoreCommand = ReactiveCommand.Create(MaximizeRestoreWindow);
+        CloseCommand = ReactiveCommand.Create(CloseWindow);
+    }
+
+    private void MinimizeWindow() => GetMainWindow().WindowState = WindowState.Minimized;
+
+    private void MaximizeRestoreWindow() => GetMainWindow().WindowState = GetMainWindow().WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+
+    private void CloseWindow() => GetMainWindow().Close();
 }

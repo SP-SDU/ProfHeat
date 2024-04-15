@@ -12,13 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls;
 using ReactiveUI;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using Avalonia;
 
 namespace ProfHeat.AUI.ViewModels;
 
 public class BaseViewModel : ReactiveObject
 {
     public ViewModelActivator Activator { get; } = new ViewModelActivator();
+
+    public static Window GetMainWindow()
+    {
+        if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            return desktop.MainWindow!;
+        }
+        return null!;
+    }
 }

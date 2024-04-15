@@ -5,21 +5,95 @@
         xmlns:m="using:ProfHeat.Core.Models"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="420"
         x:Class="ProfHeat.AUI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/icon.ico"
-        Title="ProfHeat">
+        Icon="/Assets/Images/Icon.ico"
+        Title="ProfHeat"
+        SystemDecorations="None"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="0"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <StackPanel>
-        <v:OptimizerView/>
 
-        <!-- Should be a different tab -->
-        <v:DataVisualizerView/>
-    </StackPanel>
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
 
+        <!-- Main Grid -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <!-- For tabs -->
+                <ColumnDefinition Width="Auto"/>
+                <!-- For window controls -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Tabs -->
+            <TabControl x:Name="MainTabControl" Grid.Column="0">
+                <!-- OptimizerView -->
+                <TabItem Header="Optimizer">
+                    <v:OptimizerView/>
+                </TabItem>
+
+                <!-- DataVisualizerView -->
+                <TabItem Header="Data Visualizer" >
+                    <v:DataVisualizerView/>
+                </TabItem>
+            </TabControl>
+            
+            <!-- Window Controls -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Border x:Name="DraggableArea" PointerPressed="DraggableArea_PointerPressed"
+                        Height="22" Width="25" Background="Transparent" CornerRadius="5">
+                    <Image Source="{SvgImage /Assets/Images/Move.svg}" Margin="2">
+                        <Image.Styles>
+                            <Style Selector="Image">
+                                <Setter Property="Opacity" Value="0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                    </TransformGroup>
+                                </Setter>
+                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                            </Style>
+                            <Style Selector="Image:pointerover">
+                                <Setter Property="Opacity" Value="1"/>
+                                <Setter Property="RenderTransform">
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.1"/>
+                                    </TransformGroup>
+                                </Setter>
+                            </Style>
+                        </Image.Styles>
+                    </Image>
+                </Border>
+
+
+                <TextBlock Text=" |" Opacity="0.80" Margin="7" VerticalAlignment="Bottom"/>
+                <Button x:Name="MinimizeButton" Command="{Binding MinimizeCommand}" Width="30" Margin="2" Background="Transparent">
+                    <Image Source="{SvgImage /Assets/Images/Minimize.svg}"/>
+                </Button>
+                <Button x:Name="MaximizeButton" Command="{Binding MaximizeRestoreCommand}" Width="30" Margin="2" Background="Transparent">
+                    <Image Source="{SvgImage /Assets/Images/Maximize.svg}"/>
+                </Button>
+                <Button x:Name="CloseButton" Command="{Binding CloseCommand}" Width="30" Margin="2" Background="Transparent">
+                    <Image Source="{SvgImage /Assets/Images/Close.svg}"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Panel>
+    
 </Window>

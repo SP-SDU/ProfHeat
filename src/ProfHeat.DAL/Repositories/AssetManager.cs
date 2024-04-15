@@ -14,25 +14,14 @@
 
 using ProfHeat.Core.Models;
 using ProfHeat.DAL.Interfaces;
-using System.Xml.Serialization;
 
 namespace ProfHeat.DAL.Repositories;
 
 public class AssetManager(string filePath) : IAssetManager
 {
-    public HeatingGrid LoadAssets()
-    {
-        var serializer = new XmlSerializer(typeof(HeatingGrid));
-        using var reader = new StreamReader(filePath);
-        var result = serializer.Deserialize(reader);
+    private readonly IXmlRepository _xmlRepo = new XmlRepository();
 
-        return result as HeatingGrid ?? throw new IOException("Failed to load assets.");
-    }
+    public HeatingGrid LoadAssets() => _xmlRepo.Load<HeatingGrid>(filePath);
 
-    public void SaveAssets(HeatingGrid grid)
-    {
-        var serializer = new XmlSerializer(typeof(HeatingGrid));
-        using var writer = new StreamWriter(filePath);
-        serializer.Serialize(writer, grid);
-    }
+    public void SaveAssets(HeatingGrid grid) => _xmlRepo.Save(grid, filePath);
 }

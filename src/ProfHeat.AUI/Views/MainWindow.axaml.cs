@@ -13,10 +13,27 @@
 // limitations under the License.
 
 using Avalonia.Controls;
+using Avalonia.Controls.Presenters;
+using Avalonia.Controls.Primitives;
+using Avalonia.Input;
+using Avalonia.Media;
+using HarfBuzzSharp;
+using System;
+using System.Globalization;
+using System.Linq;
 
 namespace ProfHeat.AUI.Views;
 
 public partial class MainWindow : Window
 {
     public MainWindow() => InitializeComponent();
+    // Data Context for a MainWindow is set in app.xaml.cs
+
+    private void DraggableArea_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (sender is Border border && e.GetCurrentPoint(border).Properties.IsLeftButtonPressed)
+        {
+            BeginMoveDrag(e);
+        }
+    }
 }

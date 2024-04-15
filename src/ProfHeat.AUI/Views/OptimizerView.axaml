@@ -15,7 +15,7 @@
 
     <!-- UI for testing -->
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
-        <Button Content="Import"  Command="{Binding ImportDataCommand}" />
+        <Button Content="Import Data"  Command="{Binding ImportDataCommand}" />
         <ItemsControl ItemsSource="{Binding CheckBoxItems}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -25,7 +25,7 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Button Content="Calculate" Command="{Binding OptimizeCommand}"/>
+        <Button Content="Optimize" Command="{Binding OptimizeCommand}"/>
     </StackPanel>
 
 </UserControl>

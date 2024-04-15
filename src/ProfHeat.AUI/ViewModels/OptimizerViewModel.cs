@@ -13,8 +13,6 @@
 // limitations under the License.
 
 using ReactiveUI;
-using System.Reactive;
-using Avalonia.Controls;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +23,8 @@ using System;
 using System.Reactive.Linq;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Avalonia.Platform.Storage;
+using System.Windows.Input;
 
 namespace ProfHeat.AUI.ViewModels;
 
@@ -38,17 +38,14 @@ public class OptimizerViewModel : BaseViewModel
     public ObservableCollection<CheckBoxItem> CheckBoxItems { get; set; }   // Note: Add the pictures from PU and display in the UI (And make the pictures)
     public ObservableCollection<OptimizationResult> Results { get; set; } = [];
 
-    public Interaction<Unit, string[]> ShowOpenFileDialog { get; }
-    public ReactiveCommand<Unit, Unit> ImportDataCommand { get; }
-    public ReactiveCommand<Unit, Unit> OptimizeCommand { get;  }
+    public ICommand ImportDataCommand { get; }
+    public ICommand OptimizeCommand { get; }
     public OptimizerViewModel()
     {
         _sourceDataManager = new SourceDataManager();
-        _assetManager = new AssetManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data/HeatingGrid.xml"));
+        _assetManager = new AssetManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "HeatingGrid.config"));
         _grid = _assetManager.LoadAssets();
         CheckBoxItems = new ObservableCollection<CheckBoxItem>(_grid.ProductionUnits.Select(pu => new CheckBoxItem(pu.Name)));
-
-        ShowOpenFileDialog = new Interaction<Unit, string[]>();
 
         ImportDataCommand = ReactiveCommand.CreateFromTask(ImportDataAsync);
         OptimizeCommand = ReactiveCommand.Create(Optimize);
@@ -56,11 +53,29 @@ public class OptimizerViewModel : BaseViewModel
 
     private async Task ImportDataAsync()
     {
+        var options = new FilePickerOpenOptions
+        {
+            AllowMultiple = false,
+            FileTypeFilter = [
+                    new("XML Files")
+                    {
+                        Patterns = ["*.xml"],
+                        AppleUniformTypeIdentifiers = ["public.xml"],
+                        MimeTypes = ["application/xml", "text/xml"]
+                    }]
+        };
+
         // Trigger the interaction
-        var filePath = await ShowOpenFileDialog.Handle(Unit.Default);
+        var files = await GetMainWindow().StorageProvider.OpenFilePickerAsync(options);
+        var filePaths = files.Select(file => file.TryGetLocalPath()).ToArray();
+
+        if (filePaths == null || filePaths.Length == 0)
+        {
+            return;
+        }
 
         // Load the source data
-        _marketConditions = _sourceDataManager.LoadSourceData(filePath[0]);
+        _marketConditions = _sourceDataManager.LoadSourceData(filePaths[0]!);
     }
 
     private void Optimize()

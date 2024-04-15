@@ -12,27 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Avalonia.Controls;
-using ReactiveUI;
-using Avalonia.ReactiveUI;
-using ProfHeat.AUI.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Reactive.Disposables;
-using Avalonia.Platform.Storage;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Reactive;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia;
+namespace ProfHeat.DAL.Interfaces;
 
-namespace ProfHeat.AUI.Views;
-
-public partial class OptimizerView : UserControl
+public interface IXmlRepository
 {
-    public OptimizerView()
-    {
-        InitializeComponent();
-        DataContext = new OptimizerViewModel();
-    }
+    T Load<T>(string filePath);
+    void Save<T>(T data, string filePath);
 }

@@ -14,29 +14,16 @@
 
 using ProfHeat.Core.Models;
 using ProfHeat.DAL.Interfaces;
-using System.Globalization;
-using System.Text;
-using System.Xml.Serialization;
 
 namespace ProfHeat.DAL.Repositories;
 
 public class SourceDataManager : ISourceDataManager
 {
-    public List<MarketCondition> LoadSourceData(string filePath)
-    {
-        var serializer = new XmlSerializer(typeof(List<MarketCondition>));
-        using var reader = new StreamReader(filePath);
-        var result = serializer.Deserialize(reader);
+    private readonly IXmlRepository _xmlRepo = new XmlRepository();
 
-        return result as List<MarketCondition> ?? [];
-    }
+    public List<MarketCondition> LoadSourceData(string filePath) => _xmlRepo.Load<List<MarketCondition>>(filePath);
 
-    public void SaveSourceData(List<MarketCondition> data, string filePath)
-    {
-        var serializer = new XmlSerializer(typeof(List<MarketCondition>));
-        using var writer = new StreamWriter(filePath);
-        serializer.Serialize(writer, data);
-    }
+    public void SaveSourceData(List<MarketCondition> data, string filePath) => _xmlRepo.Save(data, filePath);
 
-    // Note: Add method for api here
+    // Note Use API repository here
 }

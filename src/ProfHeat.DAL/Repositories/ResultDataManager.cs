@@ -14,27 +14,14 @@
 
 using ProfHeat.Core.Models;
 using ProfHeat.DAL.Interfaces;
-using System.Globalization;
-using System.Text;
-using System.Xml.Serialization;
 
 namespace ProfHeat.DAL.Repositories;
 
 public class ResultDataManager : IResultDataManager
 {
-    public List<OptimizationResult> LoadResultData(string filePath)
-    {
-        var serializer = new XmlSerializer(typeof(List<OptimizationResult>));
-        using var reader = new StreamReader(filePath);
-        var result = serializer.Deserialize(reader);
+    private readonly IXmlRepository _xmlRepo = new XmlRepository();
 
-        return result as List<OptimizationResult> ?? [];
-    }
+    public List<OptimizationResult> LoadResultData(string filePath) => _xmlRepo.Load<List<OptimizationResult>>(filePath);
 
-    public void SaveResultData(List<OptimizationResult> data, string filePath)
-    {
-        var serializer = new XmlSerializer(typeof(List<OptimizationResult>));
-        using var writer = new StreamWriter(filePath);
-        serializer.Serialize(writer, data);
-    }
+    public void SaveResultData(List<OptimizationResult> data, string filePath) => _xmlRepo.Save(data, filePath);
 }
