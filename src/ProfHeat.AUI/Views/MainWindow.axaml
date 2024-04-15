@@ -20,7 +20,6 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-
     <Panel>
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>

@@ -9,10 +9,6 @@
              x:Class="ProfHeat.AUI.Views.DataVisualizerView"
              x:DataType="vm:DataVisualizerViewModel">
 
-    <Design.DataContext>
-        <vm:DataVisualizerViewModel/>
-    </Design.DataContext>
-
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
         <TextBlock Text="Optimization Results:" />
         <!-- Graphs Here -->

@@ -9,11 +9,6 @@
              x:Class="ProfHeat.AUI.Views.OptimizerView"
              x:DataType="vm:OptimizerViewModel">
 
-    <Design.DataContext>
-        <vm:OptimizerViewModel/>
-    </Design.DataContext>
-
-    <!-- UI for testing -->
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
         <Button Content="Import Data"  Command="{Binding ImportDataCommand}" />
         <ItemsControl ItemsSource="{Binding CheckBoxItems}">
