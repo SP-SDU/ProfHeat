@@ -35,6 +35,9 @@ public class MainWindowViewModel : BaseViewModel
         MinimizeCommand = ReactiveCommand.Create(MinimizeWindow);
         MaximizeRestoreCommand = ReactiveCommand.Create(MaximizeRestoreWindow);
         CloseCommand = ReactiveCommand.Create(CloseWindow);
+
+        // Assign the Results from Optimizer to DataVisualizer
+        DataVisualizer.Results = Optimizer.Results;
     }
 
     private void MinimizeWindow() => GetMainWindow().WindowState = WindowState.Minimized;

@@ -12,16 +12,55 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using ProfHeat.Core.Models;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using ProfHeat.DAL.Interfaces;
+using ProfHeat.DAL.Repositories;
+using Avalonia.Platform.Storage;
 
 namespace ProfHeat.AUI.ViewModels;
 
 public class DataVisualizerViewModel : BaseViewModel
 {
+    private readonly IResultDataManager _ResultDataManager;
+
+    public ObservableCollection<OptimizationResult> Results { get; set; } = [];
+
+    public ICommand ExportResultsCommand { get; }
     // Display data as graphs and charts
     // Maybe an Import results button
+
+    public DataVisualizerViewModel()
+    {
+        _ResultDataManager = new ResultDataManager();
+
+        ExportResultsCommand = ReactiveCommand.CreateFromTask(ExportResultsAsync);
+    }
+
+    private async Task ExportResultsAsync()
+    {
+        var options = new FilePickerSaveOptions
+        {
+            SuggestedFileName = "Results",
+            DefaultExtension = "xml",
+        };
+
+        var filePath = (await GetMainWindow().StorageProvider.SaveFilePickerAsync(options))!.TryGetLocalPath();
+
+        if (filePath == null)
+        {
+            return;
+        }
+
+        var results = new List<OptimizationResult>(Results);
+
+        _ResultDataManager.SaveResultData(results, filePath!);
+    }
 }

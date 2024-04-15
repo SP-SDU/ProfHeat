@@ -92,9 +92,11 @@ public static class Optimizer
         return units.Select(unit => new
         {
             Unit = unit,
-            ProfitPotential = unit.MaxElectricity > 0 ? ((electricityPrice - unit.ProductionCost) * unit.MaxElectricity) - shutdownCostFactor : 0
+            ProfitPotential = unit.MaxElectricity >= 0
+                              ? ((electricityPrice - unit.ProductionCost) * Math.Max(unit.MaxElectricity, unit.MaxHeat)) - shutdownCostFactor
+                              : (unit.MaxHeat * unit.ProductionCost) - shutdownCostFactor  // Consider heat production for non-electricity producing units
         })
-        .Where(a => a.ProfitPotential > 0)
+        .Where(a => a.ProfitPotential > -shutdownCostFactor)
         .OrderByDescending(a => a.ProfitPotential)
         .Select(a => a.Unit);
     }

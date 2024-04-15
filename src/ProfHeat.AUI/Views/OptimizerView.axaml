@@ -26,6 +26,10 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         <Button Content="Optimize" Command="{Binding OptimizeCommand}"/>
+
+        <!-- For testing, needs to be removed -->
+        <TextBlock Text="{Binding ResultsText}" TextWrapping="Wrap" />
+
     </StackPanel>
 
 </UserControl>

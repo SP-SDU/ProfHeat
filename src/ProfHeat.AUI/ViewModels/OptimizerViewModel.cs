@@ -25,6 +25,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
 using System.Windows.Input;
+using ProfHeat.AUI.ViewModels;
 
 namespace ProfHeat.AUI.ViewModels;
 
@@ -66,8 +67,9 @@ public class OptimizerViewModel : BaseViewModel
         };
 
         // Trigger the interaction
-        var files = await GetMainWindow().StorageProvider.OpenFilePickerAsync(options);
-        var filePaths = files.Select(file => file.TryGetLocalPath()).ToArray();
+        var filePaths = (await GetMainWindow().StorageProvider.OpenFilePickerAsync(options))
+            .Select(file => file.TryGetLocalPath())
+            .ToArray();
 
         if (filePaths == null || filePaths.Length == 0)
         {
@@ -90,9 +92,29 @@ public class OptimizerViewModel : BaseViewModel
         };
 
         var optimizationResults = Optimizer.Optimize(newGrid, _marketConditions);
+
+        // For testing, needs to be removed
+        ResultsText = string.Join("\n", optimizationResults.Select(result =>
+    $"Period: {result.TimeFrom} to {result.TimeTo}, " +
+    $"Produced Heat: {result.ProducedHeat} MWh, " +
+    $"Electricity Produced: {result.ElectricityProduced} MWh, " +
+    $"Primary Energy Consumption: {result.PrimaryEnergyConsumption} MWh, " +
+    $"Costs: {result.Costs} DKK, " +
+    $"CO2 Emissions: {result.CO2Emissions} kg")); // Update this when you have new results
+
+        if (optimizationResults == null || !optimizationResults.Any())
+        {
+            throw new InvalidOperationException("Optimization failed to produce any results.");
+        }
+
         Results = new ObservableCollection<OptimizationResult>(optimizationResults);
-        // Need to prove that the optimization is working by displaying the results
-        // Turn them into a graph in DV (which is why it is observable collection)
-        // And export the results to a file in DV (OpenFolderDialog)
+
+    }
+
+    private string _resultsText;
+    public string ResultsText
+    {
+        get => _resultsText;
+        set => this.RaiseAndSetIfChanged(ref _resultsText, value);
     }
 }
