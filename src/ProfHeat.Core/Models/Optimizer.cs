@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using ProfHeat.Core.Interfaces;
+
 namespace ProfHeat.Core.Models;
 
-public static class Optimizer
+public class Optimizer : IOptimizer
 {
-    public static List<OptimizationResult> Optimize(HeatingGrid grid, List<MarketCondition> MarketConditions)
+    public List<OptimizationResult> Optimize(HeatingGrid grid, List<MarketCondition> MarketConditions)
     {
         var optimizationResults = new List<OptimizationResult>();
         var heatDissipationFactor = CalculateHeatDissipation(grid.Buildings);

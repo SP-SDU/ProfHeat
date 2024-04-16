@@ -23,6 +23,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Input;
+using ProfHeat.Core.Interfaces;
 
 namespace ProfHeat.AUI.ViewModels;
 
@@ -30,9 +31,10 @@ public partial class OptimizerViewModel : BaseViewModel
 {
     private readonly IAssetManager _assetManager = new AssetManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "HeatingGrid.config"));
     private readonly ISourceDataManager _sourceDataManager = new SourceDataManager();
+    private readonly IOptimizer _optimizer = new Optimizer();
     private readonly ObservableCollection<OptimizationResult> _results;
-    private readonly HeatingGrid _grid;                         // Static grid
-    private List<MarketCondition> _marketConditions = [];       // Dynamically loaded Market data
+    private readonly HeatingGrid _grid;                             // Static grid
+    private readonly List<MarketCondition> _marketConditions = [];  // Dynamically loaded Market data
 
     public ObservableCollection<CheckBoxItem> CheckBoxItems { get; }
 
@@ -70,7 +72,8 @@ public partial class OptimizerViewModel : BaseViewModel
         }
 
         // Load the source data
-        _marketConditions = _sourceDataManager.LoadSourceData(filePaths[0]!);
+        _marketConditions.Clear();
+        _marketConditions.AddRange(_sourceDataManager.LoadSourceData(filePaths[0]!));
     }
 
     [RelayCommand]
@@ -87,7 +90,7 @@ public partial class OptimizerViewModel : BaseViewModel
             ProductionUnits = newUnits
         };
 
-        var optimizationResults = Optimizer.Optimize(newGrid, _marketConditions);
+        var optimizationResults = _optimizer.Optimize(newGrid, _marketConditions);
 
         if (optimizationResults.Count == 0)
         {
@@ -95,9 +98,6 @@ public partial class OptimizerViewModel : BaseViewModel
         }
 
         _results.Clear();
-        foreach (var result in optimizationResults)
-        {
-            _results.Add(result);
-        }
+        optimizationResults.ForEach(_results.Add);
     }
 }
