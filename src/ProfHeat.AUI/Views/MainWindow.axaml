@@ -85,7 +85,7 @@
                 <Button x:Name="MinimizeButton" Command="{Binding MinimizeCommand}" Width="30" Margin="2" Background="Transparent">
                     <Image Source="{SvgImage /Assets/Images/Minimize.svg}"/>
                 </Button>
-                <Button x:Name="MaximizeButton" Command="{Binding MaximizeRestoreCommand}" Width="30" Margin="2" Background="Transparent">
+                <Button x:Name="MaximizeButton" Command="{Binding MaximizeCommand}" Width="30" Margin="2" Background="Transparent">
                     <Image Source="{SvgImage /Assets/Images/Maximize.svg}"/>
                 </Button>
                 <Button x:Name="CloseButton" Command="{Binding CloseCommand}" Width="30" Margin="2" Background="Transparent">

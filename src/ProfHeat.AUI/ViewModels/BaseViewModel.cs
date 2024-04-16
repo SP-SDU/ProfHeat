@@ -14,15 +14,13 @@
 
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls;
-using ReactiveUI;
 using Avalonia;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ProfHeat.AUI.ViewModels;
 
-public class BaseViewModel : ReactiveObject
+public class BaseViewModel : ObservableObject
 {
-    public ViewModelActivator Activator { get; } = new ViewModelActivator();
-
     public static Window GetMainWindow()
     {
         if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

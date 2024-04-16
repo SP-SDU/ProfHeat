@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using Avalonia;
-using Avalonia.ReactiveUI;
 using System;
 
 namespace ProfHeat.AUI;
@@ -32,6 +31,5 @@ internal static class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
-            .LogToTrace()
-            .UseReactiveUI();
+            .LogToTrace();
 }

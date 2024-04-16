@@ -19,12 +19,12 @@ public static class Optimizer
     public static List<OptimizationResult> Optimize(HeatingGrid grid, List<MarketCondition> MarketConditions)
     {
         var optimizationResults = new List<OptimizationResult>();
-        double heatDissipationFactor = CalculateHeatDissipation(grid.Buildings);
+        var heatDissipationFactor = CalculateHeatDissipation(grid.Buildings);
 
         foreach (var condition in MarketConditions)
         {
-            double adjustedHeatDemand = condition.HeatDemand + heatDissipationFactor;
-            double shutdownCostFactor = CalculateShutdownCostFactor(grid.ProductionUnits, adjustedHeatDemand, condition.ElectricityPrice);
+            var adjustedHeatDemand = condition.HeatDemand + heatDissipationFactor;
+            var shutdownCostFactor = CalculateShutdownCostFactor(grid.ProductionUnits, adjustedHeatDemand, condition.ElectricityPrice);
 
             foreach (var unit in OrderUnitsByProfitPotential(grid.ProductionUnits, condition.ElectricityPrice, shutdownCostFactor))
             {
@@ -74,15 +74,15 @@ public static class Optimizer
     private static double CalculateShutdownCostFactor(List<ProductionUnit> units, double demand, double electricityPrice)
     {
         const double BaseShutdownCost = 500; // Base cost for shutting down a unit
-        double totalAvailableCapacity = units.Sum(unit => unit.MaxHeat);
-        double shortageRatio = demand / totalAvailableCapacity;
+        var totalAvailableCapacity = units.Sum(unit => unit.MaxHeat);
+        var shortageRatio = demand / totalAvailableCapacity;
 
         // Additional factors
-        double rampDownCost = units.Sum(unit => unit.MaxHeat * 0.05);                                   // 5% of max heat capacity as ramp down cost
-        double efficiencyPenalty = units.Sum(unit => (1 - (unit.MaxElectricity / unit.MaxHeat)) * 100); // Efficiency penalty based on electrical output to heat ratio
+        var rampDownCost = units.Sum(unit => unit.MaxHeat * 0.05);                                   // 5% of max heat capacity as ramp down cost
+        var efficiencyPenalty = units.Sum(unit => (1 - (unit.MaxElectricity / unit.MaxHeat)) * 100); // Efficiency penalty based on electrical output to heat ratio
 
         // Market penalty for supply-demand mismatch
-        double marketPenalty = shortageRatio > 1 ? (shortageRatio - 1) * electricityPrice * 100 : 0;    // Penalty increases with the ratio exceeding 1
+        var marketPenalty = shortageRatio > 1 ? (shortageRatio - 1) * electricityPrice * 100 : 0;    // Penalty increases with the ratio exceeding 1
 
         return BaseShutdownCost + rampDownCost + efficiencyPenalty + marketPenalty;
     }

@@ -13,34 +13,31 @@
 // limitations under the License.
 
 using ProfHeat.Core.Models;
-using ReactiveUI;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using ProfHeat.DAL.Interfaces;
 using ProfHeat.DAL.Repositories;
 using Avalonia.Platform.Storage;
 using System.IO;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace ProfHeat.AUI.ViewModels;
 
-public class DataVisualizerViewModel : BaseViewModel
+public partial class DataVisualizerViewModel : BaseViewModel
 {
     private readonly IResultDataManager _ResultDataManager = new ResultDataManager();
     private readonly ObservableCollection<OptimizationResult> _results;
 
-    public ICommand ExportResultsCommand { get; }
-
     public DataVisualizerViewModel(ObservableCollection<OptimizationResult> results)
     {
         _results = results;
-
-        ExportResultsCommand = ReactiveCommand.CreateFromTask(ExportResultsAsync);
     }
 
-    private async Task ExportResultsAsync()
+    [RelayCommand]
+    public async Task ExportResultsCommand()
     {
+        var results = new List<OptimizationResult>(_results);
         var options = new FilePickerSaveOptions
         {
             SuggestedFileName = $"Results_{Path.GetRandomFileName()}",
@@ -68,7 +65,6 @@ public class DataVisualizerViewModel : BaseViewModel
             return;
         }
 
-        var results = new List<OptimizationResult>(_results);
         _ResultDataManager.SaveResultData(results, filePath!);
     }
 }

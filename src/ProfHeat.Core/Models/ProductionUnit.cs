@@ -24,10 +24,10 @@ public class ProductionUnit
     public Guid Id { get; set; } = Guid.NewGuid();  // Unique identifier
 
     [XmlElement("Name")]
-    public string Name { get; set; }                // Name of the heating unit
+    public required string Name { get; set; }                // Name of the heating unit
 
     [XmlElement("ImagePath")]
-    public string ImagePath { get; set; }           // Path to the image of the heating unit
+    public required string ImagePath { get; set; }           // Path to the image of the heating unit
 
     [XmlElement("MaxHeat")]
     public double MaxHeat { get; set; }             // Maximum heat output in MWh
