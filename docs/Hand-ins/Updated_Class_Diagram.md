@@ -8,23 +8,22 @@ Models:
   + CO2Emission: double
   + GasConsumption: double
 
-- HeatDemand
-  + Time: DateTime
+- SourceData
+  + TimeFrom: DateTime
+  + TimeTo: DateTime
   + DemandValue: double
-
-- ElectricityPrice
-  + Time: DateTime
   + Price: double
 
-- OptimizationResult
-  + Time: DateTime
+- ResultData
+  + TimeFrom: DateTime
+  + TimeTo: DateTime
   + OptimizedHeat: double
   + OptimizedCosts: double
   + CO2Emissions: double
 
 - Optimizer (Business Logic/Model)
-  + Optimize(assets: List<ProductionUnit>, demands: List<HeatDemand>, prices: List<ElectricityPrice>): List<OptimizationResult>
-  --> Interacts with: ProductionUnit, HeatDemand, ElectricityPrice, OptimizationResult
+  + Optimize(assets: List<ProductionUnit>, demands and prices: List<SourceData>): List<ResultData>
+  --> Interacts with: ProductionUnit, SourceData, ResultData
 
 Services: (Are named managers to keep consistency with the case)
 - AssetManager
@@ -33,29 +32,28 @@ Services: (Are named managers to keep consistency with the case)
   --> Uses: ProductionUnit
 
 - SourceDataManager
-  + LoadSourceData(): List<(HeatDemand, ElectricityPrice)>
-  + SaveSourceData(List<(HeatDemand demand, ElectricityPrice price)> data): void
-  --> Uses: HeatDemand, ElectricityPrice
+  + LoadSourceData(): List<SourceData>
+  + SaveSourceData(List<SourceData> data): void
+  --> Uses: SourceData
 
 - ResultDataManager
-  + SaveOptimizationResults(results: List<OptimizationResult>): void
-  + LoadOptimizationResults(): List<OptimizationResult>
-  --> Uses: OptimizationResult
+  + SaveOptimizationResults(results: List<ResultData>): void
+  + LoadOptimizationResults(): List<ResultData>
+  --> Uses: ResultData
 
 ViewModels:
 - OptimizerViewModel
   --> Uses: AssetManager, SourceDataManager, ResultDataManager, Optimizer
-  + OptimizationResults: ObservableCollection<OptimizationResult>
+  + OptimizationResults: ObservableCollection<ResultData>
   + OptimizeCommand(): void
-  --> Binds to: OptimizationResult
+  --> Binds to: ResultData
 
 - DataVisualizerViewModel
   --> Uses: SourceDataManager
   Inherits: ViewModelBase
-  + HeatDemands: ObservableCollection<HeatDemand>
-  + ElectricityPrices: ObservableCollection<ElectricityPrice>
+  + SourceData: ObservableCollection<SourceData>
   + LoadDataCommand(): void
-  --> Binds to: HeatDemand, ElectricityPrice
+  --> Binds to: SourceData
 
 Views:
 - OptimizerView

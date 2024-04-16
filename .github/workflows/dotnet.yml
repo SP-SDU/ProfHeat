@@ -21,18 +21,52 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Restore dependencies (ProfHeat)
+      # Source:
+    - name: Restore dependencies (ProfHeat.Core)
       run: dotnet restore
-      working-directory: src/ProfHeat
+      working-directory: src/ProfHeat.Core
 
-    - name: Build (ProfHeat)
+    - name: Build (ProfHeat.Core)
       run: dotnet build --no-restore
-      working-directory: src/ProfHeat
+      working-directory: src/ProfHeat.Core
 
-    - name: Restore dependencies (ProfHeat.Tests)
+    - name: Restore dependencies (ProfHeat.DAL)
       run: dotnet restore
-      working-directory: src/ProfHeat.Tests
+      working-directory: src/ProfHeat.DAL
 
-    - name: Test (ProfHeat.Tests)
+    - name: Build (ProfHeat.DAL)
+      run: dotnet build --no-restore
+      working-directory: src/ProfHeat.DAL
+
+    - name: Restore dependencies (ProfHeat.AUI)
+      run: dotnet restore
+      working-directory: src/ProfHeat.AUI
+
+    - name: Build (ProfHeat.AUI)
+      run: dotnet build --no-restore
+      working-directory: src/ProfHeat.AUI
+
+      # Tests:
+    - name: Restore dependencies (ProfHeat.Core.Tests)
+      run: dotnet restore
+      working-directory: tests/ProfHeat.Core.Tests
+
+    - name: Test (ProfHeat.Core.Tests)
       run: dotnet test
-      working-directory: src/ProfHeat.Tests
+      working-directory: tests/ProfHeat.Core.Tests
+
+    - name: Restore dependencies (ProfHeat.DAL.Tests)
+      run: dotnet restore
+      working-directory: tests/ProfHeat.DAL.Tests
+
+    - name: Test (ProfHeat.DAL.Tests)
+      run: dotnet test
+      working-directory: tests/ProfHeat.DAL.Tests
+
+    - name: Restore dependencies (ProfHeat.AUI.Tests)
+      run: dotnet restore
+      working-directory: tests/ProfHeat.AUI.Tests
+
+    - name: Test (ProfHeat.AUI.Tests)
+      run: dotnet test
+      working-directory: tests/ProfHeat.AUI.Tests

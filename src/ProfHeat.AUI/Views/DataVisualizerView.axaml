@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:ProfHeat.AUI.ViewModels"
+             xmlns:v="using:ProfHeat.AUI.Views"
+             xmlns:m="using:ProfHeat.Core.Models"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ProfHeat.AUI.Views.DataVisualizerView">
+
+    <Design.DataContext>
+        <vm:DataVisualizerViewModel/>
+    </Design.DataContext>
+
+    <StackPanel>
+        <TextBlock Text="Optimization Results:" />
+        <!-- Graphs Here -->
+        <Button Content="Export Results" />
+    </StackPanel>
+</UserControl>
