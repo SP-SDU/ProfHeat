@@ -17,11 +17,9 @@ using ProfHeat.DAL.Interfaces;
 
 namespace ProfHeat.DAL.Repositories;
 
-public class ResultDataManager : IResultDataManager
+public class ResultDataManager(IRepository repository) : IResultDataManager
 {
-    private readonly IXmlRepository _xmlRepo = new XmlRepository();
+    public List<OptimizationResult> LoadResultData(string filePath) => repository.Load<List<OptimizationResult>>(filePath).ToList();
 
-    public List<OptimizationResult> LoadResultData(string filePath) => _xmlRepo.Load<List<OptimizationResult>>(filePath);
-
-    public void SaveResultData(List<OptimizationResult> data, string filePath) => _xmlRepo.Save(data, filePath);
+    public void SaveResultData(List<OptimizationResult> data, string filePath) => repository.Save(data, filePath);
 }

@@ -24,10 +24,10 @@ public class ProductionUnit
     public Guid Id { get; set; } = Guid.NewGuid();  // Unique identifier
 
     [XmlElement("Name")]
-    public required string Name { get; set; }                // Name of the heating unit
+    public required string Name { get; set; }       // Name of the heating unit
 
     [XmlElement("ImagePath")]
-    public required string ImagePath { get; set; }           // Path to the image of the heating unit
+    public required string ImagePath { get; set; }  // Path to the image of the heating unit
 
     [XmlElement("MaxHeat")]
     public double MaxHeat { get; set; }             // Maximum heat output in MWh
@@ -36,7 +36,7 @@ public class ProductionUnit
     public double ProductionCost { get; set; }      // Production cost in currency per MWh
 
     [XmlElement("CO2Emissions")]
-    public double CO2Emissions { get; set; }         // CO2 emissions in kg per MWh
+    public double CO2Emissions { get; set; }        // CO2 emissions in kg per MWh
 
     [XmlElement("GasConsumption")]
     public double GasConsumption { get; set; }      // Gas consumption in units

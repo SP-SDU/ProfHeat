@@ -17,42 +17,20 @@ using ProfHeat.DAL.Interfaces;
 
 namespace ProfHeat.DAL.Repositories;
 
-public class XmlRepository : IXmlRepository
+public class XmlRepository : IRepository
 {
     public T Load<T>(string filePath)
     {
-        try
-        {
-            var serializer = new XmlSerializer(typeof(T));
-            using var reader = new StreamReader(filePath);
-            var result = serializer.Deserialize(reader) ?? throw new InvalidOperationException("Deserialization returned null.");
-            return (T) result;
-        }
-        catch (FileNotFoundException fnfe)
-        {
-            throw new ApplicationException($"The file '{filePath}' was not found.", fnfe);
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException($"Error loading data from {filePath}.", ex);
-        }
+        var serializer = new XmlSerializer(typeof(T));
+        using var reader = new StreamReader(filePath);
+        var result = serializer.Deserialize(reader) ?? throw new InvalidOperationException("Deserialization returned null.");
+        return (T) result;
     }
 
     public void Save<T>(T data, string filePath)
     {
-        try
-        {
-            var serializer = new XmlSerializer(typeof(T));
-            using var writer = new StreamWriter(filePath);
-            serializer.Serialize(writer, data);
-        }
-        catch (UnauthorizedAccessException uae)
-        {
-            throw new ApplicationException($"Access to '{filePath}' is denied.", uae);
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException($"Error saving data to {filePath}.", ex);
-        }
+        var serializer = new XmlSerializer(typeof(T));
+        using var writer = new StreamWriter(filePath);
+        serializer.Serialize(writer, data);
     }
 }

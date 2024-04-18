@@ -17,11 +17,9 @@ using ProfHeat.DAL.Interfaces;
 
 namespace ProfHeat.DAL.Repositories;
 
-public class AssetManager(string filePath) : IAssetManager
+public class AssetManager(IRepository repository, string filePath) : IAssetManager
 {
-    private readonly IXmlRepository _xmlRepo = new XmlRepository();
+    public HeatingGrid LoadAssets() => repository.Load<HeatingGrid>(filePath);
 
-    public HeatingGrid LoadAssets() => _xmlRepo.Load<HeatingGrid>(filePath);
-
-    public void SaveAssets(HeatingGrid grid) => _xmlRepo.Save(grid, filePath);
+    public void SaveAssets(HeatingGrid grid) => repository.Save(grid, filePath);
 }

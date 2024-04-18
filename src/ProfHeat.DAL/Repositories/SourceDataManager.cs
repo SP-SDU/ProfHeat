@@ -17,13 +17,11 @@ using ProfHeat.DAL.Interfaces;
 
 namespace ProfHeat.DAL.Repositories;
 
-public class SourceDataManager : ISourceDataManager
+public class SourceDataManager(IRepository repository) : ISourceDataManager
 {
-    private readonly IXmlRepository _xmlRepo = new XmlRepository();
+    public List<MarketCondition> LoadSourceData(string filePath) => repository.Load<List<MarketCondition>>(filePath).ToList();
 
-    public List<MarketCondition> LoadSourceData(string filePath) => _xmlRepo.Load<List<MarketCondition>>(filePath);
-
-    public void SaveSourceData(List<MarketCondition> data, string filePath) => _xmlRepo.Save(data, filePath);
+    public void SaveSourceData(List<MarketCondition> data, string filePath) => repository.Save(data, filePath);
 
     // Note Use API repository here
 }

@@ -26,7 +26,7 @@ namespace ProfHeat.AUI.ViewModels;
 
 public partial class DataVisualizerViewModel : BaseViewModel
 {
-    private readonly IResultDataManager _ResultDataManager = new ResultDataManager();
+    private readonly IResultDataManager _ResultDataManager = new ResultDataManager(new CsvRepository());
     private readonly ObservableCollection<OptimizationResult> _results;
 
     public DataVisualizerViewModel(ObservableCollection<OptimizationResult> results)
@@ -40,15 +40,16 @@ public partial class DataVisualizerViewModel : BaseViewModel
         var results = new List<OptimizationResult>(_results);
         var options = new FilePickerSaveOptions
         {
+            Title = "Save CSV File",
             SuggestedFileName = $"Results_{Path.GetRandomFileName()}",
-            DefaultExtension = "xml",
+            DefaultExtension = "csv",
             FileTypeChoices = [
-                    new("XML Files")
-                    {
-                        Patterns = ["*.xml"],
-                        AppleUniformTypeIdentifiers = ["public.xml"],
-                        MimeTypes = ["application/xml", "text/xml"]
-                    }]
+                new("CSV Files (Invariant Culture)")
+                {
+                    Patterns = ["*.csv"],
+                    AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
+                    MimeTypes = ["text/csv"]
+                }]
         };
 
         var files = await GetMainWindow().StorageProvider.SaveFilePickerAsync(options);

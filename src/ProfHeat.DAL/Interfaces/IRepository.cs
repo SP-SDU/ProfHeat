@@ -14,7 +14,7 @@
 
 namespace ProfHeat.DAL.Interfaces;
 
-public interface IXmlRepository
+public interface IRepository
 {
     T Load<T>(string filePath);
     void Save<T>(T data, string filePath);

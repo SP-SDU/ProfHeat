@@ -12,22 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Xml.Serialization;
+using CsvHelper.Configuration.Attributes;
 
 namespace ProfHeat.Core.Models;
 
-[XmlRoot("MarketCondition")]
-public class MarketCondition()
+public class MarketCondition
 {
-    [XmlElement("TimeFrom")]
+    [Name("TimeFrom")]
     public DateTime TimeFrom { get; set; }          // Start time of the period
 
-    [XmlElement("TimeTo")]
+    [Name("TimeTo")]
     public DateTime TimeTo { get; set; }            // End time of the period
 
-    [XmlElement("HeatDemand")]
+    [Name("HeatDemand")]
     public double HeatDemand { get; set; }          // The value of the heat demand in MWh
 
-    [XmlElement("ElectricityPrice")]
+    [Name("ElectricityPrice")]
     public double ElectricityPrice { get; set; }    // The price of electricity per MWh
 }

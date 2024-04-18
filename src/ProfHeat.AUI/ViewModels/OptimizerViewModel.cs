@@ -29,8 +29,8 @@ namespace ProfHeat.AUI.ViewModels;
 
 public partial class OptimizerViewModel : BaseViewModel
 {
-    private readonly IAssetManager _assetManager = new AssetManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "HeatingGrid.config"));
-    private readonly ISourceDataManager _sourceDataManager = new SourceDataManager();
+    private readonly IAssetManager _assetManager = new AssetManager(new XmlRepository(), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "HeatingGrid.config"));
+    private readonly ISourceDataManager _sourceDataManager = new SourceDataManager(new CsvRepository());
     private readonly IOptimizer _optimizer = new Optimizer();
     private readonly ObservableCollection<OptimizationResult> _results;
     private readonly HeatingGrid _grid;                             // Static grid
@@ -51,14 +51,15 @@ public partial class OptimizerViewModel : BaseViewModel
     {
         var options = new FilePickerOpenOptions
         {
+            Title = "Open CSV File",
             AllowMultiple = false,
             FileTypeFilter = [
-                    new("XML Files")
-                    {
-                        Patterns = ["*.xml"],
-                        AppleUniformTypeIdentifiers = ["public.xml"],
-                        MimeTypes = ["application/xml", "text/xml"]
-                    }]
+                new("CSV Files (Invariant Culture)")
+                {
+                    Patterns = ["*.csv"],
+                    AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
+                    MimeTypes = ["text/csv"]
+                }]
         };
 
         // Trigger file picker interaction
