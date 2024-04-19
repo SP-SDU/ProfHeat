@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using Avalonia.Platform.Storage;
+using CommunityToolkit.Mvvm.Input;
+using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
 using ProfHeat.DAL.Interfaces;
 using ProfHeat.DAL.Repositories;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Avalonia.Platform.Storage;
-using CommunityToolkit.Mvvm.Input;
-using ProfHeat.Core.Interfaces;
 
 namespace ProfHeat.AUI.ViewModels;
 

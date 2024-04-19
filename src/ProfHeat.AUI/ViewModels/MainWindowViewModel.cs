@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using Avalonia.Controls;
+using CommunityToolkit.Mvvm.Input;
 using ProfHeat.Core.Models;
 using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.Input;
 
 namespace ProfHeat.AUI.ViewModels;
 

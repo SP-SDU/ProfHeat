@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Controls;
 using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ProfHeat.AUI.ViewModels;

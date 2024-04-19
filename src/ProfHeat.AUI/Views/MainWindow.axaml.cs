@@ -13,14 +13,7 @@
 // limitations under the License.
 
 using Avalonia.Controls;
-using Avalonia.Controls.Presenters;
-using Avalonia.Controls.Primitives;
 using Avalonia.Input;
-using Avalonia.Media;
-using HarfBuzzSharp;
-using System;
-using System.Globalization;
-using System.Linq;
 
 namespace ProfHeat.AUI.Views;
 
