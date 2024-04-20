@@ -16,26 +16,12 @@ using CsvHelper.Configuration.Attributes;
 
 namespace ProfHeat.Core.Models;
 
-public class OptimizationResult
-{
-    [Name("TimeFrom")]
-    public DateTime TimeFrom { get; set; }                  // Start time of the period
-
-    [Name("TimeTo")]
-    public DateTime TimeTo { get; set; }                    // End time of the period
-
-    [Name("ProducedHeat")]
-    public double ProducedHeat { get; set; }                // Heat produced in MWh
-
-    [Name("ElectricityProduced")]
-    public double ElectricityProduced { get; set; }         // Added for clarity on electricity produced or consumed
-
-    [Name("PrimaryEnergyConsumption")]
-    public double PrimaryEnergyConsumption { get; set; }    // Primary energy used
-
-    [Name("Costs")]
-    public double Costs { get; set; }                       // Production costs, implying net costs considering any profits from electricity generation
-
-    [Name("CO2Emissions")]
-    public double CO2Emissions { get; set; }                // CO2 emissions in kg
-}
+public readonly record struct OptimizationResult(
+    [Name("TimeFrom")] DateTime TimeFrom,                               // Start time of the period
+    [Name("TimeTo")] DateTime TimeTo,                                   // End time of the period
+    [Name("ProducedHeat")] double ProducedHeat,                         // Heat produced in MWh
+    [Name("ElectricityProduced")] double ElectricityProduced,           // Added for clarity on electricity produced or consumed
+    [Name("PrimaryEnergyConsumption")] double PrimaryEnergyConsumption, // Primary energy used
+    [Name("Costs")] double Costs,                                       // Production costs, implying net costs considering any profits from electricity generation
+    [Name("CO2Emissions")] double CO2Emissions                          // CO2 emissions in kg
+    );

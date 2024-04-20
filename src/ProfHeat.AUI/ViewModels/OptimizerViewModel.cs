@@ -24,12 +24,14 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ProfHeat.AUI.ViewModels;
 
 public partial class OptimizerViewModel : BaseViewModel
 {
-    private readonly IAssetManager _assetManager = new AssetManager(new XmlRepository(), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "HeatingGrid.config"));
+    private readonly IAssetManager _assetManager = new AssetManager(new XmlRepository(),
+        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "HeatingGrid.config")); // Sets the path to the HeatingGrid.config file
     private readonly ISourceDataManager _sourceDataManager = new SourceDataManager(new CsvRepository());
     private readonly IOptimizer _optimizer = new Optimizer();
     private readonly ObservableCollection<OptimizationResult> _results;
@@ -43,7 +45,8 @@ public partial class OptimizerViewModel : BaseViewModel
         // Initialize fields
         _results = results;
         _grid = _assetManager.LoadAssets();
-        CheckBoxItems = new ObservableCollection<CheckBoxItem>(_assetManager.LoadAssets().ProductionUnits.Select(pu => new CheckBoxItem { Name = pu.Name }));
+        CheckBoxItems = new ObservableCollection<CheckBoxItem>(_assetManager.LoadAssets()
+            .ProductionUnits.Select(pu => new CheckBoxItem(pu.Name)));  // Populate CheckBoxItems with ProductionUnit names
     }
 
     [RelayCommand]
@@ -83,13 +86,13 @@ public partial class OptimizerViewModel : BaseViewModel
         // User selected units
         var selectedUnits = CheckBoxItems.Where(cbi => cbi.IsChecked).Select(cbi => cbi.Name).ToList();
         var newUnits = _grid.ProductionUnits.Where(pu => selectedUnits.Contains(pu.Name)).ToList();
-        var newGrid = new HeatingGrid
-        {
-            Name = _grid.Name,
-            ImagePath = _grid.ImagePath,
-            Buildings = _grid.Buildings,
-            ProductionUnits = newUnits
-        };
+        var newGrid = new HeatingGrid(
+            Name: _grid.Name,
+            ImagePath: _grid.ImagePath,
+            Buildings: _grid.Buildings,
+            ProductionUnits: newUnits
+            );
+
 
         var optimizationResults = _optimizer.Optimize(newGrid, _marketConditions);
 

@@ -16,17 +16,9 @@ using CsvHelper.Configuration.Attributes;
 
 namespace ProfHeat.Core.Models;
 
-public class MarketCondition
-{
-    [Name("TimeFrom")]
-    public DateTime TimeFrom { get; set; }          // Start time of the period
-
-    [Name("TimeTo")]
-    public DateTime TimeTo { get; set; }            // End time of the period
-
-    [Name("HeatDemand")]
-    public double HeatDemand { get; set; }          // The value of the heat demand in MWh
-
-    [Name("ElectricityPrice")]
-    public double ElectricityPrice { get; set; }    // The price of electricity per MWh
-}
+public readonly record struct MarketCondition(
+    [Name("TimeFrom")] DateTime TimeFrom,               // Start time of the period
+    [Name("TimeTo")] DateTime TimeTo,                   // End time of the period
+    [Name("HeatDemand")] double HeatDemand,             // The value of the heat demand in MWh
+    [Name("ElectricityPrice")] double ElectricityPrice  // The price of electricity per MWh
+    );

@@ -17,18 +17,9 @@ using System.Xml.Serialization;
 namespace ProfHeat.Core.Models;
 
 [XmlRoot("HeatingGrid")]
-public class HeatingGrid
-{
-    [XmlElement("Name")]
-    public required string Name { get; set; }
-
-    [XmlElement("ImagePath")]
-    public required string ImagePath { get; set; }
-
-    [XmlElement("Buildings")]
-    public int Buildings { get; set; }
-
-    [XmlArray("ProductionUnits")]
-    [XmlArrayItem("ProductionUnit")]
-    public required List<ProductionUnit> ProductionUnits { get; set; }
-}
+public readonly record struct HeatingGrid(
+    [XmlElement("Name")] string Name,
+    [XmlElement("ImagePath")] string ImagePath,
+    [XmlElement("Buildings")] int Buildings,
+    [XmlArray("ProductionUnits"), XmlArrayItem("ProductionUnit")] List<ProductionUnit> ProductionUnits
+    );

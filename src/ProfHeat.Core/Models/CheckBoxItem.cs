@@ -14,8 +14,8 @@
 
 namespace ProfHeat.Core.Models;
 
-public class CheckBoxItem
+public class CheckBoxItem(string name, bool isChecked = false)
 {
-    public required string Name { get; set; }
-    public bool IsChecked { get; set; }
+    public string Name { get; set; } = name;
+    public bool IsChecked { get; set; } = isChecked;
 }

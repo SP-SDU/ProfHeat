@@ -42,16 +42,15 @@ public class Optimizer : IOptimizer
                 var electricityProduced = (unit.MaxElectricity / unit.MaxHeat) * productionAmount;  // Negative is consumption and Positive is production
                 cost -= electricityProduced * condition.ElectricityPrice;                           // Adjust cost based on electricity produced or consumed
 
-                optimizationResults.Add(new OptimizationResult
-                {
-                    TimeFrom = condition.TimeFrom,
-                    TimeTo = condition.TimeTo,
-                    ProducedHeat = Math.Round(productionAmount, 2),
-                    ElectricityProduced = Math.Round(electricityProduced, 2),
-                    PrimaryEnergyConsumption = Math.Round(primaryEnergyConsumption, 2),
-                    Costs = Math.Round(cost, 2),
-                    CO2Emissions = Math.Round(co2Emissions, 2)
-                });
+                optimizationResults.Add(new OptimizationResult(
+                    TimeFrom: condition.TimeFrom,
+                    TimeTo: condition.TimeTo,
+                    ProducedHeat: Math.Round(productionAmount, 2),
+                    ElectricityProduced: Math.Round(electricityProduced, 2),
+                    PrimaryEnergyConsumption: Math.Round(primaryEnergyConsumption, 2),
+                    Costs: Math.Round(cost, 2),
+                    CO2Emissions: Math.Round(co2Emissions, 2)
+                    ));
 
                 adjustedHeatDemand -= productionAmount;
             }
