@@ -33,14 +33,22 @@
         </ExperimentalAcrylicBorder>
         
             <!-- Tabs -->
-            <ui:TabView x:Name="MainTabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <ui:TabView x:Name="MainTabControl"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        IsAddTabButtonVisible="False"
+                        CanDragTabs="False"
+                        CanReorderTabs="False"
+                        AllowDropTabs="False">
                 <!-- OptimizerView -->
-                <ui:TabViewItem Header="Optimizer">
+                <ui:TabViewItem Header="Optimizer"
+                                IsClosable="False">
                     <v:OptimizerView DataContext="{Binding Optimizer}"/>
                 </ui:TabViewItem>
 
                 <!-- DataVisualizerView -->
-                <ui:TabViewItem Header="Data Visualizer" >
+                <ui:TabViewItem Header="Data Visualizer"
+                                IsClosable="False">
                     <v:DataVisualizerView DataContext="{Binding DataVisualizer}"/>
                 </ui:TabViewItem>
             </ui:TabView>
