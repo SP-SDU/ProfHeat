@@ -15,25 +15,9 @@
         </ResourceDictionary>
     </Styles.Resources>
 
-    <Style Selector="Button#CloseButton, Button#MinimizeButton, Button#MaximizeButton">
-        <Setter Property="Width" Value="30"/>
-        <Setter Property="Height" Value="30"/>
-        <Setter Property="CornerRadius" Value="50"/>
-    </Style>
-    
-    <!-- Style for the Close Button Hover -->
-    <Style Selector="Button#CloseButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="{StaticResource CloseButtonHoverBrush}"/>
-    </Style>
-
-    <!-- Style for the Minimize Button Hover -->
-    <Style Selector="Button#MinimizeButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="{StaticResource MinimizeButtonHoverBrush}"/>
-    </Style>
-
-    <!-- Style for the Maximize Button Hover -->
-    <Style Selector="Button#MaximizeButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="{StaticResource MaximizeButtonHoverBrush}"/>
+    <Style Selector="TabItem > TextBlock">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
     <Style Selector="Button.operationButton">

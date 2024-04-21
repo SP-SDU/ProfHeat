@@ -43,17 +43,22 @@ public class Optimizer : IOptimizer
                 cost -= electricityProduced * condition.ElectricityPrice;                           // Adjust cost based on electricity produced or consumed
 
                 optimizationResults.Add(new OptimizationResult(
-                    TimeFrom: condition.TimeFrom,
-                    TimeTo: condition.TimeTo,
-                    ProducedHeat: Math.Round(productionAmount, 2),
-                    ElectricityProduced: Math.Round(electricityProduced, 2),
-                    PrimaryEnergyConsumption: Math.Round(primaryEnergyConsumption, 2),
-                    Costs: Math.Round(cost, 2),
-                    CO2Emissions: Math.Round(co2Emissions, 2)
+                    condition.TimeFrom,
+                    condition.TimeTo,
+                    Math.Round(productionAmount, 2),
+                    Math.Round(electricityProduced, 2),
+                    Math.Round(primaryEnergyConsumption, 2),
+                    Math.Round(cost, 2),
+                    Math.Round(co2Emissions, 2)
                     ));
 
                 adjustedHeatDemand -= productionAmount;
             }
+        }
+
+        if (optimizationResults.Count == 0)
+        {
+            throw new InvalidOperationException("Optimization failed to produce any results.");
         }
 
         // // Only returns the results that have been optimized, not the turned off units

@@ -22,9 +22,9 @@ public partial class MainWindow : Window
     public MainWindow() => InitializeComponent();
     // Data Context for a MainWindow is set in app.xaml.cs
 
-    private void DraggableArea_PointerPressed(object? sender, PointerPressedEventArgs e)
+    private void DragWindow_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (sender is Border border && e.GetCurrentPoint(border).Properties.IsLeftButtonPressed)
+        if (sender is Window window && e.GetCurrentPoint(window).Properties.IsLeftButtonPressed)
         {
             BeginMoveDrag(e);
         }

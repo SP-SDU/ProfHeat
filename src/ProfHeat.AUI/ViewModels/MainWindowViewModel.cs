@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Avalonia.Controls;
-using CommunityToolkit.Mvvm.Input;
 using ProfHeat.Core.Models;
 using System.Collections.ObjectModel;
 
 namespace ProfHeat.AUI.ViewModels;
 
-public partial class MainWindowViewModel : BaseViewModel
+public class MainWindowViewModel : BaseViewModel
 {
     public OptimizerViewModel Optimizer { get; }
     public DataVisualizerViewModel DataVisualizer { get; }
@@ -31,13 +29,4 @@ public partial class MainWindowViewModel : BaseViewModel
         Optimizer = new OptimizerViewModel(Results);
         DataVisualizer = new DataVisualizerViewModel(Results);
     }
-
-    [RelayCommand]
-    public void MinimizeCommand() => GetMainWindow().WindowState = WindowState.Minimized;
-
-    [RelayCommand]
-    public void MaximizeCommand() => GetMainWindow().WindowState = GetMainWindow().WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
-
-    [RelayCommand]
-    public void CloseCommand() => GetMainWindow().Close();
 }

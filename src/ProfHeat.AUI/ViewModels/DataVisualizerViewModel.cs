@@ -28,6 +28,19 @@ public partial class DataVisualizerViewModel : BaseViewModel
 {
     private readonly IResultDataManager _ResultDataManager = new ResultDataManager(new CsvRepository());
     private readonly ObservableCollection<OptimizationResult> _results;
+    private readonly FilePickerSaveOptions _saveCsvFileOptions = new()
+    {
+        Title = "Save CSV File",
+        SuggestedFileName = $"Results_{Path.GetRandomFileName()}",
+        DefaultExtension = "csv",
+        FileTypeChoices = [
+                new("CSV Files (Invariant Culture)")
+                {
+                    Patterns = ["*.csv"],
+                    AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
+                    MimeTypes = ["text/csv"]
+                }]
+    };
 
     public DataVisualizerViewModel(ObservableCollection<OptimizationResult> results)
     {
@@ -38,34 +51,12 @@ public partial class DataVisualizerViewModel : BaseViewModel
     public async Task ExportResultsCommand()
     {
         var results = new List<OptimizationResult>(_results);
-        var options = new FilePickerSaveOptions
-        {
-            Title = "Save CSV File",
-            SuggestedFileName = $"Results_{Path.GetRandomFileName()}",
-            DefaultExtension = "csv",
-            FileTypeChoices = [
-                new("CSV Files (Invariant Culture)")
-                {
-                    Patterns = ["*.csv"],
-                    AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
-                    MimeTypes = ["text/csv"]
-                }]
-        };
+        var filePicker = await GetMainWindow().StorageProvider.SaveFilePickerAsync(_saveCsvFileOptions);
+        var filePath = filePicker!.TryGetLocalPath();
 
-        var files = await GetMainWindow().StorageProvider.SaveFilePickerAsync(options);
-
-        if (files == null)
+        if (filePath != null)
         {
-            return;
+            _ResultDataManager.SaveResultData(results, filePath!);
         }
-
-        var filePath = files.TryGetLocalPath();
-
-        if (filePath == null)
-        {
-            return;
-        }
-
-        _ResultDataManager.SaveResultData(results, filePath!);
     }
 }

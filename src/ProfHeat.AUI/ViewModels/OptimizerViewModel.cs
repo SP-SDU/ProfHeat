@@ -24,7 +24,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace ProfHeat.AUI.ViewModels;
 
@@ -37,6 +36,18 @@ public partial class OptimizerViewModel : BaseViewModel
     private readonly ObservableCollection<OptimizationResult> _results;
     private readonly HeatingGrid _grid;                             // Static grid
     private readonly List<MarketCondition> _marketConditions = [];  // Dynamically loaded Market data
+    private readonly FilePickerOpenOptions _openCsvFileOptions = new()
+    {
+        Title = "Open CSV File",
+        AllowMultiple = false,
+        FileTypeFilter = [
+                new("CSV Files (Invariant Culture)")
+                {
+                    Patterns = ["*.csv"],
+                    AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
+                    MimeTypes = ["text/csv"]
+                }]
+    };
 
     public ObservableCollection<CheckBoxItem> CheckBoxItems { get; }
 
@@ -52,54 +63,30 @@ public partial class OptimizerViewModel : BaseViewModel
     [RelayCommand]
     public async Task ImportDataCommand()
     {
-        var options = new FilePickerOpenOptions
-        {
-            Title = "Open CSV File",
-            AllowMultiple = false,
-            FileTypeFilter = [
-                new("CSV Files (Invariant Culture)")
-                {
-                    Patterns = ["*.csv"],
-                    AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
-                    MimeTypes = ["text/csv"]
-                }]
-        };
+        var filePicker = await GetMainWindow().StorageProvider.OpenFilePickerAsync(_openCsvFileOptions);    // Select file in File Explorer
+        var filePaths = filePicker.Select(file => file.TryGetLocalPath()).ToList();
 
-        // Trigger file picker interaction
-        var filePaths = (await GetMainWindow().StorageProvider.OpenFilePickerAsync(options))
-            .Select(file => file.TryGetLocalPath())
-            .ToArray();
-
-        if (filePaths.Length == 0)
+        if (filePaths.Count != 0)
         {
-            return;
+            _marketConditions.Clear();
+            _marketConditions.AddRange(_sourceDataManager.LoadSourceData(filePaths[0]!));   // Load the source data
         }
-
-        // Load the source data
-        _marketConditions.Clear();
-        _marketConditions.AddRange(_sourceDataManager.LoadSourceData(filePaths[0]!));
     }
 
     [RelayCommand]
     public void OptimizeCommand()
     {
-        // User selected units
+        // Getting check marked Production Units
         var selectedUnits = CheckBoxItems.Where(cbi => cbi.IsChecked).Select(cbi => cbi.Name).ToList();
         var newUnits = _grid.ProductionUnits.Where(pu => selectedUnits.Contains(pu.Name)).ToList();
         var newGrid = new HeatingGrid(
-            Name: _grid.Name,
-            ImagePath: _grid.ImagePath,
-            Buildings: _grid.Buildings,
-            ProductionUnits: newUnits
+            _grid.Name,
+            _grid.ImagePath,
+            _grid.Buildings,
+            newUnits
             );
 
-
         var optimizationResults = _optimizer.Optimize(newGrid, _marketConditions);
-
-        if (optimizationResults.Count == 0)
-        {
-            throw new InvalidOperationException("Optimization failed to produce any results.");
-        }
 
         _results.Clear();
         optimizationResults.ForEach(_results.Add);
