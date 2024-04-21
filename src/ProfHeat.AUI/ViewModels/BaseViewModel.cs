@@ -15,7 +15,6 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ProfHeat.AUI.ViewModels;
 

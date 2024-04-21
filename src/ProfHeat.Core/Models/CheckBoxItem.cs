@@ -14,8 +14,12 @@
 
 namespace ProfHeat.Core.Models;
 
-public class CheckBoxItem(string name, bool isChecked = false)
+public partial class CheckBoxItem(string name, Action isCheckedChanged) : ObservableObject
 {
+    [ObservableProperty]
+    private bool _isChecked;
+
     public string Name { get; set; } = name;
-    public bool IsChecked { get; set; } = isChecked;
+
+    partial void OnIsCheckedChanged(bool value) => isCheckedChanged?.Invoke();
 }

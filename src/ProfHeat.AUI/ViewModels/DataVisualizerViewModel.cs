@@ -13,21 +13,15 @@
 // limitations under the License.
 
 using Avalonia.Platform.Storage;
-using CommunityToolkit.Mvvm.Input;
 using ProfHeat.Core.Models;
 using ProfHeat.DAL.Interfaces;
 using ProfHeat.DAL.Repositories;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace ProfHeat.AUI.ViewModels;
 
 public partial class DataVisualizerViewModel : BaseViewModel
 {
     private readonly IResultDataManager _ResultDataManager = new ResultDataManager(new CsvRepository());
-    private readonly ObservableCollection<OptimizationResult> _results;
     private readonly FilePickerSaveOptions _saveCsvFileOptions = new()
     {
         Title = "Save CSV File",
@@ -42,21 +36,31 @@ public partial class DataVisualizerViewModel : BaseViewModel
                 }]
     };
 
-    public DataVisualizerViewModel(ObservableCollection<OptimizationResult> results)
+    [ObservableProperty, NotifyCanExecuteChangedFor(nameof(ExportResultsCommand))]
+    private List<OptimizationResult> _results;
+
+    private bool CanExport() => Results.Count > 0;
+
+    public DataVisualizerViewModel(List<OptimizationResult> results)
     {
-        _results = results;
+        Results = results;
     }
 
-    [RelayCommand]
-    public async Task ExportResultsCommand()
+    [RelayCommand(CanExecute = nameof(CanExport))]
+    public async Task ExportResults()
     {
-        var results = new List<OptimizationResult>(_results);
         var filePicker = await GetMainWindow().StorageProvider.SaveFilePickerAsync(_saveCsvFileOptions);
+
+        if (filePicker == null)
+        {
+            return;
+        }
+
         var filePath = filePicker!.TryGetLocalPath();
 
         if (filePath != null)
         {
-            _ResultDataManager.SaveResultData(results, filePath!);
+            _ResultDataManager.SaveResultData(Results, filePath!);
         }
     }
 }

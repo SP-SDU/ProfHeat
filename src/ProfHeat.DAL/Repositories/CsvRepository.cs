@@ -14,8 +14,6 @@
 
 using CsvHelper;
 using ProfHeat.DAL.Interfaces;
-using System.Collections;
-using System.Globalization;
 
 namespace ProfHeat.DAL.Repositories;
 

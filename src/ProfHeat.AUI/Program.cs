@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using Avalonia;
-using System;
 
 namespace ProfHeat.AUI;
 

@@ -13,17 +13,10 @@
 // limitations under the License.
 
 using Avalonia.Platform.Storage;
-using CommunityToolkit.Mvvm.Input;
 using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
 using ProfHeat.DAL.Interfaces;
 using ProfHeat.DAL.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProfHeat.AUI.ViewModels;
 
@@ -33,9 +26,9 @@ public partial class OptimizerViewModel : BaseViewModel
         Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "HeatingGrid.config")); // Sets the path to the HeatingGrid.config file
     private readonly ISourceDataManager _sourceDataManager = new SourceDataManager(new CsvRepository());
     private readonly IOptimizer _optimizer = new Optimizer();
-    private readonly ObservableCollection<OptimizationResult> _results;
     private readonly HeatingGrid _grid;                             // Static grid
     private readonly List<MarketCondition> _marketConditions = [];  // Dynamically loaded Market data
+    private readonly List<OptimizationResult> _results;
     private readonly FilePickerOpenOptions _openCsvFileOptions = new()
     {
         Title = "Open CSV File",
@@ -48,20 +41,21 @@ public partial class OptimizerViewModel : BaseViewModel
                     MimeTypes = ["text/csv"]
                 }]
     };
+    private bool CanOptimize() => _marketConditions.Count > 0 && CheckBoxItems.Any(cbi => cbi.IsChecked);
 
     public ObservableCollection<CheckBoxItem> CheckBoxItems { get; }
 
-    public OptimizerViewModel(ObservableCollection<OptimizationResult> results)
+    public OptimizerViewModel(List<OptimizationResult> results)
     {
         // Initialize fields
         _results = results;
         _grid = _assetManager.LoadAssets();
         CheckBoxItems = new ObservableCollection<CheckBoxItem>(_assetManager.LoadAssets()
-            .ProductionUnits.Select(pu => new CheckBoxItem(pu.Name)));  // Populate CheckBoxItems with ProductionUnit names
+            .ProductionUnits.Select(pu => new CheckBoxItem(pu.Name, () => OptimizeCommand.NotifyCanExecuteChanged())));  // Populate CheckBoxItems with ProductionUnit names
     }
 
     [RelayCommand]
-    public async Task ImportDataCommand()
+    public async Task ImportData()
     {
         var filePicker = await GetMainWindow().StorageProvider.OpenFilePickerAsync(_openCsvFileOptions);    // Select file in File Explorer
         var filePaths = filePicker.Select(file => file.TryGetLocalPath()).ToList();
@@ -70,11 +64,12 @@ public partial class OptimizerViewModel : BaseViewModel
         {
             _marketConditions.Clear();
             _marketConditions.AddRange(_sourceDataManager.LoadSourceData(filePaths[0]!));   // Load the source data
+            OptimizeCommand.NotifyCanExecuteChanged();
         }
     }
 
-    [RelayCommand]
-    public void OptimizeCommand()
+    [RelayCommand(CanExecute = nameof(CanOptimize))]
+    public void Optimize()
     {
         // Getting check marked Production Units
         var selectedUnits = CheckBoxItems.Where(cbi => cbi.IsChecked).Select(cbi => cbi.Name).ToList();
@@ -89,6 +84,6 @@ public partial class OptimizerViewModel : BaseViewModel
         var optimizationResults = _optimizer.Optimize(newGrid, _marketConditions);
 
         _results.Clear();
-        optimizationResults.ForEach(_results.Add);
+        _results.AddRange(optimizationResults);
     }
 }

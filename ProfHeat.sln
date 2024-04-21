@@ -17,13 +17,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfHeat.DAL.Tests", "tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfHeat.AUI", "src\ProfHeat.AUI\ProfHeat.AUI.csproj", "{D3C6FE5E-CEF1-4A30-8F3B-1E20FC18E273}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfHeat.AUI.Tests", "tests\ProfHeat.AUI.Tests\ProfHeat.AUI.Tests.csproj", "{5664AC86-5CC9-46FA-ABAC-653AA323323D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfHeat.AUI.Tests", "tests\ProfHeat.AUI.Tests\ProfHeat.AUI.Tests.csproj", "{5664AC86-5CC9-46FA-ABAC-653AA323323D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E9DF8A9F-468A-43A8-8074-5068082EA682}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		Directory.Build.props = Directory.Build.props
 		global.json = global.json
 		LICENSE = LICENSE
 		OpenCode.vbs = OpenCode.vbs

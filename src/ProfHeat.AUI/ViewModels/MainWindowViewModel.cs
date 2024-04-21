@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using ProfHeat.Core.Models;
-using System.Collections.ObjectModel;
 
 namespace ProfHeat.AUI.ViewModels;
 
@@ -22,7 +21,7 @@ public class MainWindowViewModel : BaseViewModel
     public OptimizerViewModel Optimizer { get; }
     public DataVisualizerViewModel DataVisualizer { get; }
 
-    public ObservableCollection<OptimizationResult> Results { get; set; } = [];
+    public List<OptimizationResult> Results { get; set; } = [];
 
     public MainWindowViewModel()
     {
