@@ -3,6 +3,7 @@
         xmlns:vm="using:ProfHeat.AUI.ViewModels"
         xmlns:v="using:ProfHeat.AUI.Views"
         xmlns:m="using:ProfHeat.Core.Models"
+        xmlns:ui="using:FluentAvalonia.UI.Controls"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="420"
@@ -27,24 +28,22 @@
                     BackgroundSource="Digger"
                     TintColor="Black"
                     TintOpacity="1"
-                    MaterialOpacity="0.65" />
+                    MaterialOpacity="0.40" />
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-
-        
         
             <!-- Tabs -->
-            <TabControl x:Name="MainTabControl" Grid.Column="0">
+            <ui:TabView x:Name="MainTabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <!-- OptimizerView -->
-                <TabItem Header="Optimizer">
+                <ui:TabViewItem Header="Optimizer">
                     <v:OptimizerView DataContext="{Binding Optimizer}"/>
-                </TabItem>
+                </ui:TabViewItem>
 
                 <!-- DataVisualizerView -->
-                <TabItem Header="Data Visualizer" >
+                <ui:TabViewItem Header="Data Visualizer" >
                     <v:DataVisualizerView DataContext="{Binding DataVisualizer}"/>
-                </TabItem>
-            </TabControl>
+                </ui:TabViewItem>
+            </ui:TabView>
           
     </Panel>
     
