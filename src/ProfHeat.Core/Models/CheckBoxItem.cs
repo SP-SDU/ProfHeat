@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ProfHeat.Core.Models;
 
-public class CheckBoxItem(string name, bool isChecked = false)
+public partial class CheckBoxItem(string name, Action isCheckedChanged) : ObservableObject
 {
+    [ObservableProperty]
+    private bool _isChecked;
+
     public string Name { get; set; } = name;
-    public bool IsChecked { get; set; } = isChecked;
+
+    partial void OnIsCheckedChanged(bool value) => isCheckedChanged?.Invoke();
 }

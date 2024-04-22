@@ -15,7 +15,6 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using ProfHeat.AUI.ViewModels;
-using System;
 
 namespace ProfHeat.AUI;
 public class ViewLocator : IDataTemplate

@@ -12,27 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using ProfHeat.Core.Models;
-using ProfHeat.DAL.Interfaces;
+using ProfHeat.Core.Interfaces;
 using System.Xml.Serialization;
 
-namespace ProfHeat.DAL.Repositories;
+namespace ProfHeat.Core.Repositories;
 
-public class AssetManager(string filePath) : IAssetManager
+public class XmlRepository : IRepository
 {
-    public HeatingGrid LoadAssets()
+    public T Load<T>(string filePath)
     {
-        var serializer = new XmlSerializer(typeof(HeatingGrid));
+        var serializer = new XmlSerializer(typeof(T));
         using var reader = new StreamReader(filePath);
-        var result = serializer.Deserialize(reader);
-
-        return result as HeatingGrid ?? throw new IOException("Failed to load assets.");
+        var result = serializer.Deserialize(reader) ?? throw new InvalidOperationException("Deserialization returned null.");
+        return (T) result;
     }
 
-    public void SaveAssets(HeatingGrid grid)
+    public void Save<T>(T data, string filePath)
     {
-        var serializer = new XmlSerializer(typeof(HeatingGrid));
+        var serializer = new XmlSerializer(typeof(T));
         using var writer = new StreamWriter(filePath);
-        serializer.Serialize(writer, grid);
+        serializer.Serialize(writer, data);
     }
 }

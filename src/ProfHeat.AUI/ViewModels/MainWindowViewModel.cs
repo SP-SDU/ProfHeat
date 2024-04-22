@@ -12,11 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using ProfHeat.Core.Models;
+
 namespace ProfHeat.AUI.ViewModels;
 
 public class MainWindowViewModel : BaseViewModel
 {
-    public OptimizerViewModel Optimizer { get; } = new OptimizerViewModel();
+    public OptimizerViewModel Optimizer { get; }
+    public DataVisualizerViewModel DataVisualizer { get; }
 
-    public DataVisualizerViewModel DataVisualizer { get; } = new DataVisualizerViewModel();
+    public List<OptimizationResult> Results { get; set; } = [];
+
+    public MainWindowViewModel()
+    {
+        Optimizer = new OptimizerViewModel(Results);
+        DataVisualizer = new DataVisualizerViewModel(Results);
+    }
 }

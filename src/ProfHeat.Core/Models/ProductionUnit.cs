@@ -16,31 +16,13 @@ using System.Xml.Serialization;
 
 namespace ProfHeat.Core.Models;
 
-
 [XmlRoot("ProductionUnit")]
-public class ProductionUnit
-{
-    [XmlAttribute("Id")]
-    public Guid Id { get; set; } = Guid.NewGuid();  // Unique identifier
-
-    [XmlElement("Name")]
-    public string Name { get; set; }                // Name of the heating unit
-
-    [XmlElement("ImagePath")]
-    public string ImagePath { get; set; }           // Path to the image of the heating unit
-
-    [XmlElement("MaxHeat")]
-    public double MaxHeat { get; set; }             // Maximum heat output in MWh
-
-    [XmlElement("ProductionCost")]
-    public double ProductionCost { get; set; }      // Production cost in currency per MWh
-
-    [XmlElement("CO2Emission")]
-    public double CO2Emission { get; set; }         // CO2 emissions in kg per MWh
-
-    [XmlElement("GasConsumption")]
-    public double GasConsumption { get; set; }      // Gas consumption in units
-
-    [XmlElement("MaxElectricity")]
-    public double MaxElectricity { get; set; }      // Maximum electricity output in MWh
-}
+public readonly record struct ProductionUnit(
+    [XmlElement("Name")] string Name,                       // Name of the heating unit
+    [XmlElement("ImagePath")] string ImagePath,             // Path to the image of the heating unit
+    [XmlElement("MaxHeat")] double MaxHeat,                 // Maximum heat output in MWh
+    [XmlElement("ProductionCost")] double ProductionCost,   // Production cost in currency per MWh
+    [XmlElement("CO2Emissions")] double CO2Emissions,       // CO2 emissions in kg per MWh
+    [XmlElement("GasConsumption")] double GasConsumption,   // Gas consumption in units
+    [XmlElement("MaxElectricity")] double MaxElectricity    // Maximum electricity output in MWh
+    );

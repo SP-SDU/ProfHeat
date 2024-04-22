@@ -12,11 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Avalonia.Controls;
+using ProfHeat.Core.Interfaces;
+using ProfHeat.Core.Models;
 
-namespace ProfHeat.AUI.Views;
+namespace ProfHeat.Core.Repositories;
 
-public partial class OptimizerView : UserControl
+public class SourceDataManager(IRepository repository) : ISourceDataManager
 {
-    public OptimizerView() => InitializeComponent();
+    public List<MarketCondition> LoadSourceData(string filePath) => repository.Load<List<MarketCondition>>(filePath).ToList();
+
+    public void SaveSourceData(List<MarketCondition> data, string filePath) => repository.Save(data, filePath);
+
+    // Note Use API repository here
 }

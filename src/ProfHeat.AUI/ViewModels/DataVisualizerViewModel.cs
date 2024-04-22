@@ -12,16 +12,55 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Avalonia.Platform.Storage;
+using ProfHeat.Core.Interfaces;
+using ProfHeat.Core.Models;
+using ProfHeat.Core.Repositories;
 
 namespace ProfHeat.AUI.ViewModels;
 
-public class DataVisualizerViewModel : BaseViewModel
+public partial class DataVisualizerViewModel : BaseViewModel
 {
-    // Display data as graphs and charts
-    // Maybe an Import results button
+    private readonly IResultDataManager _ResultDataManager = new ResultDataManager(new CsvRepository());
+    private readonly FilePickerSaveOptions _saveCsvFileOptions = new()
+    {
+        Title = "Save CSV File",
+        SuggestedFileName = $"Results_{Path.GetRandomFileName()}",
+        DefaultExtension = "csv",
+        FileTypeChoices = [
+                new("CSV Files (Invariant Culture)")
+                {
+                    Patterns = ["*.csv"],
+                    AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
+                    MimeTypes = ["text/csv"]
+                }]
+    };
+
+    [ObservableProperty, NotifyCanExecuteChangedFor(nameof(ExportResultsCommand))]
+    private List<OptimizationResult> _results;
+
+    private bool CanExport() => Results.Count > 0;
+
+    public DataVisualizerViewModel(List<OptimizationResult> results)
+    {
+        Results = results;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanExport))]
+    public async Task ExportResults()
+    {
+        var filePicker = await GetMainWindow().StorageProvider.SaveFilePickerAsync(_saveCsvFileOptions);
+
+        if (filePicker == null)
+        {
+            return;
+        }
+
+        var filePath = filePicker!.TryGetLocalPath();
+
+        if (filePath != null)
+        {
+            _ResultDataManager.SaveResultData(Results, filePath!);
+        }
+    }
 }

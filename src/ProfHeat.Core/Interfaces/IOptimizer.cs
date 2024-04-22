@@ -13,16 +13,9 @@
 // limitations under the License.
 
 using ProfHeat.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ProfHeat.DAL.Interfaces;
-
-public interface IResultDataManager
+namespace ProfHeat.Core.Interfaces;
+public interface IOptimizer
 {
-    List<OptimizationResult> LoadResultData(string filePath);
-    void SaveResultData(List<OptimizationResult> data, string filePath);
+    List<OptimizationResult> Optimize(HeatingGrid grid, List<MarketCondition> MarketConditions);
 }

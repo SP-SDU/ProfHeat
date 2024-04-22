@@ -13,10 +13,20 @@
 // limitations under the License.
 
 using Avalonia.Controls;
+using Avalonia.Input;
 
 namespace ProfHeat.AUI.Views;
 
 public partial class MainWindow : Window
 {
     public MainWindow() => InitializeComponent();
+    // Data Context for a MainWindow is set in app.xaml.cs
+
+    private void DragWindow_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (sender is Window window && e.GetCurrentPoint(window).Properties.IsLeftButtonPressed)
+        {
+            BeginMoveDrag(e);
+        }
+    }
 }

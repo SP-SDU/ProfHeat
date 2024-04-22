@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Avalonia.Controls;
+namespace ProfHeat.Core.Interfaces;
 
-namespace ProfHeat.AUI.Views;
-
-public partial class OptimizerView : UserControl
+public interface IRepository
 {
-    public OptimizerView() => InitializeComponent();
+    T Load<T>(string filePath);
+    void Save<T>(T data, string filePath);
 }

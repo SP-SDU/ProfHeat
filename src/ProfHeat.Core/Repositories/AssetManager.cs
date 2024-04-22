@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ProfHeat.DAL.Interfaces;
+namespace ProfHeat.Core.Repositories;
 
-public interface IAssetManager
+public class AssetManager(IRepository repository, string filePath) : IAssetManager
 {
-    HeatingGrid LoadAssets();
-    void SaveAssets(HeatingGrid grid);
+    public HeatingGrid LoadAssets() => repository.Load<HeatingGrid>(filePath);
+
+    public void SaveAssets(HeatingGrid grid) => repository.Save(grid, filePath);
 }

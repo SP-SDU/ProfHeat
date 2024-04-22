@@ -3,23 +3,56 @@
         xmlns:vm="using:ProfHeat.AUI.ViewModels"
         xmlns:v="using:ProfHeat.AUI.Views"
         xmlns:m="using:ProfHeat.Core.Models"
+        xmlns:ui="using:FluentAvalonia.UI.Controls"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="420"
         x:Class="ProfHeat.AUI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/icon.ico"
-        Title="ProfHeat">
+        Icon="/Assets/Images/Icon.ico"
+        Title="ProfHeat"
+        WindowStartupLocation="CenterOwner"
+        ExtendClientAreaToDecorationsHint="True"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        PointerPressed="DragWindow_PointerPressed">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <StackPanel>
-        <v:OptimizerView/>
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.40" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+        
+            <!-- Tabs -->
+            <ui:TabView x:Name="MainTabControl"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        IsAddTabButtonVisible="False"
+                        CanDragTabs="False"
+                        CanReorderTabs="False"
+                        AllowDropTabs="False">
+                <!-- OptimizerView -->
+                <ui:TabViewItem Header="Optimizer"
+                                IsClosable="False">
+                    <v:OptimizerView DataContext="{Binding Optimizer}"/>
+                </ui:TabViewItem>
 
-        <!-- Should be a different tab -->
-        <v:DataVisualizerView/>
-    </StackPanel>
-
+                <!-- DataVisualizerView -->
+                <ui:TabViewItem Header="Data Visualizer"
+                                IsClosable="False">
+                    <v:DataVisualizerView DataContext="{Binding DataVisualizer}"/>
+                </ui:TabViewItem>
+            </ui:TabView>
+          
+    </Panel>
+    
 </Window>

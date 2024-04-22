@@ -1,0 +1,14 @@
+<Project>
+  <ItemGroup>
+    <Using Include="System" />
+    <Using Include="System.Collections.Generic" />
+    <Using Include="System.Collections"/>
+    <Using Include="System.Collections.ObjectModel" />
+    <Using Include="System.Linq" />
+    <Using Include="System.IO"/>
+    <Using Include="System.Threading.Tasks" />
+    <Using Include="System.Globalization" />
+    <Using Include="CommunityToolkit.Mvvm.ComponentModel" />
+    <Using Include="CommunityToolkit.Mvvm.Input" />
+  </ItemGroup>
+</Project>

@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Avalonia.Controls;
+using ProfHeat.Core.Models;
 
-namespace ProfHeat.AUI.Views;
+namespace ProfHeat.Core.Interfaces;
 
-public partial class OptimizerView : UserControl
+public interface IAssetManager
 {
-    public OptimizerView() => InitializeComponent();
+    HeatingGrid LoadAssets();
+    void SaveAssets(HeatingGrid grid);
 }

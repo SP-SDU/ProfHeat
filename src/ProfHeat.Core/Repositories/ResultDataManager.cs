@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
 
-namespace ProfHeat.DAL.Interfaces;
+namespace ProfHeat.Core.Repositories;
 
-public interface ISourceDataManager
+public class ResultDataManager(IRepository repository) : IResultDataManager
 {
-    List<MarketCondition> LoadSourceData(string filePath);
-    void SaveSourceData(List<MarketCondition> data, string filePath);
+    public List<OptimizationResult> LoadResultData(string filePath) => repository.Load<List<OptimizationResult>>(filePath).ToList();
+
+    public void SaveResultData(List<OptimizationResult> data, string filePath) => repository.Save(data, filePath);
 }

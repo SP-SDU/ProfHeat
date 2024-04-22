@@ -12,27 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
+using CsvHelper.Configuration.Attributes;
 
 namespace ProfHeat.Core.Models;
 
-[XmlRoot("MarketCondition")]
-public class MarketCondition()
-{
-    [XmlElement("TimeFrom")]
-    public DateTime TimeFrom { get; set; }          // Start time of the period
-
-    [XmlElement("TimeTo")]
-    public DateTime TimeTo { get; set; }            // End time of the period
-
-    [XmlElement("HeatDemand")]
-    public double HeatDemand { get; set; }          // The value of the heat demand in MWh
-
-    [XmlElement("ElectricityPrice")]
-    public double ElectricityPrice { get; set; }    // The price of electricity per MWh
-}
+public readonly record struct MarketCondition(
+    [Name("TimeFrom")] DateTime TimeFrom,               // Start time of the period
+    [Name("TimeTo")] DateTime TimeTo,                   // End time of the period
+    [Name("HeatDemand")] double HeatDemand,             // The value of the heat demand in MWh
+    [Name("ElectricityPrice")] double ElectricityPrice  // The price of electricity per MWh
+    );

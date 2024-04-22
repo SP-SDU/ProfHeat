@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace ProfHeat.DAL.Tests.RepositoriesTests;
+using ProfHeat.Core.Models;
 
-public class UnitTest1
+namespace ProfHeat.Core.Interfaces;
+
+public interface IResultDataManager
 {
-    [Fact]
-    public void Test1()
-    {
-
-    }
+    List<OptimizationResult> LoadResultData(string filePath);
+    void SaveResultData(List<OptimizationResult> data, string filePath);
 }
