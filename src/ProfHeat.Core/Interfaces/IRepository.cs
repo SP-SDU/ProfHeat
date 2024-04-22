@@ -12,12 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using ProfHeat.Core.Models;
+namespace ProfHeat.Core.Interfaces;
 
-namespace ProfHeat.DAL.Interfaces;
-
-public interface ISourceDataManager
+public interface IRepository
 {
-    List<MarketCondition> LoadSourceData(string filePath);
-    void SaveSourceData(List<MarketCondition> data, string filePath);
+    T Load<T>(string filePath);
+    void Save<T>(T data, string filePath);
 }

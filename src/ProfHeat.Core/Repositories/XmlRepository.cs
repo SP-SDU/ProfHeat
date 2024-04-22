@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using ProfHeat.DAL.Interfaces;
+using ProfHeat.Core.Interfaces;
 using System.Xml.Serialization;
 
-namespace ProfHeat.DAL.Repositories;
+namespace ProfHeat.Core.Repositories;
 
 public class XmlRepository : IRepository
 {

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using CsvHelper;
-using ProfHeat.DAL.Interfaces;
+using ProfHeat.Core.Interfaces;
 
-namespace ProfHeat.DAL.Repositories;
+namespace ProfHeat.Core.Repositories;
 
 // Works for both single objects and collections but not for nested collections due to Csv not supporting it
 // Uses international/American delimiter settings
@@ -55,18 +55,17 @@ public class CsvRepository : IRepository
         using var writer = new StreamWriter(filePath);
         using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
 
-        if (data is IEnumerable and not string)
-        {
-            csv.WriteRecords((IEnumerable) data);
-        }
-        else
+        if (data is not IEnumerable)
         {
             csv.WriteRecord(data);
             csv.NextRecord();
         }
+        else
+        {
+            csv.WriteRecords((IEnumerable) data);
+        }
     }
 
-
-    private static bool IsCollection(Type type) => type.IsGenericType && type.GetInterfaces()
-        .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>));
+    private static bool IsCollection(Type type) => type.IsGenericType && type.GetInterfaces().ToList()
+        .Exists(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>));
 }

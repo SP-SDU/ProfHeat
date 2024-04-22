@@ -13,15 +13,11 @@
 // limitations under the License.
 
 using ProfHeat.Core.Models;
-using ProfHeat.DAL.Interfaces;
 
-namespace ProfHeat.DAL.Repositories;
+namespace ProfHeat.Core.Interfaces;
 
-public class SourceDataManager(IRepository repository) : ISourceDataManager
+public interface IAssetManager
 {
-    public List<MarketCondition> LoadSourceData(string filePath) => repository.Load<List<MarketCondition>>(filePath).ToList();
-
-    public void SaveSourceData(List<MarketCondition> data, string filePath) => repository.Save(data, filePath);
-
-    // Note Use API repository here
+    HeatingGrid LoadAssets();
+    void SaveAssets(HeatingGrid grid);
 }

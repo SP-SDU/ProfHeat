@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace ProfHeat.DAL.Interfaces;
+using ProfHeat.Core.Models;
 
-public interface IRepository
+namespace ProfHeat.Core.Interfaces;
+
+public interface IResultDataManager
 {
-    T Load<T>(string filePath);
-    void Save<T>(T data, string filePath);
+    List<OptimizationResult> LoadResultData(string filePath);
+    void SaveResultData(List<OptimizationResult> data, string filePath);
 }

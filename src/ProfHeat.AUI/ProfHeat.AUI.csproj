@@ -25,6 +25,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProfHeat.Core\ProfHeat.Core.csproj" />
-    <ProjectReference Include="..\ProfHeat.DAL\ProfHeat.DAL.csproj" />
   </ItemGroup>
 </Project>

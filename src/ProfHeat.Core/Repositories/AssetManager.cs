@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
 
-namespace ProfHeat.DAL.Interfaces;
+namespace ProfHeat.Core.Repositories;
 
-public interface IResultDataManager
+public class AssetManager(IRepository repository, string filePath) : IAssetManager
 {
-    List<OptimizationResult> LoadResultData(string filePath);
-    void SaveResultData(List<OptimizationResult> data, string filePath);
+    public HeatingGrid LoadAssets() => repository.Load<HeatingGrid>(filePath);
+
+    public void SaveAssets(HeatingGrid grid) => repository.Save(grid, filePath);
 }

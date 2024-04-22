@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using Avalonia.Platform.Storage;
+using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
-using ProfHeat.DAL.Interfaces;
-using ProfHeat.DAL.Repositories;
+using ProfHeat.Core.Repositories;
 
 namespace ProfHeat.AUI.ViewModels;
 
