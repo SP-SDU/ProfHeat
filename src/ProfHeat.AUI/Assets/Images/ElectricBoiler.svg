@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1"
+   width="1024"
+   height="1024"
+   viewBox="0 0 1024 1024"
+   sodipodi:docname="_20c35761-0679-4362-9b3d-01a40d55b57a.jpg"
+   inkscape:export-filename="..\Documents\GitHub\OptiHeat\src\ProfHeat.AUI\Assets\Images\GasBoiler.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g1">
+    <path
+       sodipodi:type="star"
+       style="fill:#ffcc00;stroke-width:37.7953;paint-order:fill markers stroke"
+       id="path5"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="678.89105"
+       sodipodi:cy="373.80994"
+       sodipodi:r1="204.58549"
+       sodipodi:r2="149.62621"
+       sodipodi:arg1="-0.34989753"
+       sodipodi:arg2="0.69729997"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 871.08027,303.67771 643.53273,575.31679 522.06015,242.4353 Z"
+       inkscape:transform-center-x="-5.3822745"
+       inkscape:transform-center-y="89.270253"
+       transform="matrix(-0.37906663,-0.22999069,-0.83365232,1.3740111,1102.6699,264.11114)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#ffcc00;stroke-width:37.7953;paint-order:fill markers stroke"
+       id="path5-5"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="678.89105"
+       sodipodi:cy="373.80994"
+       sodipodi:r1="204.58549"
+       sodipodi:r2="149.62621"
+       sodipodi:arg1="-0.34989753"
+       sodipodi:arg2="0.69729997"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 871.08027,303.67771 643.53273,575.31679 522.06015,242.4353 Z"
+       inkscape:transform-center-x="6.6630584"
+       inkscape:transform-center-y="-89.183822"
+       transform="matrix(0.38232883,0.22452594,0.81384411,-1.3858357,-40.92293,802.04779)" />
+  </g>
+</svg>

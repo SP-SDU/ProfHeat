@@ -49,8 +49,9 @@ public partial class OptimizerViewModel : BaseViewModel
         // Initialize fields
         _results = results;
         _grid = _assetManager.LoadAssets();
-        CheckBoxItems = new ObservableCollection<CheckBoxItem>(_assetManager.LoadAssets()
-            .ProductionUnits.Select(pu => new CheckBoxItem(pu.Name, () => OptimizeCommand.NotifyCanExecuteChanged())));  // Populate CheckBoxItems with ProductionUnit names
+        CheckBoxItems = new ObservableCollection<CheckBoxItem>(
+            _grid.ProductionUnits
+            .Select(pu => new CheckBoxItem(pu.Name, pu.ImagePath, () => OptimizeCommand.NotifyCanExecuteChanged())));  // Populate CheckBoxItems with ProductionUnit names
     }
 
     [RelayCommand]

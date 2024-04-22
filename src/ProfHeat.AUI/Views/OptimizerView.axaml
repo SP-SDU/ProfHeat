@@ -5,29 +5,36 @@
              xmlns:vm="using:ProfHeat.AUI.ViewModels"
              xmlns:v="using:ProfHeat.AUI.Views"
              xmlns:m="using:ProfHeat.Core.Models"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="800" Height="450"
              x:Class="ProfHeat.AUI.Views.OptimizerView"
              x:DataType="vm:OptimizerViewModel">
 
-    <Grid ColumnDefinitions="Auto,*">
-        <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="20">
-            <Button CornerRadius="5" Margin="0,30,0,0" Content="Import Data" Command="{Binding ImportDataCommand}" />
+    <Grid ColumnDefinitions="Auto,Auto">
+        <StackPanel Grid.Column="0" Width="200" Margin="100,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button CornerRadius="5" Margin="0,0,0,30" Content="Import Data" Command="{Binding ImportDataCommand}" />
             <ItemsControl ItemsSource="{Binding CheckBoxItems}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <CheckBox Margin="4"
-                                  HorizontalAlignment="Left"
-                                  IsChecked="{Binding IsChecked}"
-                                  Content="{Binding Name}"/>
+                        <Grid RowDefinitions="Auto" >
+                            <StackPanel Grid.Row="0">
+                                <CheckBox Margin="3"
+                                          HorizontalAlignment="Left" VerticalAlignment="Top" Height="50"
+                                          IsChecked="{Binding IsChecked}"
+                                          Content="{Binding Name}"/>
+                            </StackPanel>
+                            <StackPanel  Grid.Row="0">
+                                <Svg Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" Height="50" Path="{Binding ImagePath}"/>
+                            </StackPanel>
+                        </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </StackPanel>
-        <Grid Grid.Column="1" RowDefinitions="Auto, *, *" >
-            <TextBlock Grid.Row="0" Text="HEATINGTON" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,5"/>
-            <Image Grid.Row="1" Source="/Assets/Images/HeatingtonMap.png" Width="370"/>
-            <StackPanel Grid.Row="2" Height="15">
-                <Button CornerRadius="5" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Optimize" Command="{Binding OptimizeCommand}"/>
+        <Grid Grid.Column="1" Width="500" RowDefinitions="Auto, Auto, Auto" >
+            <TextBlock Grid.Row="0" Text="HEATINGTON" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="130,30,0,10"/>
+            <Svg Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Height="300" Width="320" Margin="0,0,20,0" Path="/Assets/Images/HeatingGrid.svg"/>
+            <StackPanel Grid.Row="2" Height="30">
+                <Button CornerRadius="5" Margin="0,0,20,30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Optimize" Command="{Binding OptimizeCommand}"/>
             </StackPanel>
         </Grid>
     </Grid>

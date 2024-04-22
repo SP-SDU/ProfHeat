@@ -12,14 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Drawing;
+using System.IO;
+
 namespace ProfHeat.Core.Models;
 
-public partial class CheckBoxItem(string name, Action isCheckedChanged) : ObservableObject
+public partial class CheckBoxItem(string name, string imagePath, Action isCheckedChanged) : ObservableObject
 {
     [ObservableProperty]
     private bool _isChecked;
 
     public string Name { get; set; } = name;
+
+    public string ImagePath { get; set; } = imagePath;
+
 
     partial void OnIsCheckedChanged(bool value) => isCheckedChanged?.Invoke();
 }
