@@ -1,21 +1,21 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:ProfHeat.AUI.ViewModels"
         xmlns:v="using:ProfHeat.AUI.Views"
         xmlns:m="using:ProfHeat.Core.Models"
         xmlns:ui="using:FluentAvalonia.UI.Controls"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="420"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="ProfHeat.AUI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/Images/Icon.ico"
-        Title="ProfHeat"
         WindowStartupLocation="CenterOwner"
         ExtendClientAreaToDecorationsHint="True"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
-        PointerPressed="DragWindow_PointerPressed">
+        PointerPressed="DragWindow_PointerPressed"
+        Icon="/Assets/Images/Icon.ico"
+        Title="ProfHeat">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -33,8 +33,7 @@
         </ExperimentalAcrylicBorder>
         
             <!-- Tabs -->
-            <ui:TabView x:Name="MainTabControl"
-                        HorizontalAlignment="Stretch"
+            <ui:TabView HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         IsAddTabButtonVisible="False"
                         CanDragTabs="False"

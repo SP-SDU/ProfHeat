@@ -22,18 +22,13 @@ using ProfHeat.AUI.Views;
 namespace ProfHeat.AUI;
 public partial class App : Application
 {
-    public override void Initialize()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
+    public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
     public override void OnFrameworkInitializationCompleted()
     {
+        BindingPlugins.DataValidators.RemoveAt(0);  // Remove duplicate validations from both Avalonia and CT
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            // Line below is needed to remove Avalonia data validation.
-            // Without this line you will get duplicate validations from both Avalonia and CT
-            BindingPlugins.DataValidators.RemoveAt(0);
             desktop.MainWindow = new MainWindow
             {
                 DataContext = new MainWindowViewModel(),
