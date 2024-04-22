@@ -15,6 +15,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.VisualTree;
 
 namespace ProfHeat.AUI.ViewModels;
 
@@ -24,7 +25,7 @@ public class BaseViewModel : ObservableObject
     {
         if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            return desktop.MainWindow!;
+            return (Window) desktop.MainWindow!.GetVisualRoot()!;
         }
         return null!;
     }
