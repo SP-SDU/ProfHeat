@@ -30,14 +30,6 @@ jobs:
       run: dotnet build --no-restore
       working-directory: src/ProfHeat.Core
 
-    - name: Restore dependencies (ProfHeat.DAL)
-      run: dotnet restore
-      working-directory: src/ProfHeat.DAL
-
-    - name: Build (ProfHeat.DAL)
-      run: dotnet build --no-restore
-      working-directory: src/ProfHeat.DAL
-
     - name: Restore dependencies (ProfHeat.AUI)
       run: dotnet restore
       working-directory: src/ProfHeat.AUI
@@ -54,14 +46,6 @@ jobs:
     - name: Test (ProfHeat.Core.Tests)
       run: dotnet test
       working-directory: tests/ProfHeat.Core.Tests
-
-    - name: Restore dependencies (ProfHeat.DAL.Tests)
-      run: dotnet restore
-      working-directory: tests/ProfHeat.DAL.Tests
-
-    - name: Test (ProfHeat.DAL.Tests)
-      run: dotnet test
-      working-directory: tests/ProfHeat.DAL.Tests
 
     - name: Restore dependencies (ProfHeat.AUI.Tests)
       run: dotnet restore
