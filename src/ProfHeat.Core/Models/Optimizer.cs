@@ -18,6 +18,8 @@ namespace ProfHeat.Core.Models;
 
 public class Optimizer : IOptimizer
 {
+    #region Optimizer
+    /// <summary> Main optimization method that calculates the optimal costs based on selected production units and market conditions. </summary>
     public List<OptimizationResult> Optimize(HeatingGrid grid, List<MarketCondition> MarketConditions)
     {
         var optimizationResults = new List<OptimizationResult>();
@@ -64,8 +66,10 @@ public class Optimizer : IOptimizer
         // // Only returns the results that have been optimized, not the turned off units
         return optimizationResults;
     }
+    #endregion
 
-    // Simple calculation of heat loss based on distance and building count
+    #region Helper methods
+    /// <summary> Simple calculation of heat loss based on distance and building count. </summary>
     private static double CalculateHeatDissipation(int buildings)
     {
         const double HeatLossRate = 0.02;                               // 2% per kilometer
@@ -94,4 +98,5 @@ public class Optimizer : IOptimizer
         .OrderBy(a => a.CostEffectiveness)                              // Ordering by ascending cost-effectiveness.
         .Select(a => a.Unit)
         .ToList();
+    #endregion
 }

@@ -12,15 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#region Using
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.VisualTree;
+#endregion
 
 namespace ProfHeat.AUI.ViewModels;
 
 public class BaseViewModel : ObservableObject
 {
+    /// <summary> Gets the instance of the main window. Only for desktop applications. </summary>
     public static Window GetMainWindow()
     {
         if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
