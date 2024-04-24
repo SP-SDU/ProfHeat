@@ -13,12 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Assets\Images\GasMotor.svg" />
-    <None Remove="Assets\Images\HeatingGrid.svg" />
-    <None Remove="Assets\Images\OilBoiler.svg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.0.10" />
     <PackageReference Include="Avalonia.Desktop" Version="11.0.10" />
     <PackageReference Include="Avalonia.Svg.Skia" Version="11.0.0.18" />
