@@ -12,16 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#region Using
 using Avalonia.Platform.Storage;
 using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
 using ProfHeat.Core.Repositories;
+#endregion
 
 namespace ProfHeat.AUI.ViewModels;
 
 public partial class DataVisualizerViewModel : BaseViewModel
 {
+    #region Fields
+    // Instances of managers.
     private readonly IResultDataManager _ResultDataManager = new ResultDataManager(new CsvRepository());
+
+    // Options for saving CSV files.
     private readonly FilePickerSaveOptions _saveCsvFileOptions = new()
     {
         Title = "Save CSV File",
@@ -38,18 +44,22 @@ public partial class DataVisualizerViewModel : BaseViewModel
 
     [ObservableProperty, NotifyCanExecuteChangedFor(nameof(ExportResultsCommand))]
     private List<OptimizationResult> _results;
+    #endregion
 
-    private bool CanExport() => Results.Count > 0;
-
+    #region Constructor
     public DataVisualizerViewModel(List<OptimizationResult> results)
     {
         Results = results;
     }
+    #endregion
 
+    #region Commands
+    /// <summary> Command to export results to a CSV file. </summary>
     [RelayCommand(CanExecute = nameof(CanExport))]
     public async Task ExportResults()
     {
-        var filePicker = await GetMainWindow().StorageProvider.SaveFilePickerAsync(_saveCsvFileOptions);
+        var filePicker = await GetMainWindow().StorageProvider
+            .SaveFilePickerAsync(_saveCsvFileOptions);
 
         if (filePicker == null)
         {
@@ -63,4 +73,9 @@ public partial class DataVisualizerViewModel : BaseViewModel
             _ResultDataManager.SaveResultData(Results, filePath!);
         }
     }
+    #endregion
+
+    #region Helper Methods
+    private bool CanExport() => Results.Count > 0;
+    #endregion
 }

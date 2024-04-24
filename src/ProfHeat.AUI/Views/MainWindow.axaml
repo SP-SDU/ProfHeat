@@ -6,7 +6,7 @@
         xmlns:v="using:ProfHeat.AUI.Views"
         xmlns:m="using:ProfHeat.Core.Models"
         xmlns:ui="using:FluentAvalonia.UI.Controls"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="800" Height="450"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="800" Height="450" Width="800" Height="450"
         x:Class="ProfHeat.AUI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         WindowStartupLocation="CenterOwner"
@@ -52,6 +52,5 @@
                 </ui:TabViewItem>
             </ui:TabView>
           
-    </StackPanel>
-    
+    </Panel>  
 </Window>
