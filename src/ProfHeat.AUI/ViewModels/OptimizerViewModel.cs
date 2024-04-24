@@ -50,6 +50,8 @@ public partial class OptimizerViewModel : BaseViewModel
     };
 
     public ObservableCollection<CheckBoxItem> CheckBoxItems { get; }
+    public string GridName { get; }
+    public string GridImagePath { get; }
     #endregion
 
     #region Constructor
@@ -68,7 +70,10 @@ public partial class OptimizerViewModel : BaseViewModel
                 () => OptimizeCommand.NotifyCanExecuteChanged()
                 ))
         );
+        GridName = _grid.Name;
+        GridImagePath = _grid.ImagePath;
     }
+
     #endregion
 
     #region Commands
