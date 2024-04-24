@@ -9,9 +9,12 @@
              x:Class="ProfHeat.AUI.Views.DataVisualizerView"
              x:DataType="vm:DataVisualizerViewModel">
 
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
+    <StackPanel HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="10">
         <TextBlock Text="Optimization Results:" />
         <!-- Graphs Here -->
-        <Button Content="Export Results" Command="{Binding ExportResultsCommand}" />
+        <Button Content="Export Results"
+                Command="{Binding ExportResultsCommand}" />
     </StackPanel>
 </UserControl>
