@@ -45,6 +45,7 @@ public class Optimizer : IOptimizer
                 cost -= electricityProduced * condition.ElectricityPrice;                           // Adjust cost based on electricity produced or consumed
 
                 optimizationResults.Add(new OptimizationResult(
+                    unit.Name,
                     condition.TimeFrom,
                     condition.TimeTo,
                     Math.Round(productionAmount, 2),
