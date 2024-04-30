@@ -17,6 +17,7 @@ using CsvHelper.Configuration.Attributes;
 namespace ProfHeat.Core.Models;
 
 public readonly record struct OptimizationResult(
+    [Name("UnitName")] string UnitName,                                 // Name of the used production unit
     [Name("TimeFrom")] DateTime TimeFrom,                               // Start time of the period
     [Name("TimeTo")] DateTime TimeTo,                                   // End time of the period
     [Name("ProducedHeat")] double ProducedHeat,                         // Heat produced in MWh

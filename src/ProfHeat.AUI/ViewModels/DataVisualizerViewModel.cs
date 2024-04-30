@@ -27,7 +27,19 @@ public partial class DataVisualizerViewModel : BaseViewModel
     // Instances of managers.
     private readonly IResultDataManager _ResultDataManager = new ResultDataManager(new CsvRepository());
 
-    // Options for saving CSV files.
+    // Options for CSV files.
+    private readonly FilePickerOpenOptions _openCsvFileOptions = new()
+    {
+        Title = "Open CSV File",
+        AllowMultiple = false,
+        FileTypeFilter = [
+                new("CSV Files (Invariant Culture)")
+                {
+                    Patterns = ["*.csv"],
+                    AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
+                    MimeTypes = ["text/csv"]
+                }]
+    };
     private readonly FilePickerSaveOptions _saveCsvFileOptions = new()
     {
         Title = "Save CSV File",
@@ -54,6 +66,28 @@ public partial class DataVisualizerViewModel : BaseViewModel
     #endregion
 
     #region Commands
+    /// <summary> Command to import results from a CSV file. </summary>
+    [RelayCommand]
+    public async Task ImportResults()
+    {
+        var filePicker = await GetMainWindow().StorageProvider
+            .OpenFilePickerAsync(_openCsvFileOptions);    // Select file in File Explorer.
+        var filePaths = filePicker
+            .Select(file => file
+            .TryGetLocalPath())
+            .ToList();
+
+        if (filePaths.Count != 0)
+        {
+            Results.Clear();
+            Results
+                .AddRange(_ResultDataManager
+                .LoadResultData(filePaths[0]!));
+
+            ExportResultsCommand.NotifyCanExecuteChanged();
+        }
+    }
+
     /// <summary> Command to export results to a CSV file. </summary>
     [RelayCommand(CanExecute = nameof(CanExport))]
     public async Task ExportResults()
