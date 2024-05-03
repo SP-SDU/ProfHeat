@@ -21,7 +21,7 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <StackPanel>
+    <Panel>
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial
@@ -52,6 +52,5 @@
                 </ui:TabViewItem>
             </ui:TabView>
           
-    </StackPanel>
-    
+    </Panel>  
 </Window>

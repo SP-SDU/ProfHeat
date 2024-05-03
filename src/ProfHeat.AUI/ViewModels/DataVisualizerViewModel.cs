@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+#region Using
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -14,24 +15,42 @@ using System.IO;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using ProfHeat.AUI.Views;
+#endregion
 
 namespace ProfHeat.AUI.ViewModels
 {
     public partial class DataVisualizerViewModel : BaseViewModel
     {
+        #region Fields
+        // Instances of managers.
         private readonly IResultDataManager _ResultDataManager;
+
+        // Options for CSV files.
+        private readonly FilePickerOpenOptions _openCsvFileOptions = new()
+        {
+            Title = "Open CSV File",
+            AllowMultiple = false,
+            FileTypeFilter = [
+                    new("CSV Files (Invariant Culture)")
+                {
+                    Patterns = ["*.csv"],
+                    AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
+                    MimeTypes = ["text/csv"]
+                }]
+        };
         private readonly FilePickerSaveOptions _saveCsvFileOptions = new FilePickerSaveOptions
         {
             Title = "Save CSV File",
             SuggestedFileName = $"Results_{Path.GetRandomFileName()}",
             DefaultExtension = "csv",
             FileTypeChoices = new[]
-            {
+                {
                 new FileTypeChoice("CSV Files (Invariant Culture)", new[] { "*.csv" })
             }
         };
 
         private List<OptimizationResult> _results;
+        #endregion
 
         public ISeries[] Series { get; private set; }
 
@@ -91,4 +110,9 @@ namespace ProfHeat.AUI.ViewModels
             return null;
         }
     }
+#endregion
+
+    #region Helper Methods
+    private bool CanExport() => Results.Count > 0;
+    #endregion
 }

@@ -17,8 +17,8 @@ using ProfHeat.Core.Interfaces;
 
 namespace ProfHeat.Core.Repositories;
 
-// Works for both single objects and collections but not for nested collections due to Csv not supporting it
-// Uses international/American delimiter settings
+/// <summary> Works for both single objects and collections but not for nested collections due to Csv not supporting it.
+/// Uses international/American delimiter settings. </summary>
 public class CsvRepository : IRepository
 {
     public T Load<T>(string filePath)
@@ -29,8 +29,12 @@ public class CsvRepository : IRepository
         if (IsCollection(typeof(T)))
         {
             // Extract the type of the elements in the list
-            Type itemType = typeof(T).GetGenericArguments().Single();
-            var records = csv.GetRecords(itemType).ToList();
+            Type itemType = typeof(T)
+                .GetGenericArguments()
+                .Single();
+            var records = csv
+                .GetRecords(itemType)
+                .ToList();
 
             // Create a list of the appropriate type and return it
             var listType = typeof(List<>).MakeGenericType(itemType);
@@ -66,6 +70,9 @@ public class CsvRepository : IRepository
         }
     }
 
-    private static bool IsCollection(Type type) => type.IsGenericType && type.GetInterfaces().ToList()
+    private static bool IsCollection(Type type) =>
+        type.IsGenericType && type
+        .GetInterfaces()
+        .ToList()
         .Exists(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>));
 }

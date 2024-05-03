@@ -18,14 +18,20 @@ namespace ProfHeat.AUI.ViewModels;
 
 public class MainWindowViewModel : BaseViewModel
 {
+    #region Fields
+    // ViewModels for the tabs.
     public OptimizerViewModel Optimizer { get; }
     public DataVisualizerViewModel DataVisualizer { get; }
 
+    // List of optimization results.
     public List<OptimizationResult> Results { get; set; } = [];
+    #endregion
 
+    #region Constructor
     public MainWindowViewModel()
     {
         Optimizer = new OptimizerViewModel(Results);
         DataVisualizer = new DataVisualizerViewModel(Results);
     }
+    #endregion
 }
