@@ -12,23 +12,23 @@
 
     <Grid ColumnDefinitions="Auto, Auto">
 
-<!-- Left side panel -->
+        <!-- Left side panel -->
         <StackPanel Grid.Column="0"
                     Width="200"
                     Margin="60,30,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top">
-<!-- Import Data button -->
+            <!-- Import Data button -->
             <Button CornerRadius="5"
                     Margin="0,20,0,30"
                     Width="140" Height="40"
                     Content="Import Data"
                     Command="{Binding ImportDataCommand}" />
-<!-- Check Box Items Control -->
+            <!-- Check Box Items Control -->
             <ItemsControl ItemsSource="{Binding CheckBoxItems}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-<!-- Check Box Items-->
+                        <!-- Check Box Items-->
                         <Grid ColumnDefinitions=" Auto, *">
                             <CheckBox Grid.Column="0"
                                       HorizontalAlignment="Left"
@@ -37,7 +37,7 @@
                                       Margin="0,20,0,0"
                                       IsChecked="{Binding IsChecked}"
                                       Content="{Binding Name}"/>
-<!-- Check Box Image Items -->
+                            <!-- Check Box Image Items -->
                             <Svg Grid.Column="1"
                                  HorizontalAlignment="Right"
                                  Width="50" Height="50"
@@ -48,25 +48,25 @@
             </ItemsControl>
         </StackPanel>
 
-<!-- Right side panel -->
+        <!-- Right side panel -->
         <Grid Grid.Column="1"
               Width="500"
               RowDefinitions="Auto, Auto, Auto">
-<!-- Grid Name Text Block -->
+            <!-- Grid Name Text Block -->
             <TextBlock Grid.Row="0"
                        Text="{Binding GridName}"
                        FontSize="20"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Top"
                        Margin="130,30,0,10" />
-<!-- Grid Image Image path -->
+            <!-- Grid Image Image path -->
             <Svg Grid.Row="1"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
                  Height="300" Width="320"
                  Margin="0,0,20,0"
                  Path="{Binding GridImagePath}" />
-<!-- Optimize Button -->
+            <!-- Optimize Button -->
             <StackPanel Grid.Row="2"
                         Height="30">
                 <Button CornerRadius="5"

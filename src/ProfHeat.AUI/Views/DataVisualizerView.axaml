@@ -11,6 +11,7 @@
              xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia">
     
     <TabControl TabStripPlacement="Left">
+        <!-- Tab For buttons -->
         <TabItem Header="Import and Export">
             <Grid ColumnDefinitions="Auto, Auto">
                 <Button Grid.Column="0"
@@ -21,6 +22,7 @@
                         Command="{Binding ExportResultsCommand}" />
             </Grid>
         </TabItem>
+        
         <TabItem Header="Costs">
             <lvc:CartesianChart Series="{Binding Costs}"
                                 ZoomMode="X"/>
