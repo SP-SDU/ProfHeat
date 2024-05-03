@@ -81,8 +81,7 @@ public partial class OptimizerViewModel : BaseViewModel
     [RelayCommand]
     public async Task ImportData()
     {
-        var filePicker = await GetMainWindow().StorageProvider
-            .OpenFilePickerAsync(_openCsvFileOptions);    // Select file in File Explorer.
+        var filePicker = await App.TopLevel.StorageProvider.OpenFilePickerAsync(_openCsvFileOptions);    // Select file in File Explorer.
         var filePaths = filePicker
             .Select(file => file
             .TryGetLocalPath())
@@ -92,8 +91,8 @@ public partial class OptimizerViewModel : BaseViewModel
         {
             _marketConditions.Clear();
             _marketConditions
-                .AddRange(_sourceDataManager
-                .LoadSourceData(filePaths[0]!));   // Load the source data.
+                .AddRange(
+                _sourceDataManager.LoadSourceData(filePaths[0]!));   // Load the source data.
 
             OptimizeCommand.NotifyCanExecuteChanged();
         }

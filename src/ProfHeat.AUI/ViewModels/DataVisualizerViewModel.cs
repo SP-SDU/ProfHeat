@@ -1,23 +1,13 @@
-// Copyright 2024 SoftFuzz
-//
-// Licensed under the Apache License, Version 2.0 (the "License"):
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-#region Using
 using Avalonia.Platform.Storage;
 using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
+using LiveChartsCore;
+using LiveChartsCore.Kernel;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView.VisualElements;
+using SkiaSharp;
 using ProfHeat.Core.Repositories;
-#endregion
 
 namespace ProfHeat.AUI.ViewModels;
 
@@ -34,11 +24,11 @@ public partial class DataVisualizerViewModel : BaseViewModel
         AllowMultiple = false,
         FileTypeFilter = [
                 new("CSV Files (Invariant Culture)")
-                {
-                    Patterns = ["*.csv"],
-                    AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
-                    MimeTypes = ["text/csv"]
-                }]
+            {
+                Patterns = ["*.csv"],
+                AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
+                MimeTypes = ["text/csv"]
+            }]
     };
     private readonly FilePickerSaveOptions _saveCsvFileOptions = new()
     {
@@ -47,15 +37,22 @@ public partial class DataVisualizerViewModel : BaseViewModel
         DefaultExtension = "csv",
         FileTypeChoices = [
                 new("CSV Files (Invariant Culture)")
-                {
-                    Patterns = ["*.csv"],
-                    AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
-                    MimeTypes = ["text/csv"]
-                }]
+            {
+                Patterns = ["*.csv"],
+                AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
+                MimeTypes = ["text/csv"]
+            }]
     };
 
     [ObservableProperty, NotifyCanExecuteChangedFor(nameof(ExportResultsCommand))]
     private List<OptimizationResult> _results;
+
+    // Graphs.
+    public ISeries[] Costs => [
+        new LineSeries<double>
+            {
+                Values = Results.ConvertAll(r => r.Costs)
+            }];
     #endregion
 
     #region Constructor
@@ -70,8 +67,7 @@ public partial class DataVisualizerViewModel : BaseViewModel
     [RelayCommand]
     public async Task ImportResults()
     {
-        var filePicker = await GetMainWindow().StorageProvider
-            .OpenFilePickerAsync(_openCsvFileOptions);    // Select file in File Explorer.
+        var filePicker = await App.TopLevel.StorageProvider.OpenFilePickerAsync(_openCsvFileOptions);    // Select file in File Explorer.
         var filePaths = filePicker
             .Select(file => file
             .TryGetLocalPath())
@@ -80,10 +76,11 @@ public partial class DataVisualizerViewModel : BaseViewModel
         if (filePaths.Count != 0)
         {
             Results.Clear();
-            Results
-                .AddRange(_ResultDataManager
-                .LoadResultData(filePaths[0]!));
+            Results.AddRange(
+                _ResultDataManager.LoadResultData(filePaths[0]!));
 
+            OnPropertyChanged(nameof(Results));
+            OnPropertyChanged(nameof(Costs));
             ExportResultsCommand.NotifyCanExecuteChanged();
         }
     }
@@ -92,8 +89,7 @@ public partial class DataVisualizerViewModel : BaseViewModel
     [RelayCommand(CanExecute = nameof(CanExport))]
     public async Task ExportResults()
     {
-        var filePicker = await GetMainWindow().StorageProvider
-            .SaveFilePickerAsync(_saveCsvFileOptions);
+        var filePicker = await App.TopLevel.StorageProvider.SaveFilePickerAsync(_saveCsvFileOptions);
 
         if (filePicker == null)
         {

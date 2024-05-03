@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
@@ -22,6 +23,8 @@ using ProfHeat.AUI.Views;
 namespace ProfHeat.AUI;
 public partial class App : Application
 {
+    public static TopLevel TopLevel { get; private set; } = null!;
+
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
     public override void OnFrameworkInitializationCompleted()
@@ -33,6 +36,7 @@ public partial class App : Application
             {
                 DataContext = new MainWindowViewModel(),
             };
+            TopLevel = TopLevel.GetTopLevel(desktop.MainWindow)!;
         }
 
         base.OnFrameworkInitializationCompleted();
