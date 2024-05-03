@@ -67,8 +67,7 @@ public partial class DataVisualizerViewModel : BaseViewModel
     [RelayCommand]
     public async Task ImportResults()
     {
-        var filePicker = await GetMainWindow().StorageProvider
-            .OpenFilePickerAsync(_openCsvFileOptions);    // Select file in File Explorer.
+        var filePicker = await App.TopLevel.StorageProvider.OpenFilePickerAsync(_openCsvFileOptions);    // Select file in File Explorer.
         var filePaths = filePicker
             .Select(file => file
             .TryGetLocalPath())
@@ -77,10 +76,11 @@ public partial class DataVisualizerViewModel : BaseViewModel
         if (filePaths.Count != 0)
         {
             Results.Clear();
-            Results
-                .AddRange(_ResultDataManager
-                .LoadResultData(filePaths[0]!));
+            Results.AddRange(
+                _ResultDataManager.LoadResultData(filePaths[0]!));
 
+            OnPropertyChanged(nameof(Results));
+            OnPropertyChanged(nameof(Costs));
             ExportResultsCommand.NotifyCanExecuteChanged();
         }
     }
@@ -89,8 +89,7 @@ public partial class DataVisualizerViewModel : BaseViewModel
     [RelayCommand(CanExecute = nameof(CanExport))]
     public async Task ExportResults()
     {
-        var filePicker = await GetMainWindow().StorageProvider
-            .SaveFilePickerAsync(_saveCsvFileOptions);
+        var filePicker = await App.TopLevel.StorageProvider.SaveFilePickerAsync(_saveCsvFileOptions);
 
         if (filePicker == null)
         {

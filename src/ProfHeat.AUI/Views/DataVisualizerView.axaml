@@ -5,22 +5,25 @@
              xmlns:vm="using:ProfHeat.AUI.ViewModels"
              xmlns:v="using:ProfHeat.AUI.Views"
              xmlns:m="using:ProfHeat.Core.Models"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="800" Height="450"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400" Width="800" Height="400"
              x:Class="ProfHeat.AUI.Views.DataVisualizerView"
              x:DataType="vm:DataVisualizerViewModel"
              xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia">
-
-    <StackPanel HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Spacing="10">
-        
-        <!-- Graphs Here -->
-        <Button Content="Import Results"
-                Command="{Binding ImportResultsCommand}" />
-        <Button Content="Export Results"
-                Command="{Binding ExportResultsCommand}" />
-
-        <!-- Doesn't work in stackpanel -->
-        <!-- <lvc:CartesianChart Series="{Binding Series}"/> -->
-    </StackPanel>
+    
+    <TabControl TabStripPlacement="Left">
+        <TabItem Header="Import and Export">
+            <Grid ColumnDefinitions="Auto, Auto">
+                <Button Grid.Column="0"
+                    Content="Import Results"
+                    Command="{Binding ImportResultsCommand}" />
+                <Button Grid.Column="1"
+                        Content="Export Results"
+                        Command="{Binding ExportResultsCommand}" />
+            </Grid>
+        </TabItem>
+        <TabItem Header="Costs">
+            <lvc:CartesianChart Series="{Binding Costs}"
+                                ZoomMode="X"/>
+        </TabItem>
+    </TabControl>
 </UserControl>
