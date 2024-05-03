@@ -1,66 +1,94 @@
-// Copyright 2024 SoftFuzz
-//
-// Licensed under the Apache License, Version 2.0 (the "License"):
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
+using Avalonia.Controls;
 using Avalonia.Platform.Storage;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
-using ProfHeat.Core.Repositories;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.IO;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using ProfHeat.AUI.Views;
 
-namespace ProfHeat.AUI.ViewModels;
-
-public partial class DataVisualizerViewModel : BaseViewModel
+namespace ProfHeat.AUI.ViewModels
 {
-    private readonly IResultDataManager _ResultDataManager = new ResultDataManager(new CsvRepository());
-    private readonly FilePickerSaveOptions _saveCsvFileOptions = new()
+    public partial class DataVisualizerViewModel : BaseViewModel
     {
-        Title = "Save CSV File",
-        SuggestedFileName = $"Results_{Path.GetRandomFileName()}",
-        DefaultExtension = "csv",
-        FileTypeChoices = [
-                new("CSV Files (Invariant Culture)")
-                {
-                    Patterns = ["*.csv"],
-                    AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
-                    MimeTypes = ["text/csv"]
-                }]
-    };
-
-    [ObservableProperty, NotifyCanExecuteChangedFor(nameof(ExportResultsCommand))]
-    private List<OptimizationResult> _results;
-
-    private bool CanExport() => Results.Count > 0;
-
-    public DataVisualizerViewModel(List<OptimizationResult> results)
-    {
-        Results = results;
-    }
-
-    [RelayCommand(CanExecute = nameof(CanExport))]
-    public async Task ExportResults()
-    {
-        var filePicker = await GetMainWindow().StorageProvider.SaveFilePickerAsync(_saveCsvFileOptions);
-
-        if (filePicker == null)
+        private readonly IResultDataManager _ResultDataManager;
+        private readonly FilePickerSaveOptions _saveCsvFileOptions = new FilePickerSaveOptions
         {
-            return;
+            Title = "Save CSV File",
+            SuggestedFileName = $"Results_{Path.GetRandomFileName()}",
+            DefaultExtension = "csv",
+            FileTypeChoices = new[]
+            {
+                new FileTypeChoice("CSV Files (Invariant Culture)", new[] { "*.csv" })
+            }
+        };
+
+        private List<OptimizationResult> _results;
+
+        public ISeries[] Series { get; private set; }
+
+        public DataVisualizerViewModel(List<OptimizationResult> results, IResultDataManager resultDataManager)
+        {
+            _ResultDataManager = resultDataManager;
+            _results = results;
+            InitializeChartData();
         }
 
-        var filePath = filePicker!.TryGetLocalPath();
-
-        if (filePath != null)
+        private void InitializeChartData()
         {
-            _ResultDataManager.SaveResultData(Results, filePath!);
+            Series = new ISeries[]
+            {
+                new LineSeries<double>
+                {
+                    Values = _results.Select(r => r.Costs).ToArray(),
+                    Name = "Optimized Costs"
+                }
+            };
+        }
+
+        private bool CanExport() => _results != null && _results.Count > 0;
+
+        [RelayCommand(CanExecute = nameof(CanExport))]
+        public async Task ExportResults()
+        {
+            try
+            {
+                var filePicker = await GetMainWindow().StorageProvider.SaveFilePickerAsync(_saveCsvFileOptions);
+                if (filePicker == null)
+                {
+                    return;
+                }
+
+                var filePath = filePicker.TryGetLocalPath();
+                if (filePath != null)
+                {
+                    _ResultDataManager.SaveResultData(_results, filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or notify the user
+                // For example: Log.Error("Failed to export results: " + ex.Message);
+                Console.WriteLine("Error exporting results: " + ex.Message);
+            }
+        }
+
+        // Helper method to get the main window, assuming it's implemented elsewhere in your codebase
+        private MainWindow GetMainWindow()
+        {
+            if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                return desktop.MainWindow as MainWindow;
+            }
+            return null;
         }
     }
 }
