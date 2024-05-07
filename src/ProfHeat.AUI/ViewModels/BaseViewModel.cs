@@ -12,8 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
+
 namespace ProfHeat.AUI.ViewModels;
 
 public class BaseViewModel : ObservableObject
 {
+    protected static async Task HandleErrorAsync(Exception exception, string errorMessage = "An error occurred")
+    {
+        // Log the error
+        Console.WriteLine($"{errorMessage}: {exception.Message}");
+
+        // Show the user an error message
+        _ = await MessageBoxManager
+            .GetMessageBoxStandard("Error", $"{errorMessage}: {exception.Message}", ButtonEnum.Ok)
+            .ShowAsync();
+    }
 }

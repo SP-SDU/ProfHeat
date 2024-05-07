@@ -13,8 +13,8 @@
 // limitations under the License.
 
 using ProfHeat.Core.Interfaces;
-using ProfHeat.Core.Repositories;
 using ProfHeat.Core.Models;
+using ProfHeat.Core.Repositories;
 using System.Xml.Linq;
 
 namespace ProfHeat.Core.Tests.ModelsTests;

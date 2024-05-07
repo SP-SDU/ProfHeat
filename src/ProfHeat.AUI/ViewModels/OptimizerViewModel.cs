@@ -13,8 +13,6 @@
 // limitations under the License.
 
 using Avalonia.Platform.Storage;
-using MsBox.Avalonia.Enums;
-using MsBox.Avalonia;
 using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
 using ProfHeat.Core.Repositories;
@@ -103,10 +101,7 @@ public partial class OptimizerViewModel : BaseViewModel
         }
         catch (Exception exception)
         {
-            Console.WriteLine($"Error exporting results: {exception.Message}");
-            _ = await MessageBoxManager
-                .GetMessageBoxStandard("Error", $"Error exporting results: {exception.Message}", ButtonEnum.Ok)
-                .ShowAsync();
+            await HandleErrorAsync(exception, "Error importing data");
         }
     }
 
@@ -142,10 +137,7 @@ public partial class OptimizerViewModel : BaseViewModel
         }
         catch (Exception exception)
         {
-            Console.WriteLine($"Error exporting results: {exception.Message}");
-            _ = MessageBoxManager
-                .GetMessageBoxStandard("Error", $"Error exporting results: {exception.Message}", ButtonEnum.Ok)
-                .ShowAsync();
+            _ = HandleErrorAsync(exception, "Error while optimizing");
         }
     }
     #endregion

@@ -13,17 +13,15 @@
 // limitations under the License.
 
 using Avalonia.Platform.Storage;
-using ProfHeat.Core.Interfaces;
-using ProfHeat.Core.Models;
 using LiveChartsCore;
-using LiveChartsCore.Kernel;
+using LiveChartsCore.Defaults;
+using LiveChartsCore.Drawing;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView.VisualElements;
-using SkiaSharp;
+using ProfHeat.Core.Interfaces;
+using ProfHeat.Core.Models;
 using ProfHeat.Core.Repositories;
-using MsBox.Avalonia.Enums;
-using MsBox.Avalonia;
+using SkiaSharp;
 
 namespace ProfHeat.AUI.ViewModels;
 
@@ -60,38 +58,39 @@ public partial class DataVisualizerViewModel : BaseViewModel
             }]
     };
 
+    // Observable properties. (UI)
     [ObservableProperty, NotifyCanExecuteChangedFor(nameof(ExportResultsCommand))]
     private List<OptimizationResult> _results;
 
-    // Graphs.
-    public ISeries[] TotalCostOverTime => [
-    new LineSeries<double>
+    private string _selectedPeriod = String.Empty;
+    public string SelectedPeriod
     {
-        Values = Results.ConvertAll(r => r.Costs)
-    }];
-    public ISeries[] TotalEmissionsOverTime => [
-    new LineSeries<double>
-    {
-        Values = Results.ConvertAll(r => r.CO2Emissions)
-    }];
-
-    public ISeries[] ProducedHeatOverTime => [
-    new LineSeries<double>
-    {
-        Values = Results.ConvertAll(r => r.ProducedHeat)
-    }];
-
-    public ISeries[] PrimaryEnergyConsumptionOverTime => [
-    new LineSeries<double>
-    {
-        Values = Results.ConvertAll(r => r.PrimaryEnergyConsumption)
-    }];
-
+        get => _selectedPeriod;
+        set
+        {
+            _selectedPeriod = value;
+            OnPropertyChanged(nameof(Results));
+            OnPropertyChanged(nameof(Costs));
+            OnPropertyChanged(nameof(CO2Emissions));
+            OnPropertyChanged(nameof(ProducedHeat));
+            OnPropertyChanged(nameof(PrimaryEnergyConsumption));
+            OnPropertyChanged(nameof(ElectricityProduced));
+            OnPropertyChanged(nameof(XAxes));
+        }
+    }
+    public ObservableCollection<string> Periods { get; } = ["Winter", "Summer"];
+    public ObservableCollection<ISeries> Costs => GetLineSeries(r => r.Costs);
+    public ObservableCollection<ISeries> CO2Emissions => GetLineSeries(r => r.CO2Emissions);
+    public ObservableCollection<ISeries> ProducedHeat => GetLineSeries(r => r.ProducedHeat);
+    public ObservableCollection<ISeries> PrimaryEnergyConsumption => GetLineSeries(r => r.PrimaryEnergyConsumption);
+    public ObservableCollection<ISeries> ElectricityProduced => GetLineSeries(r => r.PrimaryEnergyConsumption);
+    public static Axis[] XAxes => [new DateTimeAxis(TimeSpan.FromHours(1), date => date.ToString("yy MMM dd',' HH'h'"))];
     #endregion
 
     #region Constructor
     public DataVisualizerViewModel(List<OptimizationResult> results)
     {
+        SelectedPeriod = Periods[0];
         Results = results;
     }
     #endregion
@@ -115,20 +114,19 @@ public partial class DataVisualizerViewModel : BaseViewModel
                 Results.AddRange(
                     _ResultDataManager.LoadResultData(filePaths[0]!));
 
-                OnPropertyChanged(nameof(PrimaryEnergyConsumptionOverTime));
-                OnPropertyChanged(nameof(TotalEmissionsOverTime));
-                OnPropertyChanged(nameof(ProducedHeatOverTime));
-                OnPropertyChanged(nameof(TotalCostOverTime));
                 OnPropertyChanged(nameof(Results));
+                OnPropertyChanged(nameof(Costs));
+                OnPropertyChanged(nameof(CO2Emissions));
+                OnPropertyChanged(nameof(ProducedHeat));
+                OnPropertyChanged(nameof(PrimaryEnergyConsumption));
+                OnPropertyChanged(nameof(ElectricityProduced));
+                OnPropertyChanged(nameof(XAxes));
                 ExportResultsCommand.NotifyCanExecuteChanged();
             }
         }
         catch (Exception exception)
         {
-            Console.WriteLine($"Error exporting results: {exception.Message}");
-            _ = await MessageBoxManager
-                .GetMessageBoxStandard("Error", $"Error exporting results: {exception.Message}", ButtonEnum.Ok)
-                .ShowAsync();
+            await HandleErrorAsync(exception, "Error importing results");
         }
     }
 
@@ -154,15 +152,26 @@ public partial class DataVisualizerViewModel : BaseViewModel
         }
         catch (Exception exception)
         {
-            Console.WriteLine($"Error exporting results: {exception.Message}");
-            _ = await MessageBoxManager
-                .GetMessageBoxStandard("Error", $"Error exporting results: {exception.Message}", ButtonEnum.Ok)
-                .ShowAsync();
+            await HandleErrorAsync(exception, "Error exporting results");
         }
     }
     #endregion
 
     #region Helper Methods
     private bool CanExport() => Results.Count > 0;
+
+    private ObservableCollection<ISeries> GetLineSeries(Func<OptimizationResult, double> selector) => new(Results
+        .GroupBy(r => r.UnitName)
+        .Select(group => new LineSeries<DateTimePoint>
+        {
+            DataPadding = new LvcPoint(0.5f, 0),
+            Values = group
+            .Where(r => (SelectedPeriod == "Winter") ? r.TimeFrom.Month >= 10 || r.TimeFrom.Month <= 3 : r.TimeFrom.Month >= 4 && r.TimeFrom.Month <= 9)
+            .Select(r => new DateTimePoint(r.TimeFrom, selector(r))),
+            Name = group.Key,
+            GeometryStroke = null,
+            GeometryFill = null,
+            Fill = null
+        }));
     #endregion
 }

@@ -75,7 +75,7 @@ public class CsvRepositoryTests
         // Assert
         Assert.True(File.Exists(expectedFilePath));
         Assert.Equal(testData[0].TimeFrom, DateTime.Parse(expected[0]));
-     
+
         // Clean up
         File.Delete(expectedFilePath);
     }
