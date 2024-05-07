@@ -25,8 +25,9 @@ public class SourceDataManagerTests
         string testFilePath = Path.Combine("Data", "testFileSDM_Load.csv");
         var marketConditions = new List<MarketCondition>()
             {
-                new(new DateTime(2023, 02, 08, 0, 0, 0),
-                new DateTime(2023, 02, 08, 1, 0, 0), 10.111, 10.111)
+                new(new DateTime(2023, 02, 08, 0, 0, 0, DateTimeKind.Unspecified),
+                new DateTime(2023, 02, 08, 1, 0, 0, DateTimeKind.Unspecified)
+                , 10.111, 10.111)
             };
         var repository = new CsvRepository();
         var sourceDataManager = new SourceDataManager(repository);
@@ -50,8 +51,9 @@ public class SourceDataManagerTests
         string testFilePath = Path.Combine("Data", "testFileSDM_Save.csv");
         var marketConditions = new List<MarketCondition>()
             {
-                new(new DateTime(2023, 02, 08, 0, 0, 0),
-                new DateTime(2023, 02, 08, 1, 0, 0), 10.111, 10.111)
+                new(new DateTime(2023, 02, 08, 0, 0, 0, DateTimeKind.Unspecified),
+                new DateTime(2023, 02, 08, 1, 0, 0, DateTimeKind.Unspecified)
+                , 10.111, 10.111)
             };
         var repository = new CsvRepository();
         var sourceDataManager = new SourceDataManager(repository);
