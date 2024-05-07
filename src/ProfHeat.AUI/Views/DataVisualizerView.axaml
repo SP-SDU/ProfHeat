@@ -9,7 +9,7 @@
              x:Class="ProfHeat.AUI.Views.DataVisualizerView"
              x:DataType="vm:DataVisualizerViewModel"
              xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia">
-    
+
     <TabControl TabStripPlacement="Left">
         <!-- Tab For buttons -->
         <TabItem Header="Import and Export">
@@ -22,10 +22,52 @@
                         Command="{Binding ExportResultsCommand}" />
             </Grid>
         </TabItem>
-        
-        <TabItem Header="Costs">
-            <lvc:CartesianChart Series="{Binding Costs}"
-                                ZoomMode="X"/>
+
+           <!-- New Tab for Total Cost Over Time -->
+        <TabItem Header="Total Cost">
+            <lvc:CartesianChart Series="{Binding TotalCostOverTime}">
+                <lvc:CartesianChart.XAxes>
+                    <lvc:Axis Title="Time" />
+                </lvc:CartesianChart.XAxes>
+                <lvc:CartesianChart.YAxes>
+                    <lvc:Axis Title="Total Cost" />
+                </lvc:CartesianChart.YAxes>
+            </lvc:CartesianChart>
+        </TabItem>
+
+        <!-- New Tab for Total Emissions Over Time -->
+        <TabItem Header="Emissions">
+            <lvc:CartesianChart Series="{Binding TotalEmissionsOverTime}">
+                <lvc:CartesianChart.XAxes>
+                    <lvc:Axis Title="Time" />
+                </lvc:CartesianChart.XAxes>
+                <lvc:CartesianChart.YAxes>
+                    <lvc:Axis Title="Total Emissions" />
+                </lvc:CartesianChart.YAxes>
+            </lvc:CartesianChart>
+        </TabItem>
+
+        <!-- New Tab for Produced Heat Over Time -->
+        <TabItem Header="Heat">
+            <lvc:CartesianChart Series="{Binding ProducedHeatOverTime}">
+                <lvc:CartesianChart.XAxes>
+                    <lvc:Axis Title="Time" />
+                </lvc:CartesianChart.XAxes>
+                <lvc:CartesianChart.YAxes>
+                    <lvc:Axis Title="Produced Heat" />
+                </lvc:CartesianChart.YAxes>
+            </lvc:CartesianChart>
+        </TabItem>
+
+        <TabItem Header="Primary Energy Consumption">
+    <lvc:CartesianChart Series="{Binding PrimaryEnergyConsumptionOverTime}">
+        <lvc:CartesianChart.XAxes>
+            <lvc:Axis Title="Time" />
+        </lvc:CartesianChart.XAxes>
+        <lvc:CartesianChart.YAxes>
+            <lvc:Axis Title="Primary Energy Consumption" />
+        </lvc:CartesianChart.YAxes>
+    </lvc:CartesianChart>
         </TabItem>
     </TabControl>
 </UserControl>

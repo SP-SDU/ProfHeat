@@ -64,11 +64,29 @@ public partial class DataVisualizerViewModel : BaseViewModel
     private List<OptimizationResult> _results;
 
     // Graphs.
-    public ISeries[] Costs => [
-        new LineSeries<double>
-            {
-                Values = Results.ConvertAll(r => r.Costs)
-            }];
+    public ISeries[] TotalCostOverTime => [
+    new LineSeries<double>
+    {
+        Values = Results.ConvertAll(r => r.Costs)
+    }];
+    public ISeries[] TotalEmissionsOverTime => [
+    new LineSeries<double>
+    {
+        Values = Results.ConvertAll(r => r.CO2Emissions)
+    }];
+
+    public ISeries[] ProducedHeatOverTime => [
+    new LineSeries<double>
+    {
+        Values = Results.ConvertAll(r => r.ProducedHeat)
+    }];
+
+    public ISeries[] PrimaryEnergyConsumptionOverTime => [
+    new LineSeries<double>
+    {
+        Values = Results.ConvertAll(r => r.PrimaryEnergyConsumption)
+    }];
+
     #endregion
 
     #region Constructor
@@ -97,8 +115,11 @@ public partial class DataVisualizerViewModel : BaseViewModel
                 Results.AddRange(
                     _ResultDataManager.LoadResultData(filePaths[0]!));
 
+                OnPropertyChanged(nameof(PrimaryEnergyConsumptionOverTime));
+                OnPropertyChanged(nameof(TotalEmissionsOverTime));
+                OnPropertyChanged(nameof(ProducedHeatOverTime));
+                OnPropertyChanged(nameof(TotalCostOverTime));
                 OnPropertyChanged(nameof(Results));
-                OnPropertyChanged(nameof(Costs));
                 ExportResultsCommand.NotifyCanExecuteChanged();
             }
         }
