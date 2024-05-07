@@ -22,7 +22,8 @@ public class Optimizer_Tests
     public void Optimize_ReturnsTest()
     {
         // Arrange
-        var grid = new HeatingGrid("TestGrid", "/Path", 1, [new("Gas", "/Path", 10.111, 10.111, 1.111, 10.111, 10.111)]);
+        var grid = new HeatingGrid("TestGrid", "/Path", 1,
+            [new("Gas", "/Path", 10.111, 10.111, 1.111, 10.111, 10.111)]);
 
 
         var marketConditions = new List<MarketCondition>()
