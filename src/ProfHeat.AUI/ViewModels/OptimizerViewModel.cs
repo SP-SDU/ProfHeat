@@ -13,6 +13,8 @@
 // limitations under the License.
 
 using Avalonia.Platform.Storage;
+using MsBox.Avalonia.Enums;
+using MsBox.Avalonia;
 using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
 using ProfHeat.Core.Repositories;
@@ -81,20 +83,30 @@ public partial class OptimizerViewModel : BaseViewModel
     [RelayCommand]
     public async Task ImportData()
     {
-        var filePicker = await App.TopLevel.StorageProvider.OpenFilePickerAsync(_openCsvFileOptions);    // Select file in File Explorer.
-        var filePaths = filePicker
-            .Select(file => file
-            .TryGetLocalPath())
-            .ToList();
-
-        if (filePaths.Count != 0)
+        try
         {
-            _marketConditions.Clear();
-            _marketConditions
-                .AddRange(
-                _sourceDataManager.LoadSourceData(filePaths[0]!));   // Load the source data.
+            var filePicker = await App.TopLevel.StorageProvider.OpenFilePickerAsync(_openCsvFileOptions);    // Select file in File Explorer.
+            var filePaths = filePicker
+                .Select(file => file
+                .TryGetLocalPath())
+                .ToList();
 
-            OptimizeCommand.NotifyCanExecuteChanged();
+            if (filePaths.Count != 0)
+            {
+                _marketConditions.Clear();
+                _marketConditions
+                    .AddRange(
+                    _sourceDataManager.LoadSourceData(filePaths[0]!));   // Load the source data.
+
+                OptimizeCommand.NotifyCanExecuteChanged();
+            }
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine($"Error exporting results: {exception.Message}");
+            _ = await MessageBoxManager
+                .GetMessageBoxStandard("Error", $"Error exporting results: {exception.Message}", ButtonEnum.Ok)
+                .ShowAsync();
         }
     }
 
@@ -102,26 +114,39 @@ public partial class OptimizerViewModel : BaseViewModel
     [RelayCommand(CanExecute = nameof(CanOptimize))]
     public void Optimize()
     {
-        // Getting check marked Production Units
-        var selectedUnits = CheckBoxItems
-            .Where(item => item.IsChecked)
-            .Select(item => item.Name)
-            .ToList();
-        var newUnits = _grid.ProductionUnits
-            .Where(unit => selectedUnits
-            .Contains(unit.Name))
-            .ToList();
-        var newGrid = new HeatingGrid(
-            _grid.Name,
-            _grid.ImagePath,
-            _grid.Buildings,
-            newUnits
-            );
+        try
+        {
+            // Getting check marked Production Units
+            var selectedUnits = CheckBoxItems
+                .Where(item => item.IsChecked)
+                .Select(item => item.Name)
+                .ToList();
+            var newUnits = _grid.ProductionUnits
+                .Where(unit => selectedUnits
+                .Contains(unit.Name))
+                .ToList();
+            var newGrid = new HeatingGrid(
+                _grid.Name,
+                _grid.ImagePath,
+                _grid.Buildings,
+                newUnits
+                );
 
-        var optimizationResults = _optimizer.Optimize(newGrid, _marketConditions);
+            var optimizationResults = _optimizer.Optimize(newGrid, _marketConditions);
 
-        _results.Clear();
-        _results.AddRange(optimizationResults);
+            if (optimizationResults.Count != 0)
+            {
+                _results.Clear();
+                _results.AddRange(optimizationResults);
+            }
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine($"Error exporting results: {exception.Message}");
+            _ = MessageBoxManager
+                .GetMessageBoxStandard("Error", $"Error exporting results: {exception.Message}", ButtonEnum.Ok)
+                .ShowAsync();
+        }
     }
     #endregion
 
