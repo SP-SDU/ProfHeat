@@ -15,13 +15,6 @@
 using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Repositories;
 using ProfHeat.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace ProfHeat.Core.Tests.ModelsTests;
@@ -31,7 +24,7 @@ public class AssetManagerTests
     public void Load_ReturnsTest()
     {
         // Arrange
-        string expectedFilePath = Path.Combine("Data", "testFile.config");
+        string expectedFilePath = Path.Combine("Data", "testFileAM_Load.config");
 
         XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
         XNamespace xsd = "http://www.w3.org/2001/XMLSchema";
@@ -76,7 +69,7 @@ public class AssetManagerTests
     public void Save_AssetsTest()
     {
         // Arrange
-        string expectedFilePath = Path.Combine("Data", "testFile.config");
+        string expectedFilePath = Path.Combine("Data", "testFileAM_Save.config");
         var testGrid = new HeatingGrid("test", "/test.svg", 1000,
             [new("Boiler", "/test2.svg", 5.00, 500, 215, 1.01, 0)]);
 

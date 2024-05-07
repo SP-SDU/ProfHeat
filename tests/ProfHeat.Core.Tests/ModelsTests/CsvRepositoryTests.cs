@@ -23,10 +23,11 @@ public class CsvRepositoryTests
     public void Load_ReturnsData()
     {
         // Arrange
-        string expectedFilePath = Path.Combine("Data", "test.csv");
+        string expectedFilePath = Path.Combine("Data", "testFileCSV_Load.csv");
         var testData = new List<MarketCondition>
         {
-            new (new DateTime(2023, 8, 2, 0, 0, 0), new DateTime(2023, 8, 2, 1, 0, 0), 10.111, 10.111)
+            new (new DateTime(2023, 8, 2, 0, 0, 0),
+            new DateTime(2023, 8, 2, 1, 0, 0), 10.111, 10.111)
         };
         string header = "TimeFrom,TimeTo,HeatDemand,ElectricityPrice";
         StringBuilder test = new StringBuilder();
@@ -57,10 +58,11 @@ public class CsvRepositoryTests
     public void Save_CreatesFile()
     {
         // Arrange
-        string expectedFilePath = Path.Combine("Data", "test.csv");
+        string expectedFilePath = Path.Combine("Data", "testFileCSV_Save.csv");
         var testData = new List<MarketCondition>
         {
-            new (new DateTime(2023, 8, 2, 0, 0, 0), new DateTime(2023, 8, 2, 1, 0, 0), 10.111, 10.111)
+            new (new DateTime(2023, 8, 2, 0, 0, 0),
+            new DateTime(2023, 8, 2, 1, 0, 0), 10.111, 10.111)
         };
         CsvRepository repository = new CsvRepository();
 
