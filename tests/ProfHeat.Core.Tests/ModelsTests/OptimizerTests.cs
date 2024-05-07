@@ -28,13 +28,17 @@ public class Optimizer_Tests
 
         var marketConditions = new List<MarketCondition>()
             {
-                new(new DateTime(2023, 02, 08, 0, 0, 0),new DateTime(2023, 02, 08, 1, 0, 0), 10.111, 10.111)
+                new(new DateTime(2023, 02, 08, 0, 0, 0, DateTimeKind.Unspecified),
+                new DateTime(2023, 02, 08, 1, 0, 0, DateTimeKind.Unspecified)
+                , 10.111, 10.111)
             };
 
         var optimizer = new Optimizer();
         var expected = new List<OptimizationResult>()
             {
-                new ("Gas",new (2023, 02, 08, 0, 0, 0),new DateTime(2023, 02, 08, 1, 0, 0), 10.11, 10.11, 102.23, 0, 11.23)
+                new ("Gas",new (2023, 02, 08, 0, 0, 0, DateTimeKind.Unspecified),
+                new DateTime(2023, 02, 08, 1, 0, 0, DateTimeKind.Unspecified)
+                , 10.11, 10.11, 102.23, 0, 11.23)
             };
 
         // Act
