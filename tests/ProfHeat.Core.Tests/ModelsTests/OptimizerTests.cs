@@ -16,36 +16,27 @@ using ProfHeat.Core.Models;
 
 namespace ProfHeat.Core.Tests.ModelsTests;
 
-public class Optimizer_Tests
+public class OptimizerTests
 {
     [Fact]
-    public void Optimize_ReturnsTest()
+    public void Optimize_ReturnsCorrectResults()
     {
         // Arrange
-        var grid = new HeatingGrid("TestGrid", "/Path", 1,
-            [new("Gas", "/Path", 10.111, 10.111, 1.111, 10.111, 10.111)]);
-
-
-        var marketConditions = new List<MarketCondition>()
-            {
-                new(new DateTime(2023, 02, 08, 0, 0, 0, DateTimeKind.Unspecified),
-                new DateTime(2023, 02, 08, 1, 0, 0, DateTimeKind.Unspecified)
-                , 10.111, 10.111)
-            };
-
         var optimizer = new Optimizer();
-        var expected = new List<OptimizationResult>()
-            {
-                new ("Gas",new (2023, 02, 08, 0, 0, 0, DateTimeKind.Unspecified),
-                new DateTime(2023, 02, 08, 1, 0, 0, DateTimeKind.Unspecified)
-                , 10.11, 10.11, 102.23, 0, 11.23)
-            };
+        var productionUnits = new List<ProductionUnit>
+        {
+            new("Gas Boiler", "/Assets/Images/GasBoiler.svg", 5.00, 500, 215, 1.01, 0)
+        };
+        var marketConditions = new List<MarketCondition>
+        {
+            new(new(2023, 2, 8, 0, 0, 0, DateTimeKind.Unspecified), new(2023, 2, 8, 1, 0, 0, DateTimeKind.Unspecified), 6.62, 1190.94)
+        };
+        var expectedResult = new OptimizationResult("Gas Boiler", new(2023, 2, 8, 0, 0, 0, DateTimeKind.Unspecified), new(2023, 2, 8, 1, 0, 0, DateTimeKind.Unspecified), 5, 0, 5.05, 2500, 1075);
 
         // Act
-        var result = optimizer.Optimize(grid, marketConditions);
+        var result = optimizer.Optimize(productionUnits, marketConditions);
 
         // Assert
-        Assert.NotNull(result);
-        Assert.Equal(expected, result);
+        Assert.Equal(expectedResult, result[0]);
     }
 }

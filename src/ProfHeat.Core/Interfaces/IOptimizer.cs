@@ -17,5 +17,5 @@ using ProfHeat.Core.Models;
 namespace ProfHeat.Core.Interfaces;
 public interface IOptimizer
 {
-    List<OptimizationResult> Optimize(HeatingGrid grid, List<MarketCondition> MarketConditions);
+    List<OptimizationResult> Optimize(List<ProductionUnit> productionUnits, List<MarketCondition> marketConditions);
 }

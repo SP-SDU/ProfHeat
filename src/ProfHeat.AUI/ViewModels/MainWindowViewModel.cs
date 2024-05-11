@@ -12,26 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
+using ProfHeat.Core.Repositories;
 
 namespace ProfHeat.AUI.ViewModels;
 
 public class MainWindowViewModel : BaseViewModel
 {
     #region Fields
+    // Instances of managers.
+    private readonly IAssetManager _assetManager = new AssetManager(
+        new XmlRepository(),
+        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "HeatingGrid.config")   // Path to HeatingGrid.config.
+        );
+    private readonly ISourceDataManager _sourceDataManager = new SourceDataManager(new CsvRepository());
+    private readonly IResultDataManager _ResultDataManager = new ResultDataManager(new CsvRepository());
+    private readonly IOptimizer _optimizer = new Optimizer();
+
+    // List of optimization results.
+    private readonly List<OptimizationResult> _results = [];
+
     // ViewModels for the tabs.
     public OptimizerViewModel Optimizer { get; }
     public DataVisualizerViewModel DataVisualizer { get; }
-
-    // List of optimization results.
-    public List<OptimizationResult> Results { get; set; } = [];
     #endregion
 
     #region Constructor
     public MainWindowViewModel()
     {
-        Optimizer = new OptimizerViewModel(Results);
-        DataVisualizer = new DataVisualizerViewModel(Results);
+        Optimizer = new OptimizerViewModel(_assetManager, _sourceDataManager, _optimizer, _results);
+        DataVisualizer = new DataVisualizerViewModel(_ResultDataManager, _results);
     }
     #endregion
 }

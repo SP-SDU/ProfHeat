@@ -19,7 +19,6 @@ using ProfHeat.AUI.ViewModels;
 namespace ProfHeat.AUI;
 public class ViewLocator : IDataTemplate
 {
-
     public Control? Build(object? data)
     {
         if (data is null)

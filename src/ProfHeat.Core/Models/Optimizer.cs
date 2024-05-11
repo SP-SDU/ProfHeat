@@ -18,31 +18,22 @@ namespace ProfHeat.Core.Models;
 
 public class Optimizer : IOptimizer
 {
-    #region Optimizer
-    /// <summary> Main optimization method that calculates the optimal costs based on selected production units and market conditions. </summary>
-    public List<OptimizationResult> Optimize(HeatingGrid grid, List<MarketCondition> MarketConditions)
+    /// <summary> Greedy Algorithm to optimize heat production, minimizing costs and meeting demand. </summary>
+    public List<OptimizationResult> Optimize(List<ProductionUnit> productionUnits, List<MarketCondition> marketConditions)
     {
         var optimizationResults = new List<OptimizationResult>();
-        var heatDissipationFactor = CalculateHeatDissipation(grid.Buildings);
 
-        foreach (var condition in MarketConditions)
+        foreach (var condition in marketConditions)
         {
-            var adjustedHeatDemand = condition.HeatDemand + heatDissipationFactor;
-            var shutdownCostFactor = CalculateShutdownCostFactor(grid.ProductionUnits, adjustedHeatDemand, condition.ElectricityPrice);
+            var remainingDemand = condition.HeatDemand;
 
-            foreach (var unit in OrderByCostEffectiveness(grid.ProductionUnits, condition.ElectricityPrice, shutdownCostFactor))
+            foreach (var unit in OrderByNetCost(productionUnits, condition.ElectricityPrice))
             {
-                if (adjustedHeatDemand <= 0)
-                {
-                    break;
-                }
-
-                var productionAmount = Math.Min(unit.MaxHeat, adjustedHeatDemand);
-                var cost = productionAmount * unit.ProductionCost;
+                var productionAmount = (remainingDemand > 0) ? Math.Min(unit.MaxHeat, remainingDemand) : 0; // Only calculate production if there is demand
+                var electricityProduced = (productionAmount / unit.MaxHeat) * unit.MaxElectricity;
+                var costs = (productionAmount * unit.ProductionCost) - (electricityProduced * condition.ElectricityPrice);
                 var co2Emissions = productionAmount * unit.CO2Emissions;
-                var primaryEnergyConsumption = productionAmount * unit.GasConsumption;
-                var electricityProduced = (unit.MaxElectricity / unit.MaxHeat) * productionAmount;  // Negative is consumption and Positive is production
-                cost -= electricityProduced * condition.ElectricityPrice;                           // Adjust cost based on electricity produced or consumed
+                var GasConsumption = productionAmount * unit.GasConsumption;
 
                 optimizationResults.Add(new OptimizationResult(
                     unit.Name,
@@ -50,12 +41,12 @@ public class Optimizer : IOptimizer
                     condition.TimeTo,
                     Math.Round(productionAmount, 2),
                     Math.Round(electricityProduced, 2),
-                    Math.Round(primaryEnergyConsumption, 2),
-                    Math.Round(cost, 2),
+                    Math.Round(GasConsumption, 2),
+                    Math.Round(costs, 2),
                     Math.Round(co2Emissions, 2)
-                    ));
+                ));
 
-                adjustedHeatDemand -= productionAmount;
+                remainingDemand -= productionAmount;
             }
         }
 
@@ -64,40 +55,9 @@ public class Optimizer : IOptimizer
             throw new InvalidOperationException("Optimization failed to produce any results.");
         }
 
-        // // Only returns the results that have been optimized, not the turned off units
         return optimizationResults;
     }
-    #endregion
-
-    #region Helper methods
-    /// <summary> Simple calculation of heat loss based on distance and building count. </summary>
-    private static double CalculateHeatDissipation(int buildings)
-    {
-        const double HeatLossRate = 0.02;                               // 2% per kilometer
-        const double AverageDistance = 300;                             // Average distance in meters
-        return buildings * AverageDistance * HeatLossRate / 1000;       // Total heat dissipation
-    }
-
-    private static double CalculateShutdownCostFactor(List<ProductionUnit> units, double demand, double electricityPrice)
-    {
-        const double BaseShutdownCost = 500;                            // Fixed cost for shutting down any unit in DKK
-        double totalCapacity = units.Sum(unit => unit.MaxHeat);         // Maximum heating capacity of all units
-        double demandCoverageRatio = demand / totalCapacity;            // Determine if demand exceeds total capacity
-        double rampDownCost = units.Sum(unit => unit.MaxHeat * 0.05);   // 5% of each unit's max heat as ramp down cost
-        double marketAdjustmentCost = demandCoverageRatio > 1 ? (demandCoverageRatio - 1) * electricityPrice * 100 : 0;
-
-        return BaseShutdownCost + rampDownCost + marketAdjustmentCost;  // Total shutdown cost factor
-    }
-
-    private static List<ProductionUnit> OrderByCostEffectiveness(List<ProductionUnit> units, double electricityPrice, double shutdownCostFactor) =>
-        units.Select(unit => new
-        {
-            Unit = unit,
-            CostEffectiveness = (unit.ProductionCost - (unit.MaxElectricity / unit.MaxHeat * electricityPrice)) * unit.MaxHeat
-        })
-        .Where(a => a.CostEffectiveness > -shutdownCostFactor)          // Sets the minimum profit potential to cover the shutdown cost
-        .OrderBy(a => a.CostEffectiveness)                              // Ordering by ascending cost-effectiveness.
-        .Select(a => a.Unit)
-        .ToList();
-    #endregion
+    /// <summary> Orders production units by net cost, adjusted for electricity price. </summary>
+    private static List<ProductionUnit> OrderByNetCost(List<ProductionUnit> units, double electricityPrice) =>
+        [.. units.OrderBy(unit => unit.ProductionCost - (unit.MaxElectricity / unit.MaxHeat * electricityPrice))];
 }

@@ -12,13 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace ProfHeat.AUI.Tests.ViewsTests;
+using ProfHeat.AUI.ViewModels;
 
-public class UnitTest1
+namespace ProfHeat.AUI.Tests.ViewModels;
+
+public class MainWindowViewModelTests
 {
     [Fact]
-    public void Test1()
+    public void Constructor_InitializesViewModels()
     {
+        // Arrange & Act
+        var viewModel = new MainWindowViewModel();
 
+        // Assert
+        Assert.NotNull(viewModel.Optimizer);
+        Assert.NotNull(viewModel.DataVisualizer);
     }
 }

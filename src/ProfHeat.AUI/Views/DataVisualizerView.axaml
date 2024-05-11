@@ -9,22 +9,58 @@
              x:Class="ProfHeat.AUI.Views.DataVisualizerView"
              x:DataType="vm:DataVisualizerViewModel"
              xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia">
-    
+
     <TabControl TabStripPlacement="Left">
         <!-- Tab For buttons -->
-        <TabItem Header="Import and Export">
-            <Grid ColumnDefinitions="Auto, Auto">
-                <Button Grid.Column="0"
-                    Content="Import Results"
-                    Command="{Binding ImportResultsCommand}" />
-                <Button Grid.Column="1"
+        <TabItem Header="Options" FontWeight="SemiBold">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="Import Results"
+                        Command="{Binding ImportResultsCommand}"
+                        MinWidth="200"
+                        Margin="10"/>
+                <ComboBox ItemsSource="{Binding Periods}"
+                          SelectedItem="{Binding SelectedPeriod}"
+                          MinWidth="200"
+                          Margin="10">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button Grid.Column="2"
                         Content="Export Results"
-                        Command="{Binding ExportResultsCommand}" />
-            </Grid>
+                        Command="{Binding ExportResultsCommand}"
+                        MinWidth="200"
+                        Margin="10"/>
+            </StackPanel>
         </TabItem>
-        
+        <!-- Tab For Charts -->
         <TabItem Header="Costs">
             <lvc:CartesianChart Series="{Binding Costs}"
+                                XAxes="{Binding XAxes}"
+                                ZoomMode="X"/>
+        </TabItem>
+        <TabItem Header="CO2Emissions">
+            <lvc:CartesianChart Series="{Binding CO2Emissions}"
+                                XAxes="{Binding XAxes}"
+                                ZoomMode="X"/>
+        </TabItem>
+        <TabItem Header="ProducedHeat">
+            <lvc:CartesianChart Series="{Binding ProducedHeat}"
+                                XAxes="{Binding XAxes}"
+                                ZoomMode="X"/>
+        </TabItem>
+        <TabItem Header="GasConsumption">
+            <lvc:CartesianChart Series="{Binding GasConsumption}"
+                                XAxes="{Binding XAxes}"
+                                ZoomMode="X"/>
+        </TabItem>
+        <TabItem Header="ElectricityProduced">
+            <lvc:CartesianChart Series="{Binding ElectricityProduced}"
+                                XAxes="{Binding XAxes}"
                                 ZoomMode="X"/>
         </TabItem>
     </TabControl>
