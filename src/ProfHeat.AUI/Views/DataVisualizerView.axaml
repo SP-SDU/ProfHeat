@@ -53,8 +53,8 @@
                                 XAxes="{Binding XAxes}"
                                 ZoomMode="X"/>
         </TabItem>
-        <TabItem Header="Consumption">
-            <lvc:CartesianChart Series="{Binding PrimaryEnergyConsumption}"
+        <TabItem Header="GasConsumption">
+            <lvc:CartesianChart Series="{Binding GasConsumption}"
                                 XAxes="{Binding XAxes}"
                                 ZoomMode="X"/>
         </TabItem>

@@ -12,10 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Avalonia.Platform.Storage;
 using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
-using ProfHeat.Core.Repositories;
 
 namespace ProfHeat.AUI.ViewModels;
 
@@ -23,44 +21,29 @@ public partial class OptimizerViewModel : BaseViewModel
 {
     #region Fields
     // Instances of managers.
-    private readonly IAssetManager _assetManager = new AssetManager(
-        new XmlRepository(),
-        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "HeatingGrid.config")   // Path to HeatingGrid.config.
-        );
-    private readonly ISourceDataManager _sourceDataManager = new SourceDataManager(new CsvRepository());
-    private readonly IOptimizer _optimizer = new Optimizer();
+    private readonly ISourceDataManager _sourceDataManager;
+    private readonly IOptimizer _optimizer;
 
     // Fields for holding data.
     private readonly HeatingGrid _grid;
     private readonly List<MarketCondition> _marketConditions = [];
     private readonly List<OptimizationResult> _results;
 
-    // Options for opening CSV files.
-    private readonly FilePickerOpenOptions _openCsvFileOptions = new()
-    {
-        Title = "Open CSV File",
-        AllowMultiple = false,
-        FileTypeFilter = [
-                new("CSV Files (Invariant Culture)")
-                {
-                    Patterns = ["*.csv"],
-                    AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
-                    MimeTypes = ["text/csv"]
-                }]
-    };
-
+    // Observable properties.
     public ObservableCollection<CheckBoxItem> CheckBoxItems { get; }
     public string GridName { get; }
     public string GridImagePath { get; }
     #endregion
 
     #region Constructor
-    public OptimizerViewModel(List<OptimizationResult> results)
+    public OptimizerViewModel(IAssetManager assetManager, ISourceDataManager sourceDataManager, IOptimizer optimizer, List<OptimizationResult> results)
     {
+        _sourceDataManager = sourceDataManager;
+        _optimizer = optimizer;
         _results = results;
+        _grid = assetManager.LoadAssets();
 
-        // Load assets and initialize CheckBoxItems for UI.
-        _grid = _assetManager.LoadAssets();
+        // initialize CheckBoxItems for UI.
         CheckBoxItems = new(
             _grid.ProductionUnits
             .Select(unit =>
@@ -79,22 +62,16 @@ public partial class OptimizerViewModel : BaseViewModel
     #region Commands
     /// <summary> Command to import data from a CSV file. </summary>
     [RelayCommand]
-    public async Task ImportData()
+    public async Task ImportData(string filePath = null!)
     {
         try
         {
-            var filePicker = await App.TopLevel.StorageProvider.OpenFilePickerAsync(_openCsvFileOptions);    // Select file in File Explorer.
-            var filePaths = filePicker
-                .Select(file => file
-                .TryGetLocalPath())
-                .ToList();
+            filePath ??= await GetLoadFilePathAsync();
 
-            if (filePaths.Count != 0)
+            if (!string.IsNullOrEmpty(filePath))
             {
                 _marketConditions.Clear();
-                _marketConditions
-                    .AddRange(
-                    _sourceDataManager.LoadSourceData(filePaths[0]!));   // Load the source data.
+                _marketConditions.AddRange(_sourceDataManager.LoadSourceData(filePath));   // Load the source data.
 
                 OptimizeCommand.NotifyCanExecuteChanged();
             }
@@ -114,20 +91,11 @@ public partial class OptimizerViewModel : BaseViewModel
             // Getting check marked Production Units
             var selectedUnits = CheckBoxItems
                 .Where(item => item.IsChecked)
-                .Select(item => item.Name)
+                .Select(item => _grid.ProductionUnits.Find(unit => unit.Name == item.Name))
+                .Where(unit => unit != default)
                 .ToList();
-            var newUnits = _grid.ProductionUnits
-                .Where(unit => selectedUnits
-                .Contains(unit.Name))
-                .ToList();
-            var newGrid = new HeatingGrid(
-                _grid.Name,
-                _grid.ImagePath,
-                _grid.Buildings,
-                newUnits
-                );
 
-            var optimizationResults = _optimizer.Optimize(newGrid, _marketConditions);
+            var optimizationResults = _optimizer.Optimize(selectedUnits, _marketConditions);
 
             if (optimizationResults.Count != 0)
             {
@@ -143,6 +111,6 @@ public partial class OptimizerViewModel : BaseViewModel
     #endregion
 
     #region Helper Methods
-    private bool CanOptimize() => _marketConditions.Count > 0 && CheckBoxItems.Any(cbi => cbi.IsChecked);
+    private bool CanOptimize() => _marketConditions.Count > 0 && CheckBoxItems.Any(checkBoxItem => checkBoxItem.IsChecked);
     #endregion
 }

@@ -22,7 +22,7 @@ public readonly record struct OptimizationResult(
     [Name("TimeTo")] DateTime TimeTo,                                   // End time of the period
     [Name("ProducedHeat")] double ProducedHeat,                         // Heat produced in MWh
     [Name("ElectricityProduced")] double ElectricityProduced,           // Added for clarity on electricity produced or consumed
-    [Name("PrimaryEnergyConsumption")] double PrimaryEnergyConsumption, // Primary energy used
+    [Name("GasConsumption")] double GasConsumption,                     // Gas which is the Primary energy used
     [Name("Costs")] double Costs,                                       // Production costs, implying net costs considering any profits from electricity generation
     [Name("CO2Emissions")] double CO2Emissions                          // CO2 emissions in kg
     );

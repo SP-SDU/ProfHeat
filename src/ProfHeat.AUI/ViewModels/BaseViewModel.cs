@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Avalonia.Platform.Storage;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 
@@ -19,6 +20,36 @@ namespace ProfHeat.AUI.ViewModels;
 
 public class BaseViewModel : ObservableObject
 {
+    #region Fields
+    // Options for CSV files.
+    private static readonly FilePickerOpenOptions s_openCsvFileOptions = new()
+    {
+        Title = "Open CSV File",
+        AllowMultiple = false,
+        FileTypeFilter = [
+                new("CSV Files (Invariant Culture)")
+            {
+                Patterns = ["*.csv"],
+                AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
+                MimeTypes = ["text/csv"]
+            }]
+    };
+    private static readonly FilePickerSaveOptions s_saveCsvFileOptions = new()
+    {
+        Title = "Save CSV File",
+        SuggestedFileName = $"Results_{Path.GetRandomFileName()}",
+        DefaultExtension = "csv",
+        FileTypeChoices = [
+                new("CSV Files (Invariant Culture)")
+            {
+                Patterns = ["*.csv"],
+                AppleUniformTypeIdentifiers = ["public.comma-separated-values-text"],
+                MimeTypes = ["text/csv"]
+            }]
+    };
+    #endregion
+
+    #region Methods
     protected static async Task HandleErrorAsync(Exception exception, string errorMessage = "An error occurred")
     {
         // Log the error
@@ -29,4 +60,14 @@ public class BaseViewModel : ObservableObject
             .GetMessageBoxStandard("Error", $"{errorMessage}: {exception.Message}", ButtonEnum.Ok)
             .ShowAsync();
     }
+
+    protected static async Task<string> GetLoadFilePathAsync() =>
+        (await App.TopLevel.StorageProvider.OpenFilePickerAsync(s_openCsvFileOptions))
+        .Select(file => file.TryGetLocalPath())
+        .FirstOrDefault()!;
+
+    protected static async Task<string> GetSaveFilePathAsync() =>
+        (await App.TopLevel.StorageProvider.SaveFilePickerAsync(s_saveCsvFileOptions))
+        ?.TryGetLocalPath()!;
+    #endregion
 }

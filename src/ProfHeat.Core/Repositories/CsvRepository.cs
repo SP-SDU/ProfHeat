@@ -28,30 +28,26 @@ public class CsvRepository : IRepository
 
         if (IsCollection(typeof(T)))
         {
-            // Extract the type of the elements in the list
+            // Extracts the type of the elements in the list
             Type itemType = typeof(T)
                 .GetGenericArguments()
                 .Single();
-            var records = csv
-                .GetRecords(itemType)
-                .ToList();
+            var records = csv.GetRecords(itemType);
 
-            // Create a list of the appropriate type and return it
-            var listType = typeof(List<>).MakeGenericType(itemType);
-            var list = Activator.CreateInstance(listType);
+            // Creates a list of itemType and add the records to it
+            var list = (IList) Activator
+                .CreateInstance(typeof(List<>)
+                .MakeGenericType(itemType))!;
 
             foreach (var record in records)
             {
-                _ = ((IList) list!).Add(record);
+                _ = list.Add(record);
             }
 
-            return (T) list!;
+            return (T) list ?? throw new InvalidOperationException("Deserialization returned null or file is empty.");
         }
-        else
-        {
-            var record = csv.GetRecord<T>();
-            return record ?? throw new InvalidOperationException("Deserialization returned null or file is empty.");
-        }
+
+        return csv.GetRecord<T>() ?? throw new InvalidOperationException("Deserialization returned null or file is empty.");
     }
 
     public void Save<T>(T data, string filePath)
@@ -59,20 +55,13 @@ public class CsvRepository : IRepository
         using var writer = new StreamWriter(filePath);
         using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
 
-        if (data is not IEnumerable)
-        {
-            csv.WriteRecord(data);
-            csv.NextRecord();
-        }
-        else
-        {
-            csv.WriteRecords((IEnumerable) data);
-        }
+        IEnumerable enumerableData = data as IEnumerable ?? new[] { data };
+        csv.WriteRecords(enumerableData);
     }
 
     private static bool IsCollection(Type type) =>
         type.IsGenericType && type
         .GetInterfaces()
         .ToList()
-        .Exists(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>));
+        .Exists(interfaceType => interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == typeof(IEnumerable<>));
 }
