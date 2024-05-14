@@ -18,7 +18,7 @@ using ProfHeat.Core.Repositories;
 
 namespace ProfHeat.AUI.ViewModels;
 
-public class MainWindowViewModel : BaseViewModel
+public partial class MainWindowViewModel : BaseViewModel
 {
     #region Fields
     // Instances of managers.
@@ -33,6 +33,10 @@ public class MainWindowViewModel : BaseViewModel
     // List of optimization results.
     private readonly List<OptimizationResult> _results = [];
 
+    // Observable properties.
+    [ObservableProperty]
+    private int _selectedTabIndex = 0;  // Sets Optimizer tab as default.
+
     // ViewModels for the tabs.
     public OptimizerViewModel Optimizer { get; }
     public DataVisualizerViewModel DataVisualizer { get; }
@@ -41,8 +45,12 @@ public class MainWindowViewModel : BaseViewModel
     #region Constructor
     public MainWindowViewModel()
     {
-        Optimizer = new OptimizerViewModel(_assetManager, _sourceDataManager, _optimizer, _results);
+        Optimizer = new OptimizerViewModel(_assetManager, _sourceDataManager, _optimizer, _results, ChangeTab);
         DataVisualizer = new DataVisualizerViewModel(_ResultDataManager, _results);
     }
+    #endregion
+
+    #region Helper Methods
+    private void ChangeTab(int tabIndex) => SelectedTabIndex = tabIndex;
     #endregion
 }

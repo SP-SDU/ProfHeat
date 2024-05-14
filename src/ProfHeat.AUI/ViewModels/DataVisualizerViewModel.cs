@@ -16,8 +16,10 @@ using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Drawing;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
 using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
+using SkiaSharp;
 
 namespace ProfHeat.AUI.ViewModels;
 
@@ -54,6 +56,8 @@ public partial class DataVisualizerViewModel : BaseViewModel
     public ObservableCollection<ISeries> GasConsumption => GetLineSeries(result => result.GasConsumption);
     public ObservableCollection<ISeries> ElectricityProduced => GetLineSeries(result => result.ElectricityProduced);
     public static Axis[] XAxes => [new DateTimeAxis(TimeSpan.FromHours(1), date => date.ToString("yy MMM dd',' HH'h'"))];
+    public SolidColorPaint LegendTextPaint { get; } = new() { Color = new SKColor(255, 255, 255) };
+
     #endregion
 
     #region Constructor

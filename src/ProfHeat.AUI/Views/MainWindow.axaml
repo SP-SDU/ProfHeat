@@ -38,7 +38,8 @@
                         IsAddTabButtonVisible="False"
                         CanDragTabs="False"
                         CanReorderTabs="False"
-                        AllowDropTabs="False">
+                        AllowDropTabs="False"
+                        SelectedIndex="{Binding SelectedTabIndex}">
                 <!-- OptimizerView -->
                 <ui:TabViewItem Header="Optimizer"
                                 IsClosable="False">

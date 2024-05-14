@@ -9,7 +9,7 @@
              x:Class="ProfHeat.AUI.Views.DataVisualizerView"
              x:DataType="vm:DataVisualizerViewModel"
              xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia">
-
+    
     <TabControl TabStripPlacement="Left">
         <!-- Tab For buttons -->
         <TabItem Header="Options" FontWeight="SemiBold">
@@ -41,26 +41,36 @@
         <TabItem Header="Costs">
             <lvc:CartesianChart Series="{Binding Costs}"
                                 XAxes="{Binding XAxes}"
+                                LegendPosition="Bottom"
+                                LegendTextPaint="{Binding LegendTextPaint}"
                                 ZoomMode="X"/>
         </TabItem>
         <TabItem Header="CO2Emissions">
             <lvc:CartesianChart Series="{Binding CO2Emissions}"
                                 XAxes="{Binding XAxes}"
+                                LegendPosition="Bottom"
+                                LegendTextPaint="{Binding LegendTextPaint}"
                                 ZoomMode="X"/>
         </TabItem>
         <TabItem Header="ProducedHeat">
             <lvc:CartesianChart Series="{Binding ProducedHeat}"
                                 XAxes="{Binding XAxes}"
+                                LegendPosition="Bottom"
+                                LegendTextPaint="{Binding LegendTextPaint}"
                                 ZoomMode="X"/>
         </TabItem>
         <TabItem Header="GasConsumption">
             <lvc:CartesianChart Series="{Binding GasConsumption}"
                                 XAxes="{Binding XAxes}"
+                                LegendPosition="Bottom"
+                                LegendTextPaint="{Binding LegendTextPaint}"
                                 ZoomMode="X"/>
         </TabItem>
         <TabItem Header="ElectricityProduced">
             <lvc:CartesianChart Series="{Binding ElectricityProduced}"
                                 XAxes="{Binding XAxes}"
+                                LegendPosition="Bottom"
+                                LegendTextPaint="{Binding LegendTextPaint}"
                                 ZoomMode="X"/>
         </TabItem>
     </TabControl>
