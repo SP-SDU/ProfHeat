@@ -20,6 +20,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
 using SkiaSharp;
+using System.Reflection.Emit;
 
 namespace ProfHeat.AUI.ViewModels;
 
@@ -55,7 +56,15 @@ public partial class DataVisualizerViewModel : BaseViewModel
     public ObservableCollection<ISeries> ProducedHeat => GetLineSeries(result => result.ProducedHeat);
     public ObservableCollection<ISeries> GasConsumption => GetLineSeries(result => result.GasConsumption);
     public ObservableCollection<ISeries> ElectricityProduced => GetLineSeries(result => result.ElectricityProduced);
-    public static Axis[] XAxes => [new DateTimeAxis(TimeSpan.FromHours(1), date => date.ToString("yy MMM dd',' HH'h'"))];
+    public static DrawMarginFrame DrawMarginFrame => new() { Stroke = new SolidColorPaint(SKColors.White, 1) };
+    public static Axis[] XAxes =>
+        [new DateTimeAxis(TimeSpan.FromHours(1), date => date.ToString("yy MMM dd',' HH'h'"))
+        { LabelsPaint = new SolidColorPaint(SKColors.White) }];
+    public static Axis[] CostsYAxis { get; } = GetYAxis("DKK / MWh(th)");
+    public static Axis[] CO2EmissionsYAxis { get; } = GetYAxis("kg / MWh(th)");
+    public static Axis[] ProducedHeatYAxis { get; } = GetYAxis("MW");
+    public static Axis[] GasConsumptionYAxis { get; } = GetYAxis("MWh(gas) / MWh(th)");
+    public static Axis[] ElectricityProducedYAxis { get; } = GetYAxis("MW");
     public SolidColorPaint LegendTextPaint { get; } = new() { Color = SKColors.White };
 
     #endregion
@@ -137,5 +146,13 @@ public partial class DataVisualizerViewModel : BaseViewModel
             GeometryFill = null,
             Fill = null
         }));
+
+    private static Axis[] GetYAxis(string metric) =>
+        [new Axis
+        {
+            Name = metric,
+            NamePaint = new SolidColorPaint(SKColors.White),
+            LabelsPaint = new SolidColorPaint(SKColors.White)
+        }];
     #endregion
 }
