@@ -56,7 +56,7 @@ public partial class DataVisualizerViewModel : BaseViewModel
     public ObservableCollection<ISeries> GasConsumption => GetLineSeries(result => result.GasConsumption);
     public ObservableCollection<ISeries> ElectricityProduced => GetLineSeries(result => result.ElectricityProduced);
     public static Axis[] XAxes => [new DateTimeAxis(TimeSpan.FromHours(1), date => date.ToString("yy MMM dd',' HH'h'"))];
-    public SolidColorPaint LegendTextPaint { get; } = new() { Color = new SKColor(255, 255, 255) };
+    public SolidColorPaint LegendTextPaint { get; } = new() { Color = SKColors.White };
 
     #endregion
 
