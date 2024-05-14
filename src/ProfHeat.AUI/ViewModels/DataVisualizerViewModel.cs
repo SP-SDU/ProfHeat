@@ -20,7 +20,6 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
 using SkiaSharp;
-using System.Reflection.Emit;
 
 namespace ProfHeat.AUI.ViewModels;
 
@@ -28,7 +27,7 @@ public partial class DataVisualizerViewModel : BaseViewModel
 {
     #region Fields
     // Instances of managers.
-    private readonly IResultDataManager _ResultDataManager;
+    private readonly IResultDataManager _resultDataManager;
 
     // Observable properties.
     [ObservableProperty, NotifyCanExecuteChangedFor(nameof(ExportResultsCommand))]
@@ -72,7 +71,7 @@ public partial class DataVisualizerViewModel : BaseViewModel
     #region Constructor
     public DataVisualizerViewModel(IResultDataManager resultDataManager, List<OptimizationResult> results)
     {
-        _ResultDataManager = resultDataManager;
+        _resultDataManager = resultDataManager;
         SelectedPeriod = Periods[0];
         Results = results;
     }
@@ -90,7 +89,7 @@ public partial class DataVisualizerViewModel : BaseViewModel
             if (!string.IsNullOrEmpty(filePath))
             {
                 Results.Clear();
-                Results.AddRange(_ResultDataManager.LoadResultData(filePath));
+                Results.AddRange(_resultDataManager.LoadResultData(filePath));
 
                 OnPropertyChanged(nameof(Results));
                 OnPropertyChanged(nameof(Costs));
@@ -118,7 +117,7 @@ public partial class DataVisualizerViewModel : BaseViewModel
 
             if (!string.IsNullOrEmpty(filePath))
             {
-                _ResultDataManager.SaveResultData(Results, filePath!);
+                _resultDataManager.SaveResultData(Results, filePath!);
             }
         }
         catch (Exception exception)

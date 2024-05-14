@@ -27,7 +27,7 @@ public partial class MainWindowViewModel : BaseViewModel
         Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "HeatingGrid.config")   // Path to HeatingGrid.config.
         );
     private readonly ISourceDataManager _sourceDataManager = new SourceDataManager(new CsvRepository());
-    private readonly IResultDataManager _ResultDataManager = new ResultDataManager(new CsvRepository());
+    private readonly IResultDataManager _resultDataManager = new ResultDataManager(new CsvRepository());
     private readonly IOptimizer _optimizer = new Optimizer();
 
     // List of optimization results.
@@ -46,7 +46,7 @@ public partial class MainWindowViewModel : BaseViewModel
     public MainWindowViewModel()
     {
         Optimizer = new OptimizerViewModel(_assetManager, _sourceDataManager, _optimizer, _results, ChangeTab);
-        DataVisualizer = new DataVisualizerViewModel(_ResultDataManager, _results);
+        DataVisualizer = new DataVisualizerViewModel(_resultDataManager, _results);
     }
     #endregion
 
