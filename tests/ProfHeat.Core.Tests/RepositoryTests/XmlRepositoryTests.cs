@@ -90,7 +90,7 @@ public class XmlRepositoryTests : IDisposable
         repository.Save(data, _filePath);
 
         // Assert
-        Assert.Equal(_testFile.Replace(" ",""), File.ReadAllText(_filePath).Replace(" ", ""));
+        Assert.Equal(_testFile.Replace(" ", ""), File.ReadAllText(_filePath).Replace(" ", ""));
     }
 
     [Fact]

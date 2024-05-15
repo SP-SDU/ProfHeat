@@ -24,11 +24,12 @@ public class OptimizerViewModelTests
     private readonly Mock<IAssetManager> _mockAssetManager = new();
     private readonly Mock<ISourceDataManager> _mockSourceDataManager = new();
     private readonly Mock<IOptimizer> _mockOptimizer = new();
+    private readonly Mock<Action<int>> _mockChangeTab = new();
     private readonly List<MarketCondition> _marketConditions = [new(
         new DateTime(2023, 02, 08, 0, 0, 0, DateTimeKind.Unspecified),
         new DateTime(2023, 02, 08, 1, 0, 0, DateTimeKind.Unspecified),
         10.111, 10.111)];
-    private readonly HeatingGrid _grid = new ("test", "/test.svg", 1000, [new ("Gas Boiler", "/Assets/Images/GasBoiler.svg", 5, 500, 215, 1.01, 0)]);
+    private readonly HeatingGrid _grid = new("test", "/test.svg", 1000, [new("Gas Boiler", "/Assets/Images/GasBoiler.svg", 5, 500, 215, 1.01, 0)]);
     private readonly List<OptimizationResult> _results = [];
     private readonly OptimizerViewModel _viewModel;
     private const string _filePath = "testFile.csv";
@@ -36,7 +37,7 @@ public class OptimizerViewModelTests
     public OptimizerViewModelTests()
     {
         _ = _mockAssetManager.Setup(x => x.LoadAssets()).Returns(_grid);
-        _viewModel = new OptimizerViewModel(_mockAssetManager.Object, _mockSourceDataManager.Object, _mockOptimizer.Object, _results);
+        _viewModel = new OptimizerViewModel(_mockAssetManager.Object, _mockSourceDataManager.Object, _mockOptimizer.Object, _results, _mockChangeTab.Object);
     }
 
     [Fact]
@@ -83,5 +84,6 @@ public class OptimizerViewModelTests
         // Assert
         _mockOptimizer.Verify(sourceDataManager => sourceDataManager.Optimize(selectedUnits, It.IsAny<List<MarketCondition>>()), Times.Once());
         Assert.NotEmpty(_results);
+        _mockChangeTab.Verify(changeTab => changeTab.Invoke(1), Times.Once());
     }
 }

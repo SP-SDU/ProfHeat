@@ -16,8 +16,10 @@ using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Drawing;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
 using ProfHeat.Core.Interfaces;
 using ProfHeat.Core.Models;
+using SkiaSharp;
 
 namespace ProfHeat.AUI.ViewModels;
 
@@ -25,7 +27,7 @@ public partial class DataVisualizerViewModel : BaseViewModel
 {
     #region Fields
     // Instances of managers.
-    private readonly IResultDataManager _ResultDataManager;
+    private readonly IResultDataManager _resultDataManager;
 
     // Observable properties.
     [ObservableProperty, NotifyCanExecuteChangedFor(nameof(ExportResultsCommand))]
@@ -53,13 +55,23 @@ public partial class DataVisualizerViewModel : BaseViewModel
     public ObservableCollection<ISeries> ProducedHeat => GetLineSeries(result => result.ProducedHeat);
     public ObservableCollection<ISeries> GasConsumption => GetLineSeries(result => result.GasConsumption);
     public ObservableCollection<ISeries> ElectricityProduced => GetLineSeries(result => result.ElectricityProduced);
-    public static Axis[] XAxes => [new DateTimeAxis(TimeSpan.FromHours(1), date => date.ToString("yy MMM dd',' HH'h'"))];
+    public static DrawMarginFrame DrawMarginFrame => new() { Stroke = new SolidColorPaint(SKColors.White, 1) };
+    public static Axis[] XAxes =>
+        [new DateTimeAxis(TimeSpan.FromHours(1), date => date.ToString("yy MMM dd',' HH'h'"))
+        { LabelsPaint = new SolidColorPaint(SKColors.White) }];
+    public static Axis[] CostsYAxis { get; } = GetYAxis("DKK / MWh(th)");
+    public static Axis[] CO2EmissionsYAxis { get; } = GetYAxis("kg / MWh(th)");
+    public static Axis[] ProducedHeatYAxis { get; } = GetYAxis("MW");
+    public static Axis[] GasConsumptionYAxis { get; } = GetYAxis("MWh(gas) / MWh(th)");
+    public static Axis[] ElectricityProducedYAxis { get; } = GetYAxis("MW");
+    public SolidColorPaint LegendTextPaint { get; } = new() { Color = SKColors.White };
+
     #endregion
 
     #region Constructor
     public DataVisualizerViewModel(IResultDataManager resultDataManager, List<OptimizationResult> results)
     {
-        _ResultDataManager = resultDataManager;
+        _resultDataManager = resultDataManager;
         SelectedPeriod = Periods[0];
         Results = results;
     }
@@ -77,7 +89,7 @@ public partial class DataVisualizerViewModel : BaseViewModel
             if (!string.IsNullOrEmpty(filePath))
             {
                 Results.Clear();
-                Results.AddRange(_ResultDataManager.LoadResultData(filePath));
+                Results.AddRange(_resultDataManager.LoadResultData(filePath));
 
                 OnPropertyChanged(nameof(Results));
                 OnPropertyChanged(nameof(Costs));
@@ -105,7 +117,7 @@ public partial class DataVisualizerViewModel : BaseViewModel
 
             if (!string.IsNullOrEmpty(filePath))
             {
-                _ResultDataManager.SaveResultData(Results, filePath!);
+                _resultDataManager.SaveResultData(Results, filePath!);
             }
         }
         catch (Exception exception)
@@ -133,5 +145,13 @@ public partial class DataVisualizerViewModel : BaseViewModel
             GeometryFill = null,
             Fill = null
         }));
+
+    private static Axis[] GetYAxis(string metric) =>
+        [new Axis
+        {
+            Name = metric,
+            NamePaint = new SolidColorPaint(SKColors.White),
+            LabelsPaint = new SolidColorPaint(SKColors.White)
+        }];
     #endregion
 }

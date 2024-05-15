@@ -28,6 +28,7 @@ public partial class OptimizerViewModel : BaseViewModel
     private readonly HeatingGrid _grid;
     private readonly List<MarketCondition> _marketConditions = [];
     private readonly List<OptimizationResult> _results;
+    private readonly Action<int> _changeTab;
 
     // Observable properties.
     public ObservableCollection<CheckBoxItem> CheckBoxItems { get; }
@@ -36,11 +37,12 @@ public partial class OptimizerViewModel : BaseViewModel
     #endregion
 
     #region Constructor
-    public OptimizerViewModel(IAssetManager assetManager, ISourceDataManager sourceDataManager, IOptimizer optimizer, List<OptimizationResult> results)
+    public OptimizerViewModel(IAssetManager assetManager, ISourceDataManager sourceDataManager, IOptimizer optimizer, List<OptimizationResult> results, Action<int> changeTab)
     {
         _sourceDataManager = sourceDataManager;
         _optimizer = optimizer;
         _results = results;
+        _changeTab = changeTab;
         _grid = assetManager.LoadAssets();
 
         // initialize CheckBoxItems for UI.
@@ -101,6 +103,7 @@ public partial class OptimizerViewModel : BaseViewModel
             {
                 _results.Clear();
                 _results.AddRange(optimizationResults);
+                _changeTab?.Invoke(1);  // Changes tab to Data Visualizer.
             }
         }
         catch (Exception exception)
