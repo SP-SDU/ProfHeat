@@ -6,7 +6,7 @@
         xmlns:v="using:ProfHeat.AUI.Views"
         xmlns:m="using:ProfHeat.Core.Models"
         xmlns:ui="using:FluentAvalonia.UI.Controls"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="800" Height="450"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="ProfHeat.AUI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         WindowStartupLocation="CenterOwner"
@@ -15,13 +15,14 @@
         Background="Transparent"
         PointerPressed="DragWindow_PointerPressed"
         Icon="/Assets/Images/Icon.ico"
-        Title="ProfHeat">
+        Title="ProfHeat"
+        Width="800" Height="450">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Panel>
+    <Grid>
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial
@@ -31,27 +32,27 @@
                     MaterialOpacity="0.40" />
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-        
-            <!-- Tabs -->
-            <ui:TabView HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        IsAddTabButtonVisible="False"
-                        CanDragTabs="False"
-                        CanReorderTabs="False"
-                        AllowDropTabs="False"
-                        SelectedIndex="{Binding SelectedTabIndex}">
-                <!-- OptimizerView -->
-                <ui:TabViewItem Header="Optimizer"
-                                IsClosable="False">
-                    <v:OptimizerView DataContext="{Binding Optimizer}"/>
-                </ui:TabViewItem>
 
-                <!-- DataVisualizerView -->
-                <ui:TabViewItem Header="Data Visualizer"
-                                IsClosable="False">
-                    <v:DataVisualizerView DataContext="{Binding DataVisualizer}"/>
-                </ui:TabViewItem>
-            </ui:TabView>
-          
-    </Panel>  
+        <!-- Tabs -->
+        <ui:TabView HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    IsAddTabButtonVisible="False"
+                    CanDragTabs="False"
+                    CanReorderTabs="False"
+                    AllowDropTabs="False"
+                    SelectedIndex="{Binding SelectedTabIndex}">
+            <!-- OptimizerView -->
+            <ui:TabViewItem Header="Optimizer"
+                            IsClosable="False">
+                <v:OptimizerView DataContext="{Binding Optimizer}"/>
+            </ui:TabViewItem>
+
+            <!-- DataVisualizerView -->
+            <ui:TabViewItem Header="Data Visualizer"
+                            IsClosable="False">
+                <v:DataVisualizerView DataContext="{Binding DataVisualizer}"/>
+            </ui:TabViewItem>
+        </ui:TabView>
+    </Grid>
 </Window>
+

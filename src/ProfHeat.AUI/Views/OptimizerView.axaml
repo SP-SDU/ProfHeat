@@ -6,12 +6,10 @@
              xmlns:v="using:ProfHeat.AUI.Views"
              xmlns:m="using:ProfHeat.Core.Models"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             Width="800" Height="450"
              x:Class="ProfHeat.AUI.Views.OptimizerView"
              x:DataType="vm:OptimizerViewModel">
 
-    <Grid ColumnDefinitions="Auto, Auto">
-
+    <Grid ColumnDefinitions="Auto, *" RowDefinitions="*, Auto">
         <!-- Left side panel -->
         <StackPanel Grid.Column="0"
                     Width="200"
@@ -25,58 +23,57 @@
                     Content="Import Data"
                     Command="{Binding ImportDataCommand}" />
             <!-- Check Box Items Control -->
-            <ItemsControl ItemsSource="{Binding CheckBoxItems}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <!-- Check Box Items-->
-                        <Grid ColumnDefinitions=" Auto, *">
-                            <CheckBox Grid.Column="0"
-                                      HorizontalAlignment="Left"
-                                      VerticalAlignment="Bottom"
-                                      Height="45"
-                                      Margin="0,20,0,0"
-                                      IsChecked="{Binding IsChecked}"
-                                      Content="{Binding Name}"/>
-                            <!-- Check Box Image Items -->
-                            <Svg Grid.Column="1"
-                                 HorizontalAlignment="Right"
-                                 Width="50" Height="50"
-                                 Path="{Binding ImagePath}" />
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding CheckBoxItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Check Box Items-->
+                            <Grid ColumnDefinitions="Auto, *">
+                                <CheckBox Grid.Column="0"
+                                          HorizontalAlignment="Left"
+                                          VerticalAlignment="Bottom"
+                                          Height="45"
+                                          Margin="0,20,0,0"
+                                          IsChecked="{Binding IsChecked}"
+                                          Content="{Binding Name}"/>
+                                <!-- Check Box Image Items -->
+                                <Svg Grid.Column="1"
+                                     HorizontalAlignment="Right"
+                                     Width="50" Height="50"
+                                     Path="{Binding ImagePath}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
         </StackPanel>
 
         <!-- Right side panel -->
-        <Grid Grid.Column="1"
-              Width="500"
-              RowDefinitions="Auto, Auto, Auto">
+        <Grid Grid.Column="1" Margin="10"
+              RowDefinitions="Auto, *, Auto"
+              HorizontalAlignment="Right">
+
             <!-- Grid Name Text Block -->
             <TextBlock Grid.Row="0"
+                       HorizontalAlignment="Center"
                        Text="{Binding GridName}"
                        FontSize="20"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Top"
-                       Margin="130,30,0,10" />
+                       Margin="0,30,0,10" />
+
             <!-- Grid Image Image path -->
             <Svg Grid.Row="1"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Height="300" Width="320"
                  Margin="0,0,20,0"
                  Path="{Binding GridImagePath}" />
+
             <!-- Optimize Button -->
-            <StackPanel Grid.Row="2"
-                        Height="30">
-                <Button CornerRadius="5"
-                        Margin="0,0,20,30"
-                        Width="140" Height="40"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Bottom"
-                        Content="Optimize"
-                        Command="{Binding OptimizeCommand}" />
-            </StackPanel>
+            <Button CornerRadius="5"
+                    HorizontalAlignment="Right"
+                    Grid.Row="2"
+                    Margin="0,20,20,20"
+                    Width="140" Height="40"
+                    Content="Optimize"
+                    Command="{Binding OptimizeCommand}" />
         </Grid>
     </Grid>
 </UserControl>
+
