@@ -9,84 +9,86 @@
              x:Class="ProfHeat.AUI.Views.DataVisualizerView"
              x:DataType="vm:DataVisualizerViewModel"
              xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia">
-    
-    <TabControl TabStripPlacement="Left">
-        <!-- Tab For buttons -->
-        <TabItem Header="Options" FontWeight="SemiBold">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Content="Import Results"
-                        Command="{Binding ImportResultsCommand}"
-                        MinWidth="200"
-                        Margin="10"/>
-                <ComboBox ItemsSource="{Binding Periods}"
-                          SelectedItem="{Binding SelectedPeriod}"
-                          MinWidth="200"
-                          Margin="10">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding}"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <Button Grid.Column="2"
-                        Content="Export Results"
-                        Command="{Binding ExportResultsCommand}"
-                        MinWidth="200"
-                        Margin="10"/>
-            </StackPanel>
-        </TabItem>
-        <!-- Tab For Charts -->
-        <TabItem Header="Costs">
-            <lvc:CartesianChart Series="{Binding Costs}"
-                                TooltipPosition="Top"
-                                XAxes="{Binding XAxes}"
-                                YAxes="{Binding CostsYAxis}"
-                                LegendPosition="Bottom"
-                                LegendTextPaint="{Binding LegendTextPaint}"
-                                ZoomMode="ZoomX"
-                                DrawMarginFrame="{Binding DrawMarginFrame}"/>
-        </TabItem>
-        <TabItem Header="CO2Emissions">
-            <lvc:CartesianChart Series="{Binding CO2Emissions}"
-                                TooltipPosition="Top"
-                                XAxes="{Binding XAxes}"
-                                YAxes="{Binding CO2EmissionsYAxis}"
-                                LegendPosition="Bottom"
-                                LegendTextPaint="{Binding LegendTextPaint}"
-                                ZoomMode="ZoomX"
-                                DrawMarginFrame="{Binding DrawMarginFrame}"/>
-        </TabItem>
-        <TabItem Header="ProducedHeat">
-            <lvc:CartesianChart Series="{Binding ProducedHeat}"
-                                TooltipPosition="Top"
-                                XAxes="{Binding XAxes}"
-                                YAxes="{Binding ProducedHeatYAxis}"
-                                LegendPosition="Bottom"
-                                LegendTextPaint="{Binding LegendTextPaint}"
-                                ZoomMode="ZoomX"
-                                DrawMarginFrame="{Binding DrawMarginFrame}"/>
-        </TabItem>
-        <TabItem Header="GasConsumption">
-            <lvc:CartesianChart Series="{Binding GasConsumption}"
-                                TooltipPosition="Top"
-                                XAxes="{Binding XAxes}"
-                                YAxes="{Binding GasConsumptionYAxis}"
-                                LegendPosition="Bottom"
-                                LegendTextPaint="{Binding LegendTextPaint}"
-                                ZoomMode="ZoomX"
-                                DrawMarginFrame="{Binding DrawMarginFrame}"/>
-        </TabItem>
-        <TabItem Header="ElectricityProduced">
-            <lvc:CartesianChart Series="{Binding ElectricityProduced}"
-                                TooltipPosition="Top"
-                                XAxes="{Binding XAxes}"
-                                YAxes="{Binding ElectricityProducedYAxis}"
-                                LegendPosition="Bottom"
-                                LegendTextPaint="{Binding LegendTextPaint}"
-                                ZoomMode="ZoomX"
-                                DrawMarginFrame="{Binding DrawMarginFrame}"/>
-        </TabItem>
-    </TabControl>
+    <DockPanel>
+        <TabControl DockPanel.Dock="Top" TabStripPlacement="Left" MinHeight="350">
+            <TabItem Header="Costs">
+                <lvc:CartesianChart Series="{Binding Costs}"
+                                    TooltipPosition="Top"
+                                    XAxes="{Binding XAxes}"
+                                    YAxes="{Binding CostsYAxis}"
+                                    LegendPosition="Bottom"
+                                    LegendTextPaint="{Binding LegendTextPaint}"
+                                    ZoomMode="ZoomX"
+                                    DrawMarginFrame="{Binding DrawMarginFrame}"/>
+            </TabItem>
+            <TabItem Header="CO2Emissions">
+                <lvc:CartesianChart Series="{Binding CO2Emissions}"
+                                    TooltipPosition="Top"
+                                    XAxes="{Binding XAxes}"
+                                    YAxes="{Binding CO2EmissionsYAxis}"
+                                    LegendPosition="Bottom"
+                                    LegendTextPaint="{Binding LegendTextPaint}"
+                                    ZoomMode="ZoomX"
+                                    DrawMarginFrame="{Binding DrawMarginFrame}"/>
+            </TabItem>
+            <TabItem Header="ProducedHeat">
+                <lvc:CartesianChart Series="{Binding ProducedHeat}"
+                                    TooltipPosition="Top"
+                                    XAxes="{Binding XAxes}"
+                                    YAxes="{Binding ProducedHeatYAxis}"
+                                    LegendPosition="Bottom"
+                                    LegendTextPaint="{Binding LegendTextPaint}"
+                                    ZoomMode="ZoomX"
+                                    DrawMarginFrame="{Binding DrawMarginFrame}"/>
+            </TabItem>
+            <TabItem Header="GasConsumption">
+                <lvc:CartesianChart Series="{Binding GasConsumption}"
+                                    TooltipPosition="Top"
+                                    XAxes="{Binding XAxes}"
+                                    YAxes="{Binding GasConsumptionYAxis}"
+                                    LegendPosition="Bottom"
+                                    LegendTextPaint="{Binding LegendTextPaint}"
+                                    ZoomMode="ZoomX"
+                                    DrawMarginFrame="{Binding DrawMarginFrame}"/>
+            </TabItem>
+            <TabItem Header="ElectricityProduced">
+                <lvc:CartesianChart Series="{Binding ElectricityProduced}"
+                                    TooltipPosition="Top"
+                                    XAxes="{Binding XAxes}"
+                                    YAxes="{Binding ElectricityProducedYAxis}"
+                                    LegendPosition="Bottom"
+                                    LegendTextPaint="{Binding LegendTextPaint}"
+                                    ZoomMode="ZoomX"
+                                    DrawMarginFrame="{Binding DrawMarginFrame}"/>
+            </TabItem>
+        </TabControl>
+        <Grid DockPanel.Dock="Bottom" ColumnDefinitions="Auto,Auto,Auto"
+              VerticalAlignment="Bottom"
+              HorizontalAlignment="Center">
+            <ComboBox Grid.Column="0"
+                      ItemsSource="{Binding Periods}"
+                      SelectedItem="{Binding SelectedPeriod}"
+                      MinWidth="200"
+                      Margin="10">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Grid.Column="1"
+                    Content="Import Results"
+                    Command="{Binding ImportResultsCommand}"
+                    MinWidth="200"
+                    Margin="10"/>
+            <Button Grid.Column="2"
+                    Content="Export Results"
+                    Command="{Binding ExportResultsCommand}"
+                    MinWidth="200"
+                    Margin="10"/>
+        </Grid>
+    </DockPanel>
 </UserControl>
+
