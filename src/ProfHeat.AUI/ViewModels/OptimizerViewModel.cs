@@ -58,7 +58,6 @@ public partial class OptimizerViewModel : BaseViewModel
         GridName = _grid.Name;
         GridImagePath = _grid.ImagePath;
     }
-
     #endregion
 
     #region Commands
