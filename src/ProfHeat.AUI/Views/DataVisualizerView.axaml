@@ -5,12 +5,19 @@
              xmlns:vm="using:ProfHeat.AUI.ViewModels"
              xmlns:v="using:ProfHeat.AUI.Views"
              xmlns:m="using:ProfHeat.Core.Models"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400" Width="800" Height="400"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
              x:Class="ProfHeat.AUI.Views.DataVisualizerView"
              x:DataType="vm:DataVisualizerViewModel"
              xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia">
-    <DockPanel>
-        <TabControl DockPanel.Dock="Top" TabStripPlacement="Left" MinHeight="350">
+    <Grid>
+        <!-- Define rows in the grid -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- TabControl that will take up remaining space -->
+        <TabControl Grid.Row="0" TabStripPlacement="Left">
             <TabItem Header="Costs">
                 <lvc:CartesianChart Series="{Binding Costs}"
                                     TooltipPosition="Top"
@@ -62,7 +69,9 @@
                                     DrawMarginFrame="{Binding DrawMarginFrame}"/>
             </TabItem>
         </TabControl>
-        <Grid DockPanel.Dock="Bottom" ColumnDefinitions="Auto,Auto,Auto"
+
+        <!-- Bottom panel for ComboBox and Buttons -->
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,Auto" Margin="0,0,0,10"
               VerticalAlignment="Bottom"
               HorizontalAlignment="Center">
             <ComboBox Grid.Column="0"
@@ -89,6 +98,5 @@
                     MinWidth="200"
                     Margin="10"/>
         </Grid>
-    </DockPanel>
+    </Grid>
 </UserControl>
-
