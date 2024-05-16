@@ -33,37 +33,28 @@ public partial class DataVisualizerViewModel : BaseViewModel
     [ObservableProperty, NotifyCanExecuteChangedFor(nameof(ExportResultsCommand))]
     private List<OptimizationResult> _results;
 
+    [ObservableProperty]
     private string _selectedPeriod = String.Empty;
-    public string SelectedPeriod
-    {
-        get => _selectedPeriod;
-        set
-        {
-            _selectedPeriod = value;
-            OnPropertyChanged(nameof(Results));
-            OnPropertyChanged(nameof(Costs));
-            OnPropertyChanged(nameof(CO2Emissions));
-            OnPropertyChanged(nameof(ProducedHeat));
-            OnPropertyChanged(nameof(GasConsumption));
-            OnPropertyChanged(nameof(ElectricityProduced));
-            OnPropertyChanged(nameof(XAxes));
-        }
-    }
+
     public ObservableCollection<string> Periods { get; } = ["Winter", "Summer"];
     public ObservableCollection<ISeries> Costs => GetLineSeries(result => result.Costs);
     public ObservableCollection<ISeries> CO2Emissions => GetLineSeries(result => result.CO2Emissions);
     public ObservableCollection<ISeries> ProducedHeat => GetLineSeries(result => result.ProducedHeat);
     public ObservableCollection<ISeries> GasConsumption => GetLineSeries(result => result.GasConsumption);
     public ObservableCollection<ISeries> ElectricityProduced => GetLineSeries(result => result.ElectricityProduced);
+
     public static DrawMarginFrame DrawMarginFrame => new() { Stroke = new SolidColorPaint(SKColors.White, 1) };
+
     public static Axis[] XAxes =>
         [new DateTimeAxis(TimeSpan.FromHours(1), date => date.ToString("yy MMM dd',' HH'h'"))
         { LabelsPaint = new SolidColorPaint(SKColors.White) }];
-    public static Axis[] CostsYAxis { get; } = GetYAxis("DKK / MWh(th)");
-    public static Axis[] CO2EmissionsYAxis { get; } = GetYAxis("kg / MWh(th)");
-    public static Axis[] ProducedHeatYAxis { get; } = GetYAxis("MW");
-    public static Axis[] GasConsumptionYAxis { get; } = GetYAxis("MWh(gas) / MWh(th)");
+
+    public static Axis[] CostsYAxis { get; } = GetYAxis("DKK");
+    public static Axis[] CO2EmissionsYAxis { get; } = GetYAxis("kg");
+    public static Axis[] ProducedHeatYAxis { get; } = GetYAxis("MWh");
+    public static Axis[] GasConsumptionYAxis { get; } = GetYAxis("MWh");
     public static Axis[] ElectricityProducedYAxis { get; } = GetYAxis("MW");
+
     public SolidColorPaint LegendTextPaint { get; } = new() { Color = SKColors.White };
 
     #endregion
@@ -91,13 +82,7 @@ public partial class DataVisualizerViewModel : BaseViewModel
                 Results.Clear();
                 Results.AddRange(_resultDataManager.LoadResultData(filePath));
 
-                OnPropertyChanged(nameof(Results));
-                OnPropertyChanged(nameof(Costs));
-                OnPropertyChanged(nameof(CO2Emissions));
-                OnPropertyChanged(nameof(ProducedHeat));
-                OnPropertyChanged(nameof(GasConsumption));
-                OnPropertyChanged(nameof(ElectricityProduced));
-                OnPropertyChanged(nameof(XAxes));
+                NotifyPropertiesChanged();
                 ExportResultsCommand.NotifyCanExecuteChanged();
             }
         }
@@ -131,20 +116,23 @@ public partial class DataVisualizerViewModel : BaseViewModel
     private bool CanExport() => Results.Count > 0;
 
     private ObservableCollection<ISeries> GetLineSeries(Func<OptimizationResult, double> selector) =>
-    new(Results
-        .GroupBy(r => r.UnitName)
-        .Select(group => new LineSeries<DateTimePoint>
-        {
-            Values = group
-            .Where(result => (SelectedPeriod == "Winter") ? result.TimeFrom.Month is >= 10 or <= 3 : result.TimeFrom.Month is >= 4 and <= 9)
-            .Select(result => new DateTimePoint(result.TimeFrom, selector(result))),
-            Name = group.Key,
-            DataPadding = new LvcPoint(0.5f, 0),
-            LineSmoothness = 0,
-            GeometryStroke = null,
-            GeometryFill = null,
-            Fill = null
-        }));
+        new(Results
+            .GroupBy(r => r.UnitName)
+            .Select(group => new LineSeries<DateTimePoint>
+            {
+                Values = group
+                .Where(result => IsInSelectedPeriod(result.TimeFrom.Month))
+                .Select(result => new DateTimePoint(result.TimeFrom, selector(result))),
+                Name = group.Key,
+                DataPadding = new LvcPoint(0.5f, 0),
+                LineSmoothness = 0,
+                GeometryStroke = null,
+                GeometryFill = null,
+                Fill = null
+            }));
+
+    private bool IsInSelectedPeriod(int month) =>
+        SelectedPeriod == "Winter" ? month is >= 10 or <= 3 : month is >= 4 and <= 9;
 
     private static Axis[] GetYAxis(string metric) =>
         [new Axis
@@ -153,5 +141,18 @@ public partial class DataVisualizerViewModel : BaseViewModel
             NamePaint = new SolidColorPaint(SKColors.White),
             LabelsPaint = new SolidColorPaint(SKColors.White)
         }];
+
+    partial void OnSelectedPeriodChanged(string value) => NotifyPropertiesChanged();
+
+    private void NotifyPropertiesChanged()
+    {
+        OnPropertyChanged(nameof(Results));
+        OnPropertyChanged(nameof(Costs));
+        OnPropertyChanged(nameof(CO2Emissions));
+        OnPropertyChanged(nameof(ProducedHeat));
+        OnPropertyChanged(nameof(GasConsumption));
+        OnPropertyChanged(nameof(ElectricityProduced));
+        OnPropertyChanged(nameof(XAxes));
+    }
     #endregion
 }
