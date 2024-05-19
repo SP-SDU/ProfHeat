@@ -9,14 +9,8 @@
              x:Class="ProfHeat.AUI.Views.DataVisualizerView"
              x:DataType="vm:DataVisualizerViewModel"
              xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia">
-    <Grid>
-        <!-- Define rows in the grid -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-
-        <!-- TabControl that will take up remaining space -->
+    
+    <Grid RowDefinitions="*, Auto">
         <TabControl Grid.Row="0" TabStripPlacement="Left">
             <TabItem Header="Costs">
                 <lvc:CartesianChart Series="{Binding Costs}"
