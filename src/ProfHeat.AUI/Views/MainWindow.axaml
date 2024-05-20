@@ -16,7 +16,7 @@
         PointerPressed="DragWindow_PointerPressed"
         Icon="/Assets/Images/Icon.ico"
         Title="ProfHeat"
-        Width="800" Height="450">
+        Width="1280" Height="720">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
