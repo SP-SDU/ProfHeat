@@ -19,7 +19,7 @@ namespace ProfHeat.Core.Repositories;
 
 public class ResultDataManager(IRepository repository) : IResultDataManager
 {
-    public List<OptimizationResult> LoadResultData(string filePath) => [.. repository.Load<List<OptimizationResult>>(filePath)];
+    public List<OptimizationResult> LoadResultData(string filePath) => repository.Load<List<OptimizationResult>>(filePath);
 
     public void SaveResultData(List<OptimizationResult> data, string filePath) => repository.Save(data, filePath);
 }

@@ -19,7 +19,7 @@ namespace ProfHeat.Core.Repositories;
 
 public class SourceDataManager(IRepository repository) : ISourceDataManager
 {
-    public List<MarketCondition> LoadSourceData(string filePath) => [.. repository.Load<List<MarketCondition>>(filePath)];
+    public List<MarketCondition> LoadSourceData(string filePath) => repository.Load<List<MarketCondition>>(filePath);
 
     public void SaveSourceData(List<MarketCondition> data, string filePath) => repository.Save(data, filePath);
 
