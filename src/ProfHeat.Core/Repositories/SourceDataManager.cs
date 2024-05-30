@@ -19,9 +19,10 @@ namespace ProfHeat.Core.Repositories;
 
 public class SourceDataManager(IRepository repository) : ISourceDataManager
 {
-    public List<MarketCondition> LoadSourceData(string filePath) => repository.Load<List<MarketCondition>>(filePath);
+    public List<MarketCondition> LoadSourceData(string filePath) => repository.Load<List<MarketCondition>>(filePath).ToList();
 
     public void SaveSourceData(List<MarketCondition> data, string filePath) => repository.Save(data, filePath);
 
-    // Note Use API repository here
+    public List<MarketCondition> FetchData(DateTime from, DateTime to) =>
+    repository.Load<List<MarketCondition>>($"https://api.energidataservice.dk/dataset/Elspotprices?start={from:yyyy-MM-dd}&end={to:yyyy-MM-dd}");
 }
