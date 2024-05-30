@@ -20,4 +20,5 @@ public interface ISourceDataManager
 {
     List<MarketCondition> LoadSourceData(string filePath);
     void SaveSourceData(List<MarketCondition> data, string filePath);
+    List<MarketCondition> FetchData(DateTime from, DateTime to);
 }
