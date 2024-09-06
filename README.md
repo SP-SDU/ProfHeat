@@ -5,7 +5,7 @@
   <p align="center">
     Optimize heat demand and electricity price integration with ease.
     <br />
-    <a href="https://github.com/SP-SoftFuzz/ProfHeat"><strong>View Project »</strong></a>
+    <a href="https://github.com/SP-SP-SDU/ProfHeat"><strong>View Project »</strong></a>
     <br />
     <br />
     <a href="https://softfuzz.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog">Report Bug</a>
@@ -36,7 +36,7 @@ dotnet new install Avalonia.Templates
 - For editing Avalonia UI projects in Visual Studio Code, install the [Avalonia for Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=AvaloniaTeam.vscode-avalonia).
 
 **Installation:**
-1. Download the latest release from [releases](https://github.com/SP-SoftFuzz/ProfHeat/releases/).
+1. Download the latest release from [releases](https://github.com/SP-SP-SDU/ProfHeat/releases/).
 2. Follow the installation guide provided with the release.
 
 ## Contributing 🤝
@@ -46,7 +46,7 @@ For a smooth collaboration process, please use [GitHub Desktop](https://desktop.
 
 1. **Clone:** Open GitHub Desktop, go to `File > Clone Repository`, and paste:
    ```
-   https://github.com/SP-SoftFuzz/ProfHeat/
+   https://github.com/SP-SP-SDU/ProfHeat/
    ```
 2. **Branch**: Switch to `main` using the branch switcher, create a new branch for your feature. Name it after the JIRA issue key and feature, e.g., `SCRUM-123-Feature`.
 3. **Commit:** Enter your commit message in the `Summary (required)` field and click `Commit`.
@@ -76,4 +76,4 @@ This project is distributed under the Apache 2.0 License. See [LICENSE](LICENSE)
 
 ## Contact 📧
 
-For inquiries, please visit our [GitHub page](https://github.com/SP-SoftFuzz/ProfHeat).
+For inquiries, please visit our [GitHub page](https://github.com/SP-SP-SDU/ProfHeat).
